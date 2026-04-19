@@ -20,7 +20,7 @@
     {
       "id": "cks-atlas-prod",
       "connectionOptions": {
-        "connectionString": "mongodb+srv://<username>:<password>@cluster0.XXXXX.mongodb.net/cks_website?retryWrites=true&w=majority"
+        "connectionString": "replace-with-your-mongodb-atlas-uri"
       },
       "favorite": {
         "name": "CKS Atlas (Production)",

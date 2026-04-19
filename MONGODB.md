@@ -72,9 +72,9 @@ docker ps               # Check running containers
 
 ### Connection string for `.env.local`
 ```
-MONGODB_URI=mongodb+srv://cks_user:YOUR_PASSWORD@cluster0.XXXXX.mongodb.net/cks_website?retryWrites=true&w=majority&appName=Cluster0
+MONGODB_URI=replace-with-your-mongodb-atlas-uri
 ```
-Replace `cks_user`, `YOUR_PASSWORD`, and `cluster0.XXXXX` with your values.
+Paste the full Atlas connection string you get from the MongoDB Atlas dashboard.
 
 ### Connect with Mongo Compass (Atlas)
 1. In Atlas dashboard: **Connect → Compass**
