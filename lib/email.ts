@@ -1,9 +1,13 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const FROM = process.env.EMAIL_FROM || "hello@chandankshah.com.np";
 const TO = process.env.EMAIL_TO || "your@email.com";
+
+function getResendClient() {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) return null;
+  return new Resend(apiKey);
+}
 
 // ── Contact form notification to admin ──────────────────────────────────────
 export async function sendContactNotification(data: {
@@ -14,7 +18,8 @@ export async function sendContactNotification(data: {
   subject: string;
   message: string;
 }) {
-  if (!process.env.RESEND_API_KEY) return; // Skip if not configured
+  const resend = getResendClient();
+  if (!resend) return; // Skip if not configured
 
   try {
     await resend.emails.send({
@@ -82,7 +87,8 @@ export async function sendAutoReply(data: {
   email: string;
   service: string;
 }) {
-  if (!process.env.RESEND_API_KEY || !data.email) return;
+  const resend = getResendClient();
+  if (!resend || !data.email) return;
 
   try {
     await resend.emails.send({
