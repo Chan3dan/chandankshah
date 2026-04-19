@@ -84,7 +84,7 @@ const DEFAULTS = {
     description: "I help individuals and businesses with Loksewa form filling, DEMAT accounts, documentation, academic projects, and web development — bridging traditional services with modern tech in Nepal.",
     ctaPrimary: "View Services",
     ctaSecondary: "My Portfolio",
-    badges: ["🎓 BCA Student", "🏛️ Loksewa Expert", "📊 DEMAT Specialist", "💻 Web Developer", "📋 Docs Consultant"],
+    badges: ["BCA Student", "Loksewa Expert", "DEMAT Specialist", "Web Developer", "Documentation Consultant"],
     stats: [
       { value: "200+", label: "Clients Served" },
       { value: "98%", label: "Success Rate" },

@@ -1,10 +1,11 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, ArrowLeft, CheckCircle2, ChevronRight, Send, Loader2 } from "lucide-react";
+import { ArrowRight, ArrowLeft, CheckCircle2, ChevronRight, Send, Loader2, MessageCircle, Mail } from "lucide-react";
 import toast from "react-hot-toast";
 import TurnstileWidget from "./TurnstileWidget";
 import type { ProfileSettings } from "@/lib/settings";
+import ServiceIcon from "@/components/public/ServiceIcon";
 
 interface Service { _id: string; title: string; slug?: string; icon: string; description: string; price: string; color: string; category: string; }
 
@@ -117,7 +118,9 @@ export default function BookingFlow({ services, preselectedService, profile }: P
                   border: `2px solid ${selected?._id === svc._id ? svc.color : "var(--border)"}`,
                   borderRadius: 14, transition: "all 0.15s", fontFamily: "var(--font-sans)",
                 }}>
-                  <div style={{ fontSize: 26, marginBottom: 10 }}>{svc.icon}</div>
+                  <div style={{ width: 44, height: 44, borderRadius: 12, marginBottom: 10, background: `${svc.color}12`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <ServiceIcon service={svc} color={svc.color} />
+                  </div>
                   <div style={{ fontWeight: 700, fontSize: 14, color: "var(--ink-1)", marginBottom: 4 }}>{svc.title}</div>
                   <div style={{ fontSize: 13, color: svc.color, fontWeight: 700 }}>{svc.price}</div>
                   {selected?._id === svc._id && (
@@ -135,7 +138,9 @@ export default function BookingFlow({ services, preselectedService, profile }: P
         {step === 1 && selected && (
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 14, padding: "14px 18px", background: `${selected.color}10`, border: `1px solid ${selected.color}30`, borderRadius: 12, marginBottom: 28 }}>
-              <span style={{ fontSize: 28 }}>{selected.icon}</span>
+              <div style={{ width: 46, height: 46, borderRadius: 12, background: `${selected.color}12`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                <ServiceIcon service={selected} color={selected.color} />
+              </div>
               <div>
                 <div style={{ fontWeight: 700, fontSize: 15, color: "var(--ink-1)" }}>{selected.title}</div>
                 <div style={{ fontSize: 13, color: selected.color, fontWeight: 700 }}>{selected.price}</div>
@@ -187,7 +192,9 @@ export default function BookingFlow({ services, preselectedService, profile }: P
             <h2 style={{ fontFamily: "var(--font-serif)", fontSize: 22, fontWeight: 400, marginBottom: 24 }}>Review your booking</h2>
             <div className="card-static" style={{ padding: 24, marginBottom: 20 }}>
               <div style={{ display: "flex", gap: 16, alignItems: "center", paddingBottom: 16, marginBottom: 16, borderBottom: "1px solid var(--border)" }}>
-                <span style={{ fontSize: 32 }}>{selected.icon}</span>
+                <div style={{ width: 52, height: 52, borderRadius: 14, background: `${selected.color}12`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <ServiceIcon service={selected} size={24} color={selected.color} />
+                </div>
                 <div>
                   <div style={{ fontWeight: 700, fontSize: 16 }}>{selected.title}</div>
                   <div style={{ fontSize: 14, color: selected.color, fontWeight: 700 }}>{selected.price}</div>
@@ -216,8 +223,9 @@ export default function BookingFlow({ services, preselectedService, profile }: P
             {/* Turnstile spam protection */}
             <TurnstileWidget onVerify={setCfToken} />
 
-            <div style={{ marginTop: 16, padding: "12px 16px", background: "rgba(37,99,235,0.05)", border: "1px solid rgba(37,99,235,0.15)", borderRadius: 10, fontSize: 13, color: "var(--ink-3)" }}>
-              📬 I&apos;ll reply to <strong style={{ color: "var(--ink-1)" }}>{form.phone}</strong>{form.email ? ` / ${form.email}` : ""} within 2–4 hours.
+            <div style={{ marginTop: 16, padding: "12px 16px", background: "rgba(37,99,235,0.05)", border: "1px solid rgba(37,99,235,0.15)", borderRadius: 10, fontSize: 13, color: "var(--ink-3)", display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+              <Mail size={15} color="var(--blue)" />
+              I&apos;ll reply to <strong style={{ color: "var(--ink-1)" }}>{form.phone}</strong>{form.email ? ` / ${form.email}` : ""} within 2–4 hours.
             </div>
           </div>
         )}
@@ -266,7 +274,8 @@ function BookingSuccess({ name, service, profile }: { name: string; service: str
         <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
           <a href={`https://wa.me/${profile.whatsapp}`} target="_blank" rel="noopener noreferrer"
             style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "11px 22px", background: "#25d366", color: "#fff", borderRadius: 10, fontWeight: 700, textDecoration: "none" }}>
-            💬 WhatsApp Me
+            <MessageCircle size={16} />
+            WhatsApp Me
           </a>
           <Link href="/" className="btn btn-secondary">Back to Home</Link>
         </div>

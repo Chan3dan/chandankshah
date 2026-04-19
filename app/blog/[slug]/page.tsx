@@ -136,7 +136,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           </div>
         </article>
       </main>
-      <Footer profile={{ phone: profile.phone, email: profile.email, whatsapp: profile.whatsapp }} social={social} meta={meta} />
+      <Footer profile={{ phone: profile.phone, email: profile.email, whatsapp: profile.whatsapp, location: profile.location }} social={social} meta={meta} />
     </>
   );
 }

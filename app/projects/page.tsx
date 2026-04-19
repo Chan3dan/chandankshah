@@ -44,7 +44,7 @@ export default async function ProjectsPage() {
           <div className="site-container">
             {featured.length > 0 && (
               <div style={{ marginBottom: 52 }}>
-                <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: "var(--ink-4)", marginBottom: 20 }}>⭐ Featured</p>
+                <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: "var(--ink-4)", marginBottom: 20 }}>Featured</p>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(360px, 1fr))", gap: 24 }}>
                   {featured.map((p: any) => (
                     <Link key={p._id} href={`/projects/${p.slug}`} style={{ textDecoration: "none" }}>
@@ -106,7 +106,7 @@ export default async function ProjectsPage() {
           </div>
         </section>
       </main>
-      <Footer profile={{ phone: profile.phone, email: profile.email, whatsapp: profile.whatsapp }} social={social} meta={meta} />
+      <Footer profile={{ phone: profile.phone, email: profile.email, whatsapp: profile.whatsapp, location: profile.location }} social={social} meta={meta} />
     </>
   );
 }

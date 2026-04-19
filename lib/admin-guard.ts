@@ -1,9 +1,16 @@
 import { auth } from "./auth";
 import { NextResponse } from "next/server";
 
+function normalizeEmail(email?: string | null) {
+  return email?.trim().toLowerCase() ?? "";
+}
+
 export async function requireAdmin() {
   const session = await auth();
-  if (!session?.user?.email || session.user.email !== process.env.ADMIN_EMAIL) {
+  const sessionEmail = normalizeEmail(session?.user?.email);
+  const adminEmail = normalizeEmail(process.env.ADMIN_EMAIL);
+
+  if (!sessionEmail || !adminEmail || sessionEmail !== adminEmail) {
     return { error: NextResponse.json({ error: "Unauthorized" }, { status: 401 }) };
   }
   return { session };
@@ -11,5 +18,5 @@ export async function requireAdmin() {
 
 export async function isAdmin(): Promise<boolean> {
   const session = await auth();
-  return session?.user?.email === process.env.ADMIN_EMAIL;
+  return normalizeEmail(session?.user?.email) === normalizeEmail(process.env.ADMIN_EMAIL);
 }

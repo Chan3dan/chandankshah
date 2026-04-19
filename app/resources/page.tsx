@@ -36,7 +36,7 @@ export default async function ResourcesPage() {
       <FAQSchema faqs={LOKSEWA_FAQS} />
       <Navbar />
       <ResourcesClient resources={resources} profile={profile} />
-      <Footer profile={{ phone: profile.phone, email: profile.email, whatsapp: profile.whatsapp }} social={social} meta={meta} />
+      <Footer profile={{ phone: profile.phone, email: profile.email, whatsapp: profile.whatsapp, location: profile.location }} social={social} meta={meta} />
     </>
   );
 }

@@ -139,7 +139,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           </div>
         </section>
       </main>
-      <Footer profile={{ phone: profile.phone, email: profile.email, whatsapp: profile.whatsapp }} social={social} meta={meta} />
+      <Footer profile={{ phone: profile.phone, email: profile.email, whatsapp: profile.whatsapp, location: profile.location }} social={social} meta={meta} />
     </>
   );
 }

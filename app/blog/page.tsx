@@ -4,7 +4,7 @@ import { getSetting } from "@/lib/settings";
 import Navbar from "@/components/public/NavbarServer";
 import Footer from "@/components/public/Footer";
 import Link from "next/link";
-import { Clock, ChevronRight } from "lucide-react";
+import { Clock, ChevronRight, PenSquare } from "lucide-react";
 import type { ProfileSettings, SocialSettings } from "@/lib/settings";
 
 export const metadata = { title: "Blog" };
@@ -44,7 +44,9 @@ export default async function BlogPage() {
           <div className="site-container">
             {posts.length === 0 ? (
               <div style={{ textAlign: "center", padding: "80px 0", color: "var(--ink-4)" }}>
-                <div style={{ fontSize: 48, marginBottom: 16 }}>✍️</div>
+                <div style={{ display: "flex", justifyContent: "center", marginBottom: 16 }}>
+                  <PenSquare size={42} />
+                </div>
                 <p style={{ fontSize: 16 }}>No posts published yet. Check back soon!</p>
               </div>
             ) : (
@@ -110,7 +112,7 @@ export default async function BlogPage() {
           </div>
         </section>
       </main>
-      <Footer profile={{ phone: profile.phone, email: profile.email, whatsapp: profile.whatsapp }} social={social} meta={meta} />
+      <Footer profile={{ phone: profile.phone, email: profile.email, whatsapp: profile.whatsapp, location: profile.location }} social={social} meta={meta} />
     </>
   );
 }

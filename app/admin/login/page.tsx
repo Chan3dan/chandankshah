@@ -7,23 +7,27 @@ import { redirect } from "next/navigation";
 
 export const metadata = { title: "Admin Login" };
 
+function normalizeEmail(email?: string | null) {
+  return email?.trim().toLowerCase() ?? "";
+}
+
 export default async function AdminLoginPage({
   searchParams,
 }: {
   searchParams: Promise<{ error?: string }>;
 }) {
   const session = await auth();
-  if (session?.user?.email === process.env.ADMIN_EMAIL) {
+  if (normalizeEmail(session?.user?.email) === normalizeEmail(process.env.ADMIN_EMAIL)) {
     redirect("/admin");
   }
 
   const { error } = await searchParams;
 
   const errorMessages: Record<string, string> = {
-    AccessDenied: "⛔ This Google account is not authorized to access the admin panel.",
-    OAuthSignin: "⚠️ Could not start Google sign-in. Please try again.",
-    OAuthCallback: "⚠️ Google sign-in failed. Please try again.",
-    Default: "⚠️ Sign-in error. Please try again.",
+    AccessDenied: "This Google account is not authorized to access the admin panel.",
+    OAuthSignin: "Could not start Google sign-in. Please try again.",
+    OAuthCallback: "Google sign-in failed. Please try again.",
+    Default: "Sign-in error. Please try again.",
   };
   const errorMsg = error ? (errorMessages[error] || errorMessages.Default) : null;
 

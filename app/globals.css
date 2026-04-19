@@ -277,9 +277,11 @@ select.input { cursor: pointer; }
   box-shadow: 0 6px 18px rgba(37, 99, 235, 0.22);
 }
 .dark-panel {
-  background: linear-gradient(180deg, color-mix(in srgb, var(--ink-1) 92%, var(--blue) 8%), var(--ink-1));
+  background:
+    radial-gradient(circle at top right, rgba(37, 99, 235, 0.18), transparent 32%),
+    linear-gradient(180deg, #1c1917 0%, #111111 100%);
   color: var(--footer-ink);
-  border: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: var(--shadow-lg);
 }
 .dark-panel-title { color: #fff; }
@@ -525,6 +527,12 @@ select.input { cursor: pointer; }
 .sidebar-layout { display: grid; grid-template-columns: 1fr 300px; gap: 48px; align-items: start; }
 .sidebar-layout-wide { display: grid; grid-template-columns: 2fr 1fr; gap: 48px; align-items: start; }
 
+/* ── NAV RESPONSIVE HELPERS ── */
+.desktop-nav { display: flex; align-items: center; gap: 0; flex: 1; }
+.desktop-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.mobile-nav-toggle { display: none; margin-left: auto; }
+.section-anchor { scroll-margin-top: 92px; }
+
 /* ── RESPONSIVE BREAKPOINTS ── */
 @media (max-width: 1024px) {
   .hero-grid { grid-template-columns: 1fr; gap: 48px; }
@@ -551,6 +559,8 @@ select.input { cursor: pointer; }
   .full-mobile { width: 100% !important; }
   .text-center-mobile { text-align: center !important; }
   .light-on-dark-btn, .whatsapp-btn { width: 100%; justify-content: center; }
+  .desktop-nav, .desktop-actions { display: none !important; }
+  .mobile-nav-toggle { display: inline-flex !important; align-items: center; justify-content: center; }
 }
 
 @media (max-width: 480px) {

@@ -76,7 +76,7 @@ export default function Navbar({ navSettings }: Props) {
           </Link>
 
           {/* Desktop Nav */}
-          <nav style={{ display: "flex", alignItems: "center", gap: 0, flex: 1 }} className="hidden md:flex">
+          <nav className="desktop-nav">
             {STATIC_NAV.map((link) => (
               <div key={link.href} style={{ position: "relative" }}
                 onMouseEnter={() => "children" in link && link.children && setActiveDropdown(link.label)}
@@ -152,14 +152,14 @@ export default function Navbar({ navSettings }: Props) {
           </nav>
 
           {/* Right */}
-          <div style={{ display: "flex", alignItems: "center", gap: 8, marginLeft: "auto" }} className="hidden md:flex">
+          <div className="desktop-actions">
             <ThemeToggle compact />
             <Link href="/book" className="btn btn-secondary btn-sm">Book Service</Link>
             <Link href="/contact" className="btn btn-primary btn-sm">Contact</Link>
           </div>
 
           {/* Mobile toggle */}
-          <button className="md:hidden" onClick={() => setMobileOpen(!mobileOpen)}
+          <button className="mobile-nav-toggle" onClick={() => setMobileOpen(!mobileOpen)}
             style={{ marginLeft: "auto", background: "none", border: "none", cursor: "pointer", padding: 6, color: "var(--ink-1)", borderRadius: 8 }}
             aria-label="Toggle menu">
             {mobileOpen ? <X size={22} /> : <Menu size={22} />}

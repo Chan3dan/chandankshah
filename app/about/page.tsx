@@ -4,7 +4,7 @@ import { Testimonial } from "@/models";
 import Navbar from "@/components/public/NavbarServer";
 import Footer from "@/components/public/Footer";
 import Link from "next/link";
-import { GraduationCap, Award, ChevronRight, Star, Download, ArrowRight } from "lucide-react";
+import { GraduationCap, Award, ChevronRight, Star, Download, ArrowRight, Mail, MapPin, Phone, Clock3, Languages, Medal } from "lucide-react";
 import type { ProfileSettings, SocialSettings } from "@/lib/settings";
 
 export const metadata = { title: "About Me" };
@@ -62,14 +62,17 @@ export default async function AboutPage() {
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                   {[
-                    { label: "📍 Location", value: profile.location },
-                    { label: "📞 Phone", value: profile.phone },
-                    { label: "✉️ Email", value: profile.email },
-                    { label: "🕐 Available", value: profile.availability },
-                    { label: "🌐 Languages", value: profile.languages?.join(", ") },
+                    { label: "Location", value: profile.location, icon: MapPin },
+                    { label: "Phone", value: profile.phone, icon: Phone },
+                    { label: "Email", value: profile.email, icon: Mail },
+                    { label: "Available", value: profile.availability, icon: Clock3 },
+                    { label: "Languages", value: profile.languages?.join(", "), icon: Languages },
                   ].map(item => (
                     <div key={item.label} style={{ display: "flex", gap: 12, padding: "10px 14px", background: "var(--bg-subtle)", borderRadius: 10, alignItems: "flex-start" }}>
-                      <span style={{ fontSize: 13, color: "var(--ink-4)", flexShrink: 0, width: 110 }}>{item.label}</span>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "var(--ink-4)", flexShrink: 0, width: 124 }}>
+                        <item.icon size={14} />
+                        {item.label}
+                      </div>
                       <span style={{ fontSize: 13, fontWeight: 600, color: "var(--ink-2)" }}>{item.value}</span>
                     </div>
                   ))}
@@ -119,7 +122,9 @@ export default async function AboutPage() {
                   {profile.education.map((e, i) => (
                     <div key={i} className="card-static" style={{ padding: 22 }}>
                       <div style={{ display: "flex", gap: 14 }}>
-                        <div style={{ width: 42, height: 42, borderRadius: 12, background: "var(--blue-bg)", border: "1px solid var(--blue-border)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0 }}>🎓</div>
+                        <div style={{ width: 42, height: 42, borderRadius: 12, background: "var(--blue-bg)", border: "1px solid var(--blue-border)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                          <GraduationCap size={18} color="var(--blue)" />
+                        </div>
                         <div>
                           <div style={{ fontWeight: 700, fontSize: 14, color: "var(--ink-1)", marginBottom: 3 }}>{e.degree}</div>
                           <div style={{ fontSize: 13, color: "var(--ink-3)" }}>{e.institution}</div>
@@ -141,7 +146,9 @@ export default async function AboutPage() {
                   {profile.certifications?.map((c, i) => (
                     <div key={i} className="card-static" style={{ padding: 22 }}>
                       <div style={{ display: "flex", gap: 14 }}>
-                        <div style={{ width: 42, height: 42, borderRadius: 12, background: "rgba(217,119,6,0.08)", border: "1px solid rgba(217,119,6,0.2)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0 }}>🏅</div>
+                        <div style={{ width: 42, height: 42, borderRadius: 12, background: "rgba(217,119,6,0.08)", border: "1px solid rgba(217,119,6,0.2)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                          <Medal size={18} color="var(--amber)" />
+                        </div>
                         <div>
                           <div style={{ fontWeight: 700, fontSize: 14, color: "var(--ink-1)", marginBottom: 3 }}>{c.name}</div>
                           <div style={{ fontSize: 13, color: "var(--ink-3)" }}>{c.issuer}</div>
@@ -187,7 +194,7 @@ export default async function AboutPage() {
           </section>
         )}
       </main>
-      <Footer profile={{ phone: profile.phone, email: profile.email, whatsapp: profile.whatsapp }} social={social} meta={meta} />
+      <Footer profile={{ phone: profile.phone, email: profile.email, whatsapp: profile.whatsapp, location: profile.location }} social={social} meta={meta} />
     </>
   );
 }

@@ -1,6 +1,10 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 
+function normalizeEmail(email?: string | null) {
+  return email?.trim().toLowerCase() ?? "";
+}
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Google({
@@ -10,8 +14,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   callbacks: {
     async signIn({ user }) {
-      // Block any email that isn't the admin
-      if (!user.email || user.email !== process.env.ADMIN_EMAIL) {
+      const adminEmail = normalizeEmail(process.env.ADMIN_EMAIL);
+      const userEmail = normalizeEmail(user.email);
+
+      // Block any email that isn't the configured admin email.
+      if (!userEmail || !adminEmail || userEmail !== adminEmail) {
         return false; // NextAuth will redirect to /admin/login?error=AccessDenied
       }
       return true;

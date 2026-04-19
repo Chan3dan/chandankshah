@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { Download, ExternalLink, FileText, Link2, Video, BookOpen, ChevronRight, ArrowRight, Star, TrendingDown } from "lucide-react";
+import { Download, ExternalLink, FileText, Link2, Video, BookOpen, ChevronRight, ArrowRight, Star, TrendingDown, FolderOpen, MessageCircle } from "lucide-react";
 import type { ProfileSettings } from "@/lib/settings";
 
 interface Resource {
@@ -118,7 +118,9 @@ export default function ResourcesClient({ resources, profile }: Props) {
 
           {filtered.length === 0 ? (
             <div style={{ textAlign: "center", padding: "80px 0", color: "var(--ink-4)" }}>
-              <div style={{ fontSize: 48, marginBottom: 12 }}>📂</div>
+              <div style={{ marginBottom: 12, display: "flex", justifyContent: "center" }}>
+                <FolderOpen size={42} />
+              </div>
               <p style={{ fontSize: 16 }}>{searchQuery ? `No results for "${searchQuery}"` : "No resources in this category yet."}</p>
             </div>
           ) : (
@@ -126,7 +128,7 @@ export default function ResourcesClient({ resources, profile }: Props) {
               {/* Featured */}
               {featured.length > 0 && (
                 <div style={{ marginBottom: 48 }}>
-                  <h2 style={{ fontSize: 12, fontWeight: 700, letterSpacing: 1.5, textTransform: "uppercase", color: "var(--ink-4)", marginBottom: 20 }}>⭐ Featured Resources</h2>
+                  <h2 style={{ fontSize: 12, fontWeight: 700, letterSpacing: 1.5, textTransform: "uppercase", color: "var(--ink-4)", marginBottom: 20 }}>Featured Resources</h2>
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: 20 }}>
                     {featured.map(r => <ResourceCard key={r._id} resource={r} onDownload={handleDownload} featured />)}
                   </div>
@@ -161,7 +163,8 @@ export default function ResourcesClient({ resources, profile }: Props) {
               </Link>
               <a href={`https://wa.me/${profile.whatsapp}`} target="_blank" rel="noopener noreferrer"
                 className="whatsapp-btn">
-                💬 WhatsApp
+                <MessageCircle size={16} />
+                WhatsApp
               </a>
             </div>
           </div>

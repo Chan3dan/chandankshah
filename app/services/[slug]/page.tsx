@@ -5,9 +5,10 @@ import Navbar from "@/components/public/NavbarServer";
 import Footer from "@/components/public/Footer";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CheckCircle2, ArrowRight, ChevronRight, MessageCircle } from "lucide-react";
+import { CheckCircle2, ArrowRight, ChevronRight, MessageCircle, Clock3, Sparkles } from "lucide-react";
 import { ServiceSchema, BreadcrumbSchema } from "@/components/public/StructuredData";
 import type { ProfileSettings, SocialSettings } from "@/lib/settings";
+import ServiceIcon from "@/components/public/ServiceIcon";
 
 export const dynamic = "force-dynamic";
 
@@ -57,7 +58,9 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
             <div style={{ display: "grid", gridTemplateColumns: "1fr 340px", gap: 48, alignItems: "start" }} className="sidebar-layout">
               <div>
                 {svc.badge && <span className="badge badge-blue" style={{ marginBottom: 14 }}>{svc.badge}</span>}
-                <div style={{ fontSize: 36, marginBottom: 12 }}>{svc.icon}</div>
+                <div style={{ width: 68, height: 68, borderRadius: 18, background: `${svc.color}12`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 16 }}>
+                  <ServiceIcon service={svc} size={30} color={svc.color} />
+                </div>
                 <h1 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1.8rem,4vw,3rem)", fontWeight: 400, color: "var(--ink-1)", marginBottom: 12, lineHeight: 1.1 }}>{svc.title}</h1>
                 <p style={{ fontSize: 17, color: "var(--ink-3)", lineHeight: 1.75, maxWidth: 560 }}>{svc.description}</p>
               </div>
@@ -75,8 +78,9 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                   style={{ justifyContent: "center", gap: 8, padding: "10px" }}>
                   <MessageCircle size={15} /> WhatsApp Me
                 </a>
-                <div style={{ marginTop: 14, padding: "10px", background: "var(--bg-subtle)", borderRadius: 8, fontSize: 12, color: "var(--ink-4)", textAlign: "center" }}>
-                  ⏰ {profile.availability}
+                <div style={{ marginTop: 14, padding: "10px", background: "var(--bg-subtle)", borderRadius: 8, fontSize: 12, color: "var(--ink-4)", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
+                  <Clock3 size={13} />
+                  {profile.availability}
                 </div>
               </div>
             </div>
@@ -133,7 +137,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                         <Link key={r._id} href={`/services/${r.slug}`}
                           style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 12px", background: "var(--bg-subtle)", borderRadius: 10, textDecoration: "none" }}
                           className="hover-bg">
-                          <span style={{ fontSize: 18 }}>{r.icon}</span>
+                          <ServiceIcon service={r} size={18} color={r.color} />
                           <span style={{ fontSize: 13, fontWeight: 600, color: "var(--ink-2)" }}>{r.title}</span>
                         </Link>
                       ))}
@@ -142,7 +146,10 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                 )}
 
                 <div className="card-static" style={{ padding: 22, background: "var(--blue-bg)", borderColor: "var(--blue-border)" }}>
-                  <p style={{ fontSize: 14, fontWeight: 700, color: "var(--blue)", marginBottom: 8 }}>💡 Ready to get started?</p>
+                  <p style={{ fontSize: 14, fontWeight: 700, color: "var(--blue)", marginBottom: 8, display: "flex", alignItems: "center", gap: 8 }}>
+                    <Sparkles size={15} />
+                    Ready to get started?
+                  </p>
                   <p style={{ fontSize: 13, color: "var(--ink-3)", marginBottom: 14, lineHeight: 1.6 }}>Book instantly or send a quick WhatsApp message.</p>
                   <Link href={`/book?service=${encodeURIComponent(svc.title)}`} className="btn btn-primary btn-sm" style={{ width: "100%", justifyContent: "center", display: "flex" }}>
                     Book Now <ArrowRight size={13} />
@@ -153,7 +160,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
           </div>
         </section>
       </main>
-      <Footer profile={{ phone: profile.phone, email: profile.email, whatsapp: profile.whatsapp }} social={social} meta={meta} />
+      <Footer profile={{ phone: profile.phone, email: profile.email, whatsapp: profile.whatsapp, location: profile.location }} social={social} meta={meta} />
     </>
   );
 }

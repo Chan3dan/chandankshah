@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { Mail, MapPin, Phone } from "lucide-react";
 
 const FOOTER_LINKS = {
   Services: [
@@ -47,14 +48,26 @@ export default function Footer({ profile, social, meta }: FooterProps) {
               </div>
             </div>
             <p style={{ fontSize: 13.5, lineHeight: 1.7, color: "var(--footer-ink-muted)", marginBottom: 20 }}>
-              Your trusted partner for government forms, DEMAT accounts, documentation, and digital services in Nepal.
+              Independent digital support for documentation, forms, DEMAT setup, and online services in Nepal.
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 20 }}>
               {profile?.phone && (
-                <a href={`tel:${profile.phone}`} style={{ fontSize: 13, color: "var(--footer-ink-muted)", textDecoration: "none" }} className="link-hover-white">📞 {profile.phone}</a>
+                <a href={`tel:${profile.phone}`} style={{ fontSize: 13, color: "var(--footer-ink-muted)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 8 }} className="link-hover-white">
+                  <Phone size={14} />
+                  {profile.phone}
+                </a>
               )}
               {profile?.email && (
-                <a href={`mailto:${profile.email}`} style={{ fontSize: 13, color: "var(--footer-ink-muted)", textDecoration: "none" }} className="link-hover-white">✉️ {profile.email}</a>
+                <a href={`mailto:${profile.email}`} style={{ fontSize: 13, color: "var(--footer-ink-muted)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 8 }} className="link-hover-white">
+                  <Mail size={14} />
+                  {profile.email}
+                </a>
+              )}
+              {profile?.location && (
+                <span style={{ fontSize: 13, color: "var(--footer-ink-muted)", display: "inline-flex", alignItems: "center", gap: 8 }}>
+                  <MapPin size={14} />
+                  {profile.location}
+                </span>
               )}
             </div>
             {/* Social */}
@@ -102,6 +115,9 @@ export default function Footer({ profile, social, meta }: FooterProps) {
       <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", padding: "18px 0" }}>
         <div className="site-container" style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
           <p style={{ fontSize: 13, color: "var(--footer-ink-soft)" }}>© {new Date().getFullYear()} Chandan Kumar Shah. All rights reserved.</p>
+          <p style={{ fontSize: 13, color: "var(--footer-ink-soft)", maxWidth: 680 }}>
+            This is an independent digital services business and is not affiliated with, endorsed by, or acting on behalf of any government office or public authority.
+          </p>
           <p style={{ fontSize: 13, color: "var(--footer-ink-soft)" }}>Built with Next.js · Hosted on Vercel</p>
         </div>
       </div>

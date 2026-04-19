@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, ExternalLink, Star, Download, MapPin, Clock, Sparkles, ChevronRight } from "lucide-react";
+import { ArrowRight, CheckCircle2, ExternalLink, Star, Download, MapPin, Clock, Sparkles, ChevronRight, BadgeCheck, MessageCircle, Zap, ShieldCheck } from "lucide-react";
 import type { HeroSettings, ProfileSettings, NiyuktaSettings, PricingSettings } from "@/lib/settings";
+import ServiceIcon, { cleanBadgeLabel, profileHighlights } from "@/components/public/ServiceIcon";
 
 interface Props {
   hero: HeroSettings;
@@ -63,7 +64,7 @@ function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSe
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 36 }}>
               {hero.badges.map((b, i) => (
                 <span key={i} style={{ padding: "6px 14px", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 99, fontSize: 13, fontWeight: 500, color: "var(--ink-2)", boxShadow: "var(--shadow-xs)" }}>
-                  {b}
+                  {cleanBadgeLabel(b)}
                 </span>
               ))}
             </div>
@@ -96,9 +97,10 @@ function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSe
                 <h3 style={{ fontFamily: "var(--font-serif)", fontSize: 20, fontWeight: 400, textAlign: "center", marginBottom: 4 }}>{hero.name}</h3>
                 <p style={{ fontSize: 13, color: "var(--ink-3)", textAlign: "center", marginBottom: 20 }}>BCA Student · Digital Services</p>
                 <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 20 }}>
-                  {["🏛️ Loksewa Expert", "📊 DEMAT & Mero Share", "💻 Web Developer", "📋 Documentation Consultant"].map(item => (
-                    <div key={item} style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 12px", background: "var(--bg-subtle)", borderRadius: 10, fontSize: 13.5, color: "var(--ink-2)", border: "1px solid var(--border)" }}>
-                      {item}
+                  {profileHighlights.map(({ label, icon: Icon }) => (
+                    <div key={label} style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 12px", background: "var(--bg-subtle)", borderRadius: 10, fontSize: 13.5, color: "var(--ink-2)", border: "1px solid var(--border)" }}>
+                      <Icon size={16} color="var(--blue)" />
+                      {label}
                     </div>
                   ))}
                 </div>
@@ -110,11 +112,13 @@ function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSe
                   </span>
                 </div>
               </div>
-              <div className="anim-float" style={{ position: "absolute", top: -16, right: -24, background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 12, padding: "9px 14px", fontSize: 13, fontWeight: 700, color: "var(--ink-1)", boxShadow: "var(--shadow-md)" }}>
-                ⚡ Fast Delivery
+              <div className="anim-float" style={{ position: "absolute", top: -16, right: -24, background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 12, padding: "9px 14px", fontSize: 13, fontWeight: 700, color: "var(--ink-1)", boxShadow: "var(--shadow-md)", display: "flex", alignItems: "center", gap: 8 }}>
+                <Zap size={14} color="var(--amber)" />
+                Fast Delivery
               </div>
-              <div className="anim-float" style={{ animationDelay: "1.2s", position: "absolute", bottom: -12, left: -28, background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 12, padding: "9px 14px", fontSize: 13, fontWeight: 700, color: "var(--ink-1)", boxShadow: "var(--shadow-md)" }}>
-                ✅ 98% Success
+              <div className="anim-float" style={{ animationDelay: "1.2s", position: "absolute", bottom: -12, left: -28, background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 12, padding: "9px 14px", fontSize: 13, fontWeight: 700, color: "var(--ink-1)", boxShadow: "var(--shadow-md)", display: "flex", alignItems: "center", gap: 8 }}>
+                <BadgeCheck size={14} color="var(--green)" />
+                98% Success
               </div>
             </div>
           </div>
@@ -145,7 +149,9 @@ function ServicesSection({ services }: { services: any[] }) {
                 {svc.badge && (
                   <span style={{ position: "absolute", top: 16, right: 16, fontSize: 11, fontWeight: 700, padding: "2px 9px", background: `${svc.color}18`, color: svc.color, borderRadius: 99 }}>{svc.badge}</span>
                 )}
-                <div style={{ width: 48, height: 48, borderRadius: 13, background: `${svc.color}12`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, marginBottom: 14 }}>{svc.icon}</div>
+                <div style={{ width: 48, height: 48, borderRadius: 13, background: `${svc.color}12`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 14 }}>
+                  <ServiceIcon service={svc} color={svc.color} />
+                </div>
                 <h3 style={{ fontWeight: 700, fontSize: 16, color: "var(--ink-1)", marginBottom: 6 }}>{svc.title}</h3>
                 <p style={{ fontSize: 14, color: "var(--ink-3)", lineHeight: 1.65, marginBottom: 14 }}>{svc.description}</p>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 14 }}>
@@ -290,25 +296,26 @@ function TestimonialsSection({ testimonials }: { testimonials: any[] }) {
 /* ── PRICING ── */
 function PricingSection({ pricing }: { pricing: PricingSettings }) {
   return (
-    <section id="pricing" className="section" style={{ borderTop: "1px solid var(--border)" }}>
+    <section id="pricing" className="section section-anchor" style={{ borderTop: "1px solid var(--border)" }}>
       <div className="site-container">
         <div style={{ textAlign: "center", marginBottom: 52 }}>
           <p className="section-eyebrow" style={{ justifyContent: "center" }}>Pricing</p>
           <h2 className="section-title">{pricing.heading}</h2>
           <p className="section-desc" style={{ margin: "12px auto 0", textAlign: "center" }}>{pricing.subheading}</p>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 24, alignItems: "center" }}>
+        <div className="grid-auto" style={{ alignItems: "center" }}>
           {pricing.plans.map((plan) => (
             <div key={plan.name} style={{
               background: plan.highlighted ? "linear-gradient(135deg,#1e3a8a,#2563eb)" : "var(--surface)",
               border: plan.highlighted ? "none" : "1px solid var(--border)",
               borderRadius: 20, padding: "clamp(24px,4vw,32px)", position: "relative",
-              transform: plan.highlighted ? "scale(1.03)" : "none",
+              transform: plan.highlighted ? "translateY(-6px)" : "none",
               boxShadow: plan.highlighted ? "0 8px 40px rgba(37,99,235,0.22)" : "var(--shadow-sm)",
             }}>
               {plan.badge && (
-                <div style={{ position: "absolute", top: -13, left: "50%", transform: "translateX(-50%)", background: "var(--amber)", color: "#fff", padding: "4px 16px", borderRadius: 99, fontSize: 12, fontWeight: 700, whiteSpace: "nowrap" }}>
-                  ✨ {plan.badge}
+                <div style={{ position: "absolute", top: -13, left: "50%", transform: "translateX(-50%)", background: "var(--amber)", color: "#fff", padding: "4px 16px", borderRadius: 99, fontSize: 12, fontWeight: 700, whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: 6 }}>
+                  <Sparkles size={12} />
+                  {plan.badge}
                 </div>
               )}
               <div style={{ fontWeight: 700, fontSize: 13, color: plan.highlighted ? "rgba(255,255,255,0.7)" : "var(--blue)", marginBottom: 8 }}>{plan.name}</div>
@@ -361,7 +368,8 @@ function CTASection({ profile }: { profile: ProfileSettings }) {
             </Link>
             <a href={`https://wa.me/${profile.whatsapp}`} target="_blank" rel="noopener noreferrer"
               className="whatsapp-btn">
-              💬 WhatsApp
+              <MessageCircle size={16} />
+              WhatsApp
             </a>
           </div>
         </div>

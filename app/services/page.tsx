@@ -6,6 +6,7 @@ import Footer from "@/components/public/Footer";
 import Link from "next/link";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import type { ProfileSettings, SocialSettings } from "@/lib/settings";
+import ServiceIcon from "@/components/public/ServiceIcon";
 
 export const metadata = { title: "Services" };
 export const dynamic = "force-dynamic";
@@ -50,7 +51,9 @@ export default async function ServicesPage() {
                         <div className="card" style={{ padding: 26, height: "100%", position: "relative", overflow: "hidden" }}>
                           <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: svc.color, opacity: 0.55, borderRadius: "20px 20px 0 0" }} />
                           {svc.badge && <span style={{ position: "absolute", top: 14, right: 14, fontSize: 11, fontWeight: 700, padding: "2px 9px", background: `${svc.color}18`, color: svc.color, borderRadius: 99 }}>{svc.badge}</span>}
-                          <div style={{ fontSize: 24, marginBottom: 12 }}>{svc.icon}</div>
+                          <div style={{ width: 48, height: 48, borderRadius: 13, background: `${svc.color}12`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}>
+                            <ServiceIcon service={svc} color={svc.color} />
+                          </div>
                           <h3 style={{ fontWeight: 700, fontSize: 16, color: "var(--ink-1)", marginBottom: 6 }}>{svc.title}</h3>
                           <p style={{ fontSize: 13.5, color: "var(--ink-3)", lineHeight: 1.65, marginBottom: 14 }}>{svc.description}</p>
                           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -81,7 +84,7 @@ export default async function ServicesPage() {
           </div>
         </section>
       </main>
-      <Footer profile={{ phone: profile.phone, email: profile.email, whatsapp: profile.whatsapp }} social={social} meta={meta} />
+      <Footer profile={{ phone: profile.phone, email: profile.email, whatsapp: profile.whatsapp, location: profile.location }} social={social} meta={meta} />
     </>
   );
 }
