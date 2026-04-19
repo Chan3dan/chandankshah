@@ -1,0 +1,32 @@
+// docker/compass-connections.json
+// Import this file into MongoDB Compass:
+// Compass → File → Import Connections → select this file
+
+{
+  "type": "Compass Connections",
+  "version": { "major": 1, "minor": 0 },
+  "connections": [
+    {
+      "id": "cks-local-docker",
+      "connectionOptions": {
+        "connectionString": "mongodb://cks_admin:cks_secret@localhost:27017/?authSource=admin"
+      },
+      "favorite": {
+        "name": "CKS Local (Docker)",
+        "color": "color2"
+      },
+      "lastUsed": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "cks-atlas-prod",
+      "connectionOptions": {
+        "connectionString": "mongodb+srv://<username>:<password>@cluster0.XXXXX.mongodb.net/cks_website?retryWrites=true&w=majority"
+      },
+      "favorite": {
+        "name": "CKS Atlas (Production)",
+        "color": "color3"
+      },
+      "lastUsed": "2024-01-01T00:00:00.000Z"
+    }
+  ]
+}

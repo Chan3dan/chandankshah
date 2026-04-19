@@ -1,0 +1,24 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Install tsx for running TypeScript directly
+RUN npm install -g tsx
+
+# Copy package files
+COPY package.json package-lock.json ./
+
+# Install only server dependencies
+RUN npm ci --omit=dev
+
+# Copy server source
+COPY server/ ./server/
+COPY models/ ./models/
+COPY lib/mongodb.ts ./lib/
+COPY scripts/ ./scripts/
+COPY tsconfig.json ./
+
+# Expose utility server port
+EXPOSE 4000
+
+CMD ["tsx", "server/index.ts"]

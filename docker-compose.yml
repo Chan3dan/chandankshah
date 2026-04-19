@@ -1,0 +1,116 @@
+version: "3.9"
+
+services:
+  # ─────────────────────────────────────────────
+  # MongoDB (local, same wire protocol as Atlas)
+  # ─────────────────────────────────────────────
+  mongo:
+    image: mongo:7.0
+    container_name: cks_mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"         # Mongo Compass connects here
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: cks_admin
+      MONGO_INITDB_ROOT_PASSWORD: cks_secret
+      MONGO_INITDB_DATABASE: cks_website
+    volumes:
+      - mongo_data:/data/db
+      - ./docker/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - cks_net
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # ─────────────────────────────────────────────
+  # Mongo Express  (web-based DB admin UI)
+  # Visit → http://localhost:8081
+  # ─────────────────────────────────────────────
+  mongo-express:
+    image: mongo-express:1.0.2
+    container_name: cks_mongo_express
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: cks_admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: cks_secret
+      ME_CONFIG_MONGODB_URL: mongodb://cks_admin:cks_secret@mongo:27017/
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin123
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
+    depends_on:
+      mongo:
+        condition: service_healthy
+    networks:
+      - cks_net
+
+  # ─────────────────────────────────────────────
+  # Express utility server (seed, admin API, health)
+  # Visit → http://localhost:4000
+  # ─────────────────────────────────────────────
+  express:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.express
+    container_name: cks_express
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    environment:
+      MONGODB_URI: mongodb://cks_admin:cks_secret@mongo:27017/cks_website?authSource=admin
+      PORT: 4000
+      NODE_ENV: development
+    depends_on:
+      mongo:
+        condition: service_healthy
+    volumes:
+      - ./server:/app/server
+      - ./models:/app/models
+      - ./lib/mongodb.ts:/app/lib/mongodb.ts
+      - ./scripts:/app/scripts
+    networks:
+      - cks_net
+
+  # ─────────────────────────────────────────────
+  # Next.js dev server
+  # Visit → http://localhost:3000
+  # ─────────────────────────────────────────────
+  nextjs:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.nextjs
+    container_name: cks_nextjs
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      MONGODB_URI: mongodb://cks_admin:cks_secret@mongo:27017/cks_website?authSource=admin
+      AUTH_SECRET: dev-secret-key-change-in-production-32chars
+      NEXTAUTH_URL: http://localhost:3000
+      AUTH_GOOGLE_ID: ${AUTH_GOOGLE_ID}
+      AUTH_GOOGLE_SECRET: ${AUTH_GOOGLE_SECRET}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      NODE_ENV: development
+    depends_on:
+      mongo:
+        condition: service_healthy
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    networks:
+      - cks_net
+
+volumes:
+  mongo_data:
+    name: cks_mongo_data
+
+networks:
+  cks_net:
+    name: cks_network
+    driver: bridge
