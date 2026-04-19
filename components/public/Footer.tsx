@@ -31,30 +31,30 @@ interface FooterProps {
 
 export default function Footer({ profile, social, meta }: FooterProps) {
   return (
-    <footer style={{ background: "var(--ink-1)", color: "rgba(255,255,255,0.7)", marginTop: 0 }}>
+    <footer style={{ background: "var(--footer-bg)", color: "var(--footer-ink)", marginTop: 0 }}>
       <div className="site-container" style={{ padding: "64px 24px 48px" }}>
         <div style={{ display: "grid", gridTemplateColumns: "1.5fr repeat(3, 1fr)", gap: 40 }}
           className="footer-grid">
           {/* Brand */}
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-              <div style={{ width: 34, height: 34, borderRadius: 9, background: "linear-gradient(135deg,#2563eb,#0ea5e9)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <span style={{ color: "#fff", fontWeight: 800, fontSize: 15 }}>C</span>
+              <div className="brand-mark" style={{ width: 34, height: 34, borderRadius: 9 }}>
+                <span style={{ fontWeight: 800, fontSize: 15 }}>C</span>
               </div>
               <div>
                 <div style={{ fontWeight: 700, fontSize: 15, color: "#fff" }}>{meta?.siteName || "Chandan Shah"}</div>
-                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>{meta?.siteTagline || "Digital Services"}</div>
+                <div style={{ fontSize: 11, color: "var(--footer-ink-soft)" }}>{meta?.siteTagline || "Digital Services"}</div>
               </div>
             </div>
-            <p style={{ fontSize: 13.5, lineHeight: 1.7, color: "rgba(255,255,255,0.5)", marginBottom: 20 }}>
+            <p style={{ fontSize: 13.5, lineHeight: 1.7, color: "var(--footer-ink-muted)", marginBottom: 20 }}>
               Your trusted partner for government forms, DEMAT accounts, documentation, and digital services in Nepal.
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 20 }}>
               {profile?.phone && (
-                <a href={`tel:${profile.phone}`} style={{ fontSize: 13, color: "rgba(255,255,255,0.55)", textDecoration: "none" }} className="link-hover-white">📞 {profile.phone}</a>
+                <a href={`tel:${profile.phone}`} style={{ fontSize: 13, color: "var(--footer-ink-muted)", textDecoration: "none" }} className="link-hover-white">📞 {profile.phone}</a>
               )}
               {profile?.email && (
-                <a href={`mailto:${profile.email}`} style={{ fontSize: 13, color: "rgba(255,255,255,0.55)", textDecoration: "none" }} className="link-hover-white">✉️ {profile.email}</a>
+                <a href={`mailto:${profile.email}`} style={{ fontSize: 13, color: "var(--footer-ink-muted)", textDecoration: "none" }} className="link-hover-white">✉️ {profile.email}</a>
               )}
             </div>
             {/* Social */}
@@ -66,7 +66,7 @@ export default function Footer({ profile, social, meta }: FooterProps) {
                 { url: social?.linkedin, label: "in", color: "#0ea5e9" },
               ].filter(s => s.url).map(s => (
                 <a key={s.label} href={s.url!} target="_blank" rel="noopener noreferrer"
-                  style={{ width: 34, height: 34, borderRadius: 9, background: "rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: "#fff", textDecoration: "none", transition: "background 0.15s" }}
+                  style={{ width: 34, height: 34, borderRadius: 9, background: "rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: "#fff", textDecoration: "none", transition: "background 0.15s, transform 0.15s", border: `1px solid ${s.color}25` }}
                   className="hover-lift">
                   {s.label}
                 </a>
@@ -82,12 +82,12 @@ export default function Footer({ profile, social, meta }: FooterProps) {
                 {links.map((l) => (
                   ("external" in l && l.external) ? (
                     <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer"
-                      style={{ fontSize: 13.5, color: "rgba(255,255,255,0.5)", textDecoration: "none", transition: "color 0.15s" }} className="link-hover-white">
+                      style={{ fontSize: 13.5, color: "var(--footer-ink-muted)", textDecoration: "none", transition: "color 0.15s" }} className="link-hover-white">
                       {l.label}
                     </a>
                   ) : (
                     <Link key={l.href} href={l.href}
-                      style={{ fontSize: 13.5, color: "rgba(255,255,255,0.5)", textDecoration: "none", transition: "color 0.15s" }} className="link-hover-white">
+                      style={{ fontSize: 13.5, color: "var(--footer-ink-muted)", textDecoration: "none", transition: "color 0.15s" }} className="link-hover-white">
                       {l.label}
                     </Link>
                   )
@@ -101,8 +101,8 @@ export default function Footer({ profile, social, meta }: FooterProps) {
       {/* Bottom */}
       <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", padding: "18px 0" }}>
         <div className="site-container" style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
-          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.35)" }}>© {new Date().getFullYear()} Chandan Kumar Shah. All rights reserved.</p>
-          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.35)" }}>Built with Next.js · Hosted on Vercel</p>
+          <p style={{ fontSize: 13, color: "var(--footer-ink-soft)" }}>© {new Date().getFullYear()} Chandan Kumar Shah. All rights reserved.</p>
+          <p style={{ fontSize: 13, color: "var(--footer-ink-soft)" }}>Built with Next.js · Hosted on Vercel</p>
         </div>
       </div>
 

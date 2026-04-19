@@ -71,7 +71,8 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                 </Link>
                 <a href={`https://wa.me/${profile.whatsapp}?text=Hello%20Chandan%2C%20I%20need%20help%20with%20${encodeURIComponent(svc.title)}`}
                   target="_blank" rel="noopener noreferrer"
-                  style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, padding: "10px", background: "#dcfce7", color: "#16a34a", border: "1px solid #bbf7d0", borderRadius: 10, fontWeight: 600, fontSize: 14, textDecoration: "none" }}>
+                  className="success-panel"
+                  style={{ justifyContent: "center", gap: 8, padding: "10px" }}>
                   <MessageCircle size={15} /> WhatsApp Me
                 </a>
                 <div style={{ marginTop: 14, padding: "10px", background: "var(--bg-subtle)", borderRadius: 8, fontSize: 12, color: "var(--ink-4)", textAlign: "center" }}>

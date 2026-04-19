@@ -191,8 +191,8 @@ function NiyuktaSection({ niyukta }: { niyukta: NiyuktaSettings }) {
                   </div>
                 ))}
               </div>
-              <a href={niyukta.url} target="_blank" rel="noopener noreferrer" className="niyukta-cta"
-                style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 26px", background: "#fff", color: "#1d4ed8", borderRadius: 12, fontWeight: 700, fontSize: 15, textDecoration: "none", boxShadow: "0 4px 20px rgba(0,0,0,0.15)" }}>
+              <a href={niyukta.url} target="_blank" rel="noopener noreferrer" className="niyukta-cta light-on-dark-btn"
+                style={{ color: "#1d4ed8", boxShadow: "0 4px 20px rgba(0,0,0,0.15)" }}>
                 {niyukta.cta} <ExternalLink size={15} />
               </a>
             </div>
@@ -348,19 +348,19 @@ function CTASection({ profile }: { profile: ProfileSettings }) {
   return (
     <section style={{ padding: "80px 0", borderTop: "1px solid var(--border)" }}>
       <div className="site-container">
-        <div style={{ background: "var(--ink-1)", borderRadius: 28, padding: "clamp(32px,5vw,56px)", display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: 32 }}>
+        <div className="dark-panel" style={{ borderRadius: 28, padding: "clamp(32px,5vw,56px)", display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: 32 }}>
           <div>
-            <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1.8rem,3vw,2.8rem)", fontWeight: 400, color: "#fff", marginBottom: 8, lineHeight: 1.2 }}>
+            <h2 className="dark-panel-title" style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1.8rem,3vw,2.8rem)", fontWeight: 400, marginBottom: 8, lineHeight: 1.2 }}>
               Ready to get started?
             </h2>
-            <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 16 }}>Get in touch — I&apos;ll reply within a few hours.</p>
+            <p className="dark-panel-copy" style={{ fontSize: 16 }}>Get in touch — I&apos;ll reply within a few hours.</p>
           </div>
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <Link href="/contact" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 26px", background: "#fff", color: "var(--ink-1)", borderRadius: 12, fontWeight: 700, fontSize: 15, textDecoration: "none" }}>
+            <Link href="/contact" className="light-on-dark-btn">
               Contact Me <ArrowRight size={15} />
             </Link>
             <a href={`https://wa.me/${profile.whatsapp}`} target="_blank" rel="noopener noreferrer"
-              style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 26px", background: "#25d366", color: "#fff", borderRadius: 12, fontWeight: 700, fontSize: 15, textDecoration: "none" }}>
+              className="whatsapp-btn">
               💬 WhatsApp
             </a>
           </div>

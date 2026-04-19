@@ -60,7 +60,7 @@ export default function ContactClient({ profile, social, services }: Props) {
 
       <section className="section">
         <div className="site-container">
-          <div style={{ display: "grid", gridTemplateColumns: "340px 1fr", gap: 48, alignItems: "start" }}>
+          <div className="content-sidebar">
             {/* Left — contact info */}
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
               {contactItems.map(item => (
@@ -82,16 +82,14 @@ export default function ContactClient({ profile, social, services }: Props) {
               {/* WhatsApp */}
               <a href={`https://wa.me/${profile.whatsapp}?text=Hello%20Chandan%2C%20I%20need%20help%20with...`}
                 target="_blank" rel="noopener noreferrer"
-                style={{ display: "flex", alignItems: "center", gap: 14, padding: "18px", background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: 14, textDecoration: "none", transition: "background 0.15s" }}
-                className="hover-bg-subtle"
-                
+                className="success-panel"
               >
-                <div style={{ width: 44, height: 44, borderRadius: 12, background: "#22c55e", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <div className="success-panel__icon">
                   <MessageCircle size={22} color="#fff" />
                 </div>
                 <div>
-                  <div style={{ fontWeight: 700, fontSize: 15, color: "#15803d" }}>Chat on WhatsApp</div>
-                  <div style={{ fontSize: 12, color: "#16a34a" }}>Get a quick response</div>
+                  <div className="success-panel__title">Chat on WhatsApp</div>
+                  <div className="success-panel__copy">Get a quick response</div>
                 </div>
               </a>
 
@@ -118,7 +116,7 @@ export default function ContactClient({ profile, social, services }: Props) {
               ) : (
                 <form onSubmit={handleSubmit}>
                   <h2 style={{ fontFamily: "var(--font-serif)", fontSize: 22, fontWeight: 400, marginBottom: 24 }}>Send a Message</h2>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
+                  <div className="grid-2" style={{ gap: 16, marginBottom: 16 }}>
                     <div className="form-group" style={{ marginBottom: 0 }}>
                       <label className="form-label">Full Name *</label>
                       <input required className="input" placeholder="Your full name" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
@@ -132,7 +130,7 @@ export default function ContactClient({ profile, social, services }: Props) {
                     <label className="form-label">Email Address</label>
                     <input type="email" className="input" placeholder="you@email.com" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
                   </div>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
+                  <div className="grid-2" style={{ gap: 16, marginBottom: 16 }}>
                     <div className="form-group" style={{ marginBottom: 0 }}>
                       <label className="form-label">Service Needed *</label>
                       <select required className="input" value={form.service} onChange={e => setForm({ ...form, service: e.target.value })}>

@@ -53,7 +53,7 @@ export default function ResourcesClient({ resources, profile }: Props) {
             <Link href="/" style={{ color: "var(--ink-4)", textDecoration: "none" }}>Home</Link>
             <ChevronRight size={13} /><span>Resources</span>
           </nav>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "center" }}>
+          <div className="split-2">
             <div>
               <span style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "4px 12px", background: "var(--green-bg)", border: "1px solid rgba(22,163,74,0.2)", borderRadius: 99, fontSize: 12, fontWeight: 700, color: "var(--green)", marginBottom: 14 }}>
                 100% Free · No login required
@@ -146,21 +146,21 @@ export default function ResourcesClient({ resources, profile }: Props) {
           )}
 
           {/* CTA */}
-          <div style={{ marginTop: 64, background: "var(--ink-1)", borderRadius: 24, padding: "48px 40px", display: "grid", gridTemplateColumns: "1fr auto", gap: 32, alignItems: "center" }}>
+          <div className="dark-panel split-2" style={{ marginTop: 64, borderRadius: 24, padding: "48px 40px", gap: 32 }}>
             <div>
-              <h3 style={{ fontFamily: "var(--font-serif)", fontSize: 26, fontWeight: 400, color: "#fff", marginBottom: 10 }}>
+              <h3 className="dark-panel-title" style={{ fontFamily: "var(--font-serif)", fontSize: 26, fontWeight: 400, marginBottom: 10 }}>
                 Need personalized help with Loksewa or DEMAT?
               </h3>
-              <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 15 }}>
+              <p className="dark-panel-copy" style={{ fontSize: 15 }}>
                 Free resources are a start — but professional guidance makes the difference.
               </p>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 10, flexShrink: 0 }}>
-              <Link href="/book" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 22px", background: "#fff", color: "var(--ink-1)", borderRadius: 10, fontWeight: 700, textDecoration: "none", whiteSpace: "nowrap" }}>
+              <Link href="/book" className="light-on-dark-btn" style={{ whiteSpace: "nowrap" }}>
                 Book a Service <ArrowRight size={14} />
               </Link>
               <a href={`https://wa.me/${profile.whatsapp}`} target="_blank" rel="noopener noreferrer"
-                style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, padding: "12px 22px", background: "#25d366", color: "#fff", borderRadius: 10, fontWeight: 700, textDecoration: "none" }}>
+                className="whatsapp-btn">
                 💬 WhatsApp
               </a>
             </div>

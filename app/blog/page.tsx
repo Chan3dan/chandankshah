@@ -48,7 +48,7 @@ export default async function BlogPage() {
                 <p style={{ fontSize: 16 }}>No posts published yet. Check back soon!</p>
               </div>
             ) : (
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 280px", gap: 48 }}>
+              <div className="sidebar-layout-wide">
                 <div>
                   {featured && (
                     <Link href={`/blog/${featured.slug}`} style={{ textDecoration: "none", display: "block", marginBottom: 32 }}>

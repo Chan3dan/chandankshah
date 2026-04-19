@@ -18,14 +18,12 @@ const ThemeContext = createContext<ThemeContextType>({
 });
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("system");
+  const [theme, setThemeState] = useState<Theme>(() => {
+    if (typeof window === "undefined") return "system";
+    const saved = localStorage.getItem("cks-theme");
+    return saved === "light" || saved === "dark" || saved === "system" ? saved : "system";
+  });
   const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">("light");
-
-  useEffect(() => {
-    // Load saved preference
-    const saved = localStorage.getItem("cks-theme") as Theme | null;
-    if (saved) setThemeState(saved);
-  }, []);
 
   useEffect(() => {
     const apply = (t: Theme) => {
@@ -35,6 +33,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       else resolved = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
       setResolvedTheme(resolved);
       document.documentElement.setAttribute("data-theme", resolved);
+      document.documentElement.style.colorScheme = resolved;
     };
 
     apply(theme);

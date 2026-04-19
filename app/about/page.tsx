@@ -40,7 +40,7 @@ export default async function AboutPage() {
               <span>About</span>
             </nav>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
+            <div className="split-2" style={{ gap: 64 }}>
               <div>
                 <p className="section-eyebrow">About Me</p>
                 <h1 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(2.5rem,5vw,4rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1.1, marginBottom: 16 }}>
@@ -84,7 +84,7 @@ export default async function AboutPage() {
           <div className="site-container">
             <p className="section-eyebrow">Expertise</p>
             <h2 className="section-title" style={{ marginBottom: 48 }}>Skills & Capabilities</h2>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(380px, 1fr))", gap: 40 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 32 }}>
               {Object.entries(skillsByCategory).map(([category, skills]) => (
                 <div key={category}>
                   <h3 style={{ fontSize: 12, fontWeight: 700, letterSpacing: 1.5, textTransform: "uppercase", color: "var(--ink-4)", marginBottom: 20 }}>{category}</h3>
@@ -110,7 +110,7 @@ export default async function AboutPage() {
         {/* Education */}
         <section className="section-sm" style={{ background: "var(--bg-subtle)", borderTop: "1px solid var(--border)" }}>
           <div className="site-container">
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48 }}>
+            <div className="grid-2" style={{ gap: 48 }}>
               <div>
                 <h2 style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 20, fontFamily: "var(--font-serif)", fontWeight: 400, marginBottom: 24 }}>
                   <GraduationCap size={20} color="var(--blue)" /> Education

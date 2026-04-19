@@ -48,7 +48,9 @@ export default function Navbar({ navSettings }: Props) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => { setMobileOpen(false); }, [pathname]);
+  useEffect(() => {
+    if (mobileOpen) setMobileOpen(false);
+  }, [pathname, mobileOpen]);
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -58,17 +60,14 @@ export default function Navbar({ navSettings }: Props) {
       <header style={{
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
         transition: "all 0.25s ease",
-        background: scrolled ? "rgba(var(--bg-base-rgb, 250,250,249), 0.95)" : "transparent",
-        backdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none",
-        WebkitBackdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none",
         borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent",
-        backgroundColor: scrolled ? "var(--surface)" : "transparent",
       }}>
+        {scrolled && <div className="glass-header" style={{ position: "absolute", inset: 0, zIndex: -1 }} />}
         <div className="site-container" style={{ display: "flex", alignItems: "center", height: 64, gap: 24 }}>
           {/* Logo */}
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none", flexShrink: 0 }}>
-            <div style={{ width: 36, height: 36, borderRadius: 10, background: "linear-gradient(135deg, #2563eb 0%, #0ea5e9 100%)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 2px 8px rgba(37,99,235,0.3)" }}>
-              <span style={{ color: "#fff", fontWeight: 800, fontSize: 16, fontFamily: "var(--font-sans)", letterSpacing: "-1px" }}>C</span>
+            <div className="brand-mark" style={{ width: 36, height: 36, borderRadius: 10 }}>
+              <span style={{ fontWeight: 800, fontSize: 16, fontFamily: "var(--font-sans)", letterSpacing: "-1px" }}>C</span>
             </div>
             <div style={{ lineHeight: 1.2 }}>
               <div style={{ fontWeight: 700, fontSize: 15, color: "var(--ink-1)", letterSpacing: "-0.03em" }}>Chandan Shah</div>

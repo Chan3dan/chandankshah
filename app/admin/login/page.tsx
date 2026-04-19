@@ -1,4 +1,5 @@
 import { signIn, auth } from "@/lib/auth";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 // NOTE: No <html>/<body> — root layout.tsx provides the document shell.
@@ -43,11 +44,10 @@ export default async function AdminLoginPage({
           <div style={{ textAlign: "center", marginBottom: 32 }}>
             <div style={{
               width: 56, height: 56, borderRadius: 16,
-              background: "linear-gradient(135deg,#2563eb,#0ea5e9)",
               display: "flex", alignItems: "center", justifyContent: "center",
               margin: "0 auto 16px", boxShadow: "0 4px 14px rgba(37,99,235,0.3)",
-            }}>
-              <span style={{ color: "#fff", fontWeight: 800, fontSize: 24 }}>C</span>
+            }} className="brand-mark">
+              <span style={{ fontWeight: 800, fontSize: 24 }}>C</span>
             </div>
             <h1 style={{
               fontFamily: "var(--font-serif)", fontSize: 28, fontWeight: 400,
@@ -103,7 +103,7 @@ export default async function AdminLoginPage({
         </div>
 
         <p style={{ textAlign: "center", marginTop: 20, fontSize: 13, color: "var(--ink-4)" }}>
-          <a href="/" style={{ color: "var(--ink-4)", textDecoration: "none" }}>← Back to site</a>
+          <Link href="/" style={{ color: "var(--ink-4)", textDecoration: "none" }}>← Back to site</Link>
         </p>
       </div>
     </div>
