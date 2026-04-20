@@ -4,7 +4,7 @@ import { getSetting } from "@/lib/settings";
 import Navbar from "@/components/public/NavbarServer";
 import Footer from "@/components/public/Footer";
 import Link from "next/link";
-import { ArrowRight, ChevronRight } from "lucide-react";
+import { ArrowRight, ChevronRight, CheckCircle2, Sparkles } from "lucide-react";
 import type { ProfileSettings, SocialSettings } from "@/lib/settings";
 import ServiceIcon from "@/components/public/ServiceIcon";
 
@@ -73,6 +73,55 @@ export default async function ServicesPage() {
                 <p>No services listed yet.</p>
               </div>
             )}
+
+            <div style={{ marginTop: 24, marginBottom: 24 }}>
+              <div style={{ marginBottom: 20 }}>
+                <p className="section-eyebrow">Smart Bundles</p>
+                <h2 className="section-title" style={{ marginBottom: 10 }}>Popular combinations that save time</h2>
+                <p className="section-desc" style={{ maxWidth: 720 }}>
+                  Bundled help works well when one task naturally leads into another. These are positioned for faster completion and fewer back-and-forth steps.
+                </p>
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: 18 }}>
+                {[
+                  {
+                    title: "Loksewa Form + Document Review",
+                    description: "For applicants who want both submission support and a second review of attached details before moving ahead.",
+                    features: ["Form filling support", "Document completeness review", "Submission readiness check"],
+                  },
+                  {
+                    title: "DEMAT + Mero Share + IPO Setup",
+                    description: "A smoother path for clients who want their account setup handled end-to-end instead of piecing each step together.",
+                    features: ["DEMAT guidance", "Mero Share onboarding", "IPO-ready support"],
+                  },
+                  {
+                    title: "Portfolio Website + Domain + Deployment",
+                    description: "Ideal for students, freelancers, and professionals who want a live personal site with less technical overhead.",
+                    features: ["Portfolio build", "Domain connection help", "Production deployment support"],
+                  },
+                ].map((bundle, index) => (
+                  <div key={bundle.title} className="card-static" style={{ padding: "24px 22px" }}>
+                    <div style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "4px 10px", background: "var(--blue-bg)", border: "1px solid var(--blue-border)", borderRadius: 999, color: "var(--blue)", fontSize: 12, fontWeight: 700, marginBottom: 14 }}>
+                      <Sparkles size={12} />
+                      Bundle {index + 1}
+                    </div>
+                    <h3 style={{ fontSize: 17, fontWeight: 700, color: "var(--ink-1)", marginBottom: 8 }}>{bundle.title}</h3>
+                    <p style={{ fontSize: 14, color: "var(--ink-3)", lineHeight: 1.7, marginBottom: 16 }}>{bundle.description}</p>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 18 }}>
+                      {bundle.features.map((feature) => (
+                        <div key={feature} style={{ display: "flex", alignItems: "center", gap: 9, fontSize: 13.5, color: "var(--ink-2)" }}>
+                          <CheckCircle2 size={15} color="var(--green)" />
+                          {feature}
+                        </div>
+                      ))}
+                    </div>
+                    <Link href="/book" className="btn btn-secondary" style={{ justifyContent: "center", width: "100%" }}>
+                      Ask About This Bundle <ArrowRight size={14} />
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            </div>
 
             <div style={{ background: "var(--bg-subtle)", border: "1px solid var(--border)", borderRadius: 20, padding: "clamp(24px,5vw,36px) clamp(20px,5vw,40px)", display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: 24, marginTop: 24 }}>
               <div>
