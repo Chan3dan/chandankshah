@@ -20,6 +20,7 @@ export default function HomeClient({ hero, profile, niyukta, pricing, services, 
     <main style={{ paddingTop: 64 }}>
       <HeroSection hero={hero} profile={profile} />
       <TrustSection />
+      <ConversionSection />
       <ServicesSection services={services} />
       <ProcessSection />
       <NiyuktaSection niyukta={niyukta} />
@@ -45,6 +46,76 @@ function TrustSection() {
               <p style={{ fontSize: "clamp(14px,2vw,15px)", color: "var(--ink-3)", lineHeight: 1.7, margin: 0 }}>{item.description}</p>
             </div>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ConversionSection() {
+  return (
+    <section className="section" style={{ borderTop: "1px solid var(--border)" }}>
+      <div className="site-container">
+        <div style={{ display: "grid", gridTemplateColumns: "1.15fr 0.85fr", gap: 24 }} className="grid-2">
+          <div className="card-static" style={{ padding: "clamp(22px,4vw,32px)" }}>
+            <p className="section-eyebrow" style={{ marginBottom: 12 }}>Before You Book</p>
+            <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1.7rem,3vw,2.3rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1.2, marginBottom: 14 }}>
+              What helps a request move faster
+            </h2>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))", gap: 14, marginBottom: 18 }}>
+              {[
+                {
+                  title: "Documents ready",
+                  text: "Keep citizenship, academic papers, screenshots, or account details ready before the first message when relevant.",
+                },
+                {
+                  title: "Clear deadline",
+                  text: "Mention your submission date, exam deadline, or target launch date early so the work can be prioritized properly.",
+                },
+                {
+                  title: "Preferred follow-up",
+                  text: "Say whether you prefer WhatsApp, call, or email so updates stay consistent and easy to track.",
+                },
+              ].map((item) => (
+                <div key={item.title} style={{ padding: "16px 16px 14px", borderRadius: 14, background: "var(--bg-subtle)", border: "1px solid var(--border)" }}>
+                  <h3 style={{ fontSize: 15, fontWeight: 700, color: "var(--ink-1)", marginBottom: 8 }}>{item.title}</h3>
+                  <p style={{ margin: 0, fontSize: 13.5, color: "var(--ink-3)", lineHeight: 1.7 }}>{item.text}</p>
+                </div>
+              ))}
+            </div>
+            <div style={{ padding: "14px 16px", borderRadius: 14, background: "rgba(37,99,235,0.05)", border: "1px solid rgba(37,99,235,0.15)" }}>
+              <p style={{ margin: 0, fontSize: 13.5, color: "var(--ink-3)", lineHeight: 1.7 }}>
+                Most enquiries receive a first response in a few hours. Complex requests usually need a short review before a final timeline is confirmed.
+              </p>
+            </div>
+          </div>
+
+          <div className="card-static" style={{ padding: "clamp(22px,4vw,32px)" }}>
+            <p className="section-eyebrow" style={{ marginBottom: 12 }}>Popular Bundles</p>
+            <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1.6rem,2.8vw,2.1rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1.2, marginBottom: 14 }}>
+              Combinations clients ask for most
+            </h2>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 18 }}>
+              {[
+                "Loksewa Form + Document Review",
+                "DEMAT + Mero Share + IPO Setup",
+                "Portfolio Website + Domain + Deployment",
+              ].map((bundle) => (
+                <div key={bundle} style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 14px", borderRadius: 12, background: "var(--bg-subtle)", border: "1px solid var(--border)", fontSize: 14, fontWeight: 600, color: "var(--ink-2)" }}>
+                  <CheckCircle2 size={15} color="var(--green)" />
+                  {bundle}
+                </div>
+              ))}
+            </div>
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+              <Link href="/services" className="btn btn-primary">
+                Explore Services <ArrowRight size={14} />
+              </Link>
+              <Link href="/book" className="btn btn-secondary">
+                Book a Bundle
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </section>
