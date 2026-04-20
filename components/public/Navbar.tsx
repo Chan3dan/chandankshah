@@ -35,6 +35,7 @@ export default function Navbar({ navSettings }: Props) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const pathname = usePathname();
 
   const niyuktaUrl = navSettings?.niyuktaUrl || "https://niyukta.com";
@@ -49,8 +50,16 @@ export default function Navbar({ navSettings }: Props) {
   }, []);
 
   useEffect(() => {
-    if (mobileOpen) setMobileOpen(false);
-  }, [pathname, mobileOpen]);
+    setMobileOpen(false);
+    setMobileServicesOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -159,7 +168,7 @@ export default function Navbar({ navSettings }: Props) {
           </div>
 
           {/* Mobile toggle */}
-          <button className="mobile-nav-toggle" onClick={() => setMobileOpen(!mobileOpen)}
+          <button className="mobile-nav-toggle" onClick={() => setMobileOpen((prev) => !prev)}
             style={{ marginLeft: "auto", background: "none", border: "none", cursor: "pointer", padding: 6, color: "var(--ink-1)", borderRadius: 8 }}
             aria-label="Toggle menu">
             {mobileOpen ? <X size={22} /> : <Menu size={22} />}
@@ -167,57 +176,73 @@ export default function Navbar({ navSettings }: Props) {
         </div>
       </header>
 
-      {/* Mobile menu */}
-      {mobileOpen && (
-        <div style={{
-          position: "fixed", inset: 0, zIndex: 90,
-          background: "var(--bg-base)", paddingTop: 64, overflowY: "auto",
-        }}>
-          <div style={{ padding: "20px 20px" }}>
-            {STATIC_NAV.map((link) => (
-              <div key={link.href}>
-                <Link href={link.href} style={{
-                  display: "block", padding: "13px 4px",
-                  fontSize: 18, fontFamily: "var(--font-serif)",
-                  color: isActive(link.href) ? "var(--blue)" : "var(--ink-1)",
-                  textDecoration: "none", borderBottom: "1px solid var(--border)",
-                }}>
-                  {link.label}
-                </Link>
-                {"children" in link && link.children && (
-                  <div style={{ paddingLeft: 16 }}>
-                    {link.children.slice(1).map(child => (
-                      <Link key={child.href} href={child.href} style={{
-                        display: "block", padding: "10px 4px", fontSize: 14,
-                        color: "var(--ink-3)", textDecoration: "none",
-                        borderBottom: "1px solid var(--border)",
-                      }}>
+      <div
+        className={`mobile-nav-backdrop ${mobileOpen ? "is-open" : ""}`}
+        onClick={() => setMobileOpen(false)}
+        aria-hidden={!mobileOpen}
+      />
+
+      <aside className={`mobile-nav-panel ${mobileOpen ? "is-open" : ""}`} aria-hidden={!mobileOpen}>
+        {STATIC_NAV.map((link) => (
+          <div key={link.href}>
+            {"children" in link && link.children ? (
+              <>
+                <button
+                  className="mobile-nav-accordion"
+                  onClick={() => setMobileServicesOpen((prev) => !prev)}
+                  aria-expanded={mobileServicesOpen}
+                  type="button"
+                >
+                  <span style={{ color: isActive(link.href) ? "var(--blue)" : "var(--ink-1)" }}>{link.label}</span>
+                  <ChevronDown
+                    size={18}
+                    style={{ transform: mobileServicesOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s ease" }}
+                  />
+                </button>
+                {mobileServicesOpen && (
+                  <div className="mobile-nav-children">
+                    {link.children.map((child) => (
+                      <Link key={child.href} href={child.href} className="mobile-nav-child-link">
                         {child.label}
                       </Link>
                     ))}
                   </div>
                 )}
-              </div>
-            ))}
-
-            {showNiyukta && (
-              <a href={niyuktaUrl} target="_blank" rel="noopener noreferrer"
-                style={{ display: "block", padding: "13px 4px", fontSize: 18, fontFamily: "var(--font-serif)", color: "var(--sky)", textDecoration: "none", borderBottom: "1px solid var(--border)" }}>
-                {niyuktaLabel} ↗
-              </a>
+              </>
+            ) : (
+              <Link
+                href={link.href}
+                className="mobile-nav-link"
+                style={{ color: isActive(link.href) ? "var(--blue)" : "var(--ink-1)" }}
+              >
+                <span>{link.label}</span>
+              </Link>
             )}
-
-            <div style={{ display: "flex", gap: 12, marginTop: 24, flexWrap: "wrap" }}>
-              <Link href="/book" className="btn btn-secondary" style={{ flex: 1, justifyContent: "center" }}>Book Service</Link>
-              <Link href="/contact" className="btn btn-primary" style={{ flex: 1, justifyContent: "center" }}>Contact</Link>
-            </div>
-
-            <div style={{ marginTop: 16 }}>
-              <ThemeToggle />
-            </div>
           </div>
+        ))}
+
+        {showNiyukta && (
+          <a
+            href={niyuktaUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mobile-nav-link"
+            style={{ color: "var(--sky)" }}
+          >
+            <span>{niyuktaLabel}</span>
+            <ExternalLink size={16} />
+          </a>
+        )}
+
+        <div style={{ display: "flex", gap: 12, marginTop: 24, flexWrap: "wrap" }}>
+          <Link href="/book" className="btn btn-secondary" style={{ flex: 1, justifyContent: "center" }}>Book Service</Link>
+          <Link href="/contact" className="btn btn-primary" style={{ flex: 1, justifyContent: "center" }}>Contact</Link>
         </div>
-      )}
+
+        <div style={{ marginTop: 16 }}>
+          <ThemeToggle />
+        </div>
+      </aside>
     </>
   );
 }

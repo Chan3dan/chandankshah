@@ -27,7 +27,7 @@ export default async function BlogPage() {
     <>
       <Navbar />
       <main style={{ paddingTop: 64 }}>
-        <section style={{ background: "var(--bg-subtle)", borderBottom: "1px solid var(--border)", padding: "56px 0 48px" }}>
+        <section style={{ background: "var(--bg-subtle)", borderBottom: "1px solid var(--border)", padding: "clamp(40px,8vw,56px) 0 clamp(36px,7vw,48px)" }}>
           <div className="site-container">
             <nav style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "var(--ink-4)", marginBottom: 16 }}>
               <Link href="/" style={{ color: "var(--ink-4)", textDecoration: "none" }}>Home</Link>
@@ -47,7 +47,7 @@ export default async function BlogPage() {
                 <div style={{ display: "flex", justifyContent: "center", marginBottom: 16 }}>
                   <PenSquare size={42} />
                 </div>
-                <p style={{ fontSize: 16 }}>No posts published yet. Check back soon!</p>
+                <p style={{ fontSize: "clamp(14px,2vw,16px)" }}>No posts published yet. Check back soon!</p>
               </div>
             ) : (
               <div className="sidebar-layout-wide">

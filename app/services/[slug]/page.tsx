@@ -5,10 +5,11 @@ import Navbar from "@/components/public/NavbarServer";
 import Footer from "@/components/public/Footer";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CheckCircle2, ArrowRight, ChevronRight, MessageCircle, Clock3, Sparkles } from "lucide-react";
-import { ServiceSchema, BreadcrumbSchema } from "@/components/public/StructuredData";
+import { CheckCircle2, ArrowRight, ChevronRight, MessageCircle, Clock3, Sparkles, ShieldCheck, FileText, TimerReset } from "lucide-react";
+import { ServiceSchema, BreadcrumbSchema, FAQSchema } from "@/components/public/StructuredData";
 import type { ProfileSettings, SocialSettings } from "@/lib/settings";
 import ServiceIcon from "@/components/public/ServiceIcon";
+import { BUSINESS_DISCLAIMER, buildServiceFaqs, PROCESS_STEPS } from "@/lib/site-content";
 
 export const dynamic = "force-dynamic";
 
@@ -32,10 +33,12 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
   if (!svc) notFound();
   const related = JSON.parse(JSON.stringify(relatedRaw));
   const BASE = (meta as any).siteUrl || "https://chandankshah.com.np";
+  const faqs = buildServiceFaqs(svc);
 
   return (
     <>
       <ServiceSchema name={svc.title} description={svc.description} url={`${BASE}/services/${svc.slug}`} price={svc.price} provider={profile.fullName} />
+      <FAQSchema faqs={faqs} />
       <BreadcrumbSchema items={[
         { name: "Home", url: BASE },
         { name: "Services", url: `${BASE}/services` },
@@ -44,7 +47,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
       <Navbar />
       <main style={{ paddingTop: 64 }}>
         {/* Hero */}
-        <section style={{ background: "var(--bg-subtle)", borderBottom: "1px solid var(--border)", padding: "52px 0 44px", position: "relative", overflow: "hidden" }}>
+        <section style={{ background: "var(--bg-subtle)", borderBottom: "1px solid var(--border)", padding: "clamp(40px,8vw,52px) 0 clamp(36px,7vw,44px)", position: "relative", overflow: "hidden" }}>
           <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: svc.color, opacity: 0.6 }} />
           <div className="site-container">
             <nav style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "var(--ink-4)", marginBottom: 20, flexWrap: "wrap" }}>
@@ -55,14 +58,14 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
               <span style={{ color: "var(--ink-2)" }}>{svc.title}</span>
             </nav>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 340px", gap: 48, alignItems: "start" }} className="sidebar-layout">
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 48, alignItems: "start" }} className="sidebar-layout">
               <div>
                 {svc.badge && <span className="badge badge-blue" style={{ marginBottom: 14 }}>{svc.badge}</span>}
                 <div style={{ width: 68, height: 68, borderRadius: 18, background: `${svc.color}12`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 16 }}>
                   <ServiceIcon service={svc} size={30} color={svc.color} />
                 </div>
                 <h1 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1.8rem,4vw,3rem)", fontWeight: 400, color: "var(--ink-1)", marginBottom: 12, lineHeight: 1.1 }}>{svc.title}</h1>
-                <p style={{ fontSize: 17, color: "var(--ink-3)", lineHeight: 1.75, maxWidth: 560 }}>{svc.description}</p>
+                <p style={{ fontSize: "clamp(14px,2vw,16px)", color: "var(--ink-3)", lineHeight: 1.75, maxWidth: 560 }}>{svc.description}</p>
               </div>
 
               {/* Booking card */}
@@ -88,7 +91,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
         </section>
 
         {/* Content */}
-        <section style={{ padding: "56px 0" }}>
+        <section style={{ padding: "clamp(40px,8vw,56px) 0" }}>
           <div className="site-container">
             <div className="sidebar-layout">
               <div>
@@ -110,6 +113,66 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                     </div>
                   </div>
                 )}
+
+                <div style={{ marginTop: 36 }}>
+                  <h2 style={{ fontFamily: "var(--font-serif)", fontSize: 22, fontWeight: 400, marginBottom: 16 }}>What to expect</h2>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 14 }}>
+                    <div className="card-static" style={{ padding: 18 }}>
+                      <div style={{ width: 40, height: 40, borderRadius: 12, background: "var(--blue-bg)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}>
+                        <FileText size={18} color="var(--blue)" />
+                      </div>
+                      <h3 style={{ fontSize: 15, fontWeight: 700, color: "var(--ink-1)", marginBottom: 8 }}>Requirements reviewed first</h3>
+                      <p style={{ fontSize: 14, color: "var(--ink-3)", lineHeight: 1.7, margin: 0 }}>
+                        You will know what details or documents are needed before the work moves forward.
+                      </p>
+                    </div>
+                    <div className="card-static" style={{ padding: 18 }}>
+                      <div style={{ width: 40, height: 40, borderRadius: 12, background: "var(--green-bg)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}>
+                        <TimerReset size={18} color="var(--green)" />
+                      </div>
+                      <h3 style={{ fontSize: 15, fontWeight: 700, color: "var(--ink-1)", marginBottom: 8 }}>Timeline explained clearly</h3>
+                      <p style={{ fontSize: 14, color: "var(--ink-3)", lineHeight: 1.7, margin: 0 }}>
+                        Turnaround depends on completeness, urgency, and third-party systems, but you get a practical estimate early.
+                      </p>
+                    </div>
+                    <div className="card-static" style={{ padding: 18 }}>
+                      <div style={{ width: 40, height: 40, borderRadius: 12, background: "rgba(245,158,11,0.12)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}>
+                        <ShieldCheck size={18} color="var(--amber)" />
+                      </div>
+                      <h3 style={{ fontSize: 15, fontWeight: 700, color: "var(--ink-1)", marginBottom: 8 }}>Independent professional help</h3>
+                      <p style={{ fontSize: 14, color: "var(--ink-3)", lineHeight: 1.7, margin: 0 }}>
+                        Assistance is provided independently with care and accuracy, while final approvals remain with the relevant institution.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div style={{ marginTop: 36 }}>
+                  <h2 style={{ fontFamily: "var(--font-serif)", fontSize: 22, fontWeight: 400, marginBottom: 16 }}>How this service works</h2>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12 }}>
+                    {PROCESS_STEPS.map((step, index) => (
+                      <div key={step.title} className="card-static" style={{ padding: 18 }}>
+                        <div style={{ width: 34, height: 34, borderRadius: 10, background: "var(--bg-subtle)", border: "1px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12, fontWeight: 800, color: svc.color }}>
+                          {index + 1}
+                        </div>
+                        <h3 style={{ fontSize: 15, fontWeight: 700, color: "var(--ink-1)", marginBottom: 8 }}>{step.title}</h3>
+                        <p style={{ fontSize: 14, color: "var(--ink-3)", lineHeight: 1.7, margin: 0 }}>{step.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div style={{ marginTop: 36 }}>
+                  <h2 style={{ fontFamily: "var(--font-serif)", fontSize: 22, fontWeight: 400, marginBottom: 16 }}>Frequently asked questions</h2>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                    {faqs.map((faq) => (
+                      <div key={faq.question} className="card-static" style={{ padding: "18px 20px" }}>
+                        <h3 style={{ fontSize: 15, fontWeight: 700, color: "var(--ink-1)", marginBottom: 8 }}>{faq.question}</h3>
+                        <p style={{ fontSize: 14, color: "var(--ink-3)", lineHeight: 1.7, margin: 0 }}>{faq.answer}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
 
               {/* Sidebar */}
@@ -154,6 +217,13 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                   <Link href={`/book?service=${encodeURIComponent(svc.title)}`} className="btn btn-primary btn-sm" style={{ width: "100%", justifyContent: "center", display: "flex" }}>
                     Book Now <ArrowRight size={13} />
                   </Link>
+                </div>
+
+                <div className="card-static" style={{ padding: 22 }}>
+                  <h3 style={{ fontWeight: 700, fontSize: 14, marginBottom: 10 }}>Important notice</h3>
+                  <p style={{ fontSize: 13, color: "var(--ink-3)", lineHeight: 1.7, margin: 0 }}>
+                    {BUSINESS_DISCLAIMER}
+                  </p>
                 </div>
               </div>
             </div>

@@ -46,8 +46,8 @@ export default async function AboutPage() {
                 <h1 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(2.5rem,5vw,4rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1.1, marginBottom: 16 }}>
                   {profile.fullName}
                 </h1>
-                <p style={{ fontSize: 16, color: "var(--ink-3)", lineHeight: 1.8, marginBottom: 16 }}>{profile.bio1}</p>
-                <p style={{ fontSize: 16, color: "var(--ink-3)", lineHeight: 1.8, marginBottom: 32 }}>{profile.bio2}</p>
+                <p style={{ fontSize: "clamp(14px,2vw,16px)", color: "var(--ink-3)", lineHeight: 1.8, marginBottom: 16 }}>{profile.bio1}</p>
+                <p style={{ fontSize: "clamp(14px,2vw,16px)", color: "var(--ink-3)", lineHeight: 1.8, marginBottom: 32 }}>{profile.bio2}</p>
                 <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                   <Link href="/contact" className="btn btn-primary">Contact Me <ArrowRight size={15} /></Link>
                   <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">

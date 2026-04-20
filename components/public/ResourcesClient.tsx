@@ -61,7 +61,7 @@ export default function ResourcesClient({ resources, profile }: Props) {
               <h1 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(2rem,4vw,3rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1.15, marginBottom: 12 }}>
                 Free Study Materials<br />&amp; Resources
               </h1>
-              <p style={{ fontSize: 16, color: "var(--ink-3)", lineHeight: 1.75, maxWidth: 480 }}>
+              <p style={{ fontSize: "clamp(14px,2vw,16px)", color: "var(--ink-3)", lineHeight: 1.75, maxWidth: 480 }}>
                 Loksewa syllabuses, DEMAT guides, practice questions, and digital service tutorials — all free to download.
               </p>
             </div>
@@ -121,7 +121,7 @@ export default function ResourcesClient({ resources, profile }: Props) {
               <div style={{ marginBottom: 12, display: "flex", justifyContent: "center" }}>
                 <FolderOpen size={42} />
               </div>
-              <p style={{ fontSize: 16 }}>{searchQuery ? `No results for "${searchQuery}"` : "No resources in this category yet."}</p>
+              <p style={{ fontSize: "clamp(14px,2vw,16px)" }}>{searchQuery ? `No results for "${searchQuery}"` : "No resources in this category yet."}</p>
             </div>
           ) : (
             <>

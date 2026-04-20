@@ -22,6 +22,12 @@ const FOOTER_LINKS = {
   Products: [
     { label: "Niyukta ↗", href: "https://niyukta.com", external: true },
   ],
+  Legal: [
+    { label: "Privacy Policy", href: "/privacy-policy" },
+    { label: "Terms of Service", href: "/terms-of-service" },
+    { label: "Disclaimer", href: "/disclaimer" },
+    { label: "Refund Policy", href: "/refund-policy" },
+  ],
 };
 
 interface FooterProps {
@@ -34,7 +40,7 @@ export default function Footer({ profile, social, meta }: FooterProps) {
   return (
     <footer style={{ background: "var(--footer-bg)", color: "var(--footer-ink)", marginTop: 0 }}>
       <div className="site-container" style={{ padding: "64px 24px 48px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1.5fr repeat(3, 1fr)", gap: 40 }}
+        <div style={{ display: "grid", gridTemplateColumns: "1.5fr repeat(4, minmax(0, 1fr))", gap: 40 }}
           className="footer-grid">
           {/* Brand */}
           <div>
@@ -50,6 +56,12 @@ export default function Footer({ profile, social, meta }: FooterProps) {
             <p style={{ fontSize: 13.5, lineHeight: 1.7, color: "var(--footer-ink-muted)", marginBottom: 20 }}>
               Independent digital support for documentation, forms, DEMAT setup, and online services in Nepal.
             </p>
+            <div style={{ padding: "12px 14px", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, background: "rgba(255,255,255,0.03)", marginBottom: 20 }}>
+              <p style={{ fontSize: 12.5, lineHeight: 1.7, color: "var(--footer-ink-soft)", margin: 0 }}>
+                Professional assistance for digital processes, documentation, and online support.
+                Official approval and final decisions remain with the relevant institution or authority.
+              </p>
+            </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 20 }}>
               {profile?.phone && (
                 <a href={`tel:${profile.phone}`} style={{ fontSize: 13, color: "var(--footer-ink-muted)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 8 }} className="link-hover-white">

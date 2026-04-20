@@ -3,6 +3,7 @@ import { connectDB } from "@/lib/mongodb";
 import { Message } from "@/models";
 import { requireAdmin } from "@/lib/admin-guard";
 import { sendContactNotification, sendAutoReply } from "@/lib/email";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 export async function GET() {
   const { error } = await requireAdmin();
@@ -18,7 +19,21 @@ export async function POST(req: NextRequest) {
   try {
     await connectDB();
     const body = await req.json();
-    const ip = req.headers.get("x-forwarded-for") || "";
+    const forwardedFor = req.headers.get("x-forwarded-for") || "";
+    const ip = forwardedFor.split(",")[0]?.trim() || "unknown";
+    const rateLimit = checkRateLimit(`messages:${ip}`, 5, 10 * 60 * 1000);
+
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { error: "Too many requests. Please wait a few minutes and try again." },
+        {
+          status: 429,
+          headers: {
+            "Retry-After": Math.max(1, Math.ceil((rateLimit.resetAt - Date.now()) / 1000)).toString(),
+          },
+        }
+      );
+    }
 
     // Cloudflare Turnstile verification
     if (process.env.TURNSTILE_SECRET_KEY && body.cfToken) {

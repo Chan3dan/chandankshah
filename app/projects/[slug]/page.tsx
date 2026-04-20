@@ -43,7 +43,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
       <Navbar />
       <main style={{ paddingTop: 64 }}>
         {/* Hero */}
-        <section style={{ background: "var(--bg-subtle)", borderBottom: "1px solid var(--border)", padding: "52px 0 44px" }}>
+        <section style={{ background: "var(--bg-subtle)", borderBottom: "1px solid var(--border)", padding: "clamp(40px,8vw,52px) 0 clamp(36px,7vw,44px)" }}>
           <div className="site-container">
             <nav style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "var(--ink-4)", marginBottom: 20, flexWrap: "wrap" }}>
               <Link href="/" style={{ color: "var(--ink-4)", textDecoration: "none" }} className="hover-blue">Home</Link>
@@ -54,7 +54,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             </nav>
             <span style={{ padding: "3px 10px", background: "var(--blue-bg)", color: "var(--blue)", borderRadius: 99, fontSize: 12, fontWeight: 700, display: "inline-block", marginBottom: 14 }}>{p.category}</span>
             <h1 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1.8rem,4vw,3rem)", fontWeight: 400, color: "var(--ink-1)", marginBottom: 12, lineHeight: 1.1 }}>{p.title}</h1>
-            <p style={{ fontSize: 16, color: "var(--ink-3)", maxWidth: 600, lineHeight: 1.75 }}>{p.description}</p>
+            <p style={{ fontSize: "clamp(14px,2vw,16px)", color: "var(--ink-3)", maxWidth: 600, lineHeight: 1.75 }}>{p.description}</p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 24 }}>
               {p.link && (
                 <a href={p.link} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
@@ -72,7 +72,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
         </section>
 
         {/* Content */}
-        <section style={{ padding: "56px 0" }}>
+        <section style={{ padding: "clamp(40px,8vw,56px) 0" }}>
           <div className="site-container">
             <div className="sidebar-layout">
               <div>

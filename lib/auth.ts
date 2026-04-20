@@ -1,8 +1,11 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 
-function normalizeEmail(email?: string | null) {
-  return email?.trim().toLowerCase() ?? "";
+export function isAdminEmail(email?: string | null): boolean {
+  if (!email) return false;
+  const adminEmail = (process.env.ADMIN_EMAIL || "").trim().toLowerCase();
+  if (!adminEmail) return false;
+  return email.trim().toLowerCase() === adminEmail;
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -14,12 +17,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   callbacks: {
     async signIn({ user }) {
-      const adminEmail = normalizeEmail(process.env.ADMIN_EMAIL);
-      const userEmail = normalizeEmail(user.email);
-
-      // Block any email that isn't the configured admin email.
-      if (!userEmail || !adminEmail || userEmail !== adminEmail) {
-        return false; // NextAuth will redirect to /admin/login?error=AccessDenied
+      if (!isAdminEmail(user.email)) {
+        return `/admin/login?error=AccessDenied`;
       }
       return true;
     },
@@ -30,16 +29,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return session;
     },
     async jwt({ token, user }) {
-      if (user) {
-        token.email = user.email;
-      }
+      if (user) token.email = user.email;
       return token;
     },
   },
   pages: {
     signIn: "/admin/login",
-    error: "/admin/login",  // errors go to login page with ?error= param
   },
   secret: process.env.AUTH_SECRET,
-  trustHost: true, // Required for some deployment scenarios
+  trustHost: true,
 });

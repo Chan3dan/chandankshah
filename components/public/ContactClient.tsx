@@ -1,9 +1,10 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { Phone, Mail, MapPin, Clock, MessageCircle, Send, ChevronRight, CheckCircle2 } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, MessageCircle, Send, ChevronRight, CheckCircle2, ShieldCheck, FileText, TimerReset } from "lucide-react";
 import toast from "react-hot-toast";
 import type { ProfileSettings, SocialSettings } from "@/lib/settings";
+import { BUSINESS_DISCLAIMER, CONTACT_EXPECTATIONS } from "@/lib/site-content";
 
 interface Props {
   profile: ProfileSettings;
@@ -45,7 +46,7 @@ export default function ContactClient({ profile, social, services }: Props) {
   return (
     <main style={{ paddingTop: 64 }}>
       {/* Header */}
-      <section style={{ background: "var(--bg-subtle)", borderBottom: "1px solid var(--border)", padding: "56px 0 48px" }}>
+      <section style={{ background: "var(--bg-subtle)", borderBottom: "1px solid var(--border)", padding: "clamp(40px,8vw,56px) 0 clamp(36px,7vw,48px)" }}>
         <div className="site-container">
           <nav style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "var(--ink-4)", marginBottom: 16 }}>
             <Link href="/" style={{ color: "var(--ink-4)", textDecoration: "none" }}>Home</Link>
@@ -100,10 +101,30 @@ export default function ContactClient({ profile, social, services }: Props) {
                 {social.github && <a href={social.github} target="_blank" rel="noopener noreferrer" style={{ padding: "8px 16px", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 9, fontSize: 13, fontWeight: 600, color: "var(--ink-2)", textDecoration: "none" }}>GitHub</a>}
                 {social.linkedin && <a href={social.linkedin} target="_blank" rel="noopener noreferrer" style={{ padding: "8px 16px", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 9, fontSize: 13, fontWeight: 600, color: "var(--ink-2)", textDecoration: "none" }}>LinkedIn</a>}
               </div>
+
+              <div className="card-static" style={{ padding: 20 }}>
+                <h2 style={{ fontFamily: "var(--font-serif)", fontSize: 20, fontWeight: 400, marginBottom: 14 }}>Before you send your message</h2>
+                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                  {CONTACT_EXPECTATIONS.map((item, index) => {
+                    const Icon = index === 0 ? FileText : index === 1 ? TimerReset : ShieldCheck;
+                    return (
+                      <div key={item} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                        <div style={{ width: 34, height: 34, borderRadius: 10, background: "var(--bg-subtle)", border: "1px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                          <Icon size={15} color="var(--blue)" />
+                        </div>
+                        <p style={{ margin: 0, fontSize: 14, color: "var(--ink-3)", lineHeight: 1.7 }}>{item}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+                <p style={{ fontSize: 12.5, color: "var(--ink-4)", lineHeight: 1.7, margin: "14px 0 0" }}>
+                  {BUSINESS_DISCLAIMER}
+                </p>
+              </div>
             </div>
 
             {/* Right — Form */}
-            <div className="card-static" style={{ padding: 36 }}>
+            <div className="card-static" style={{ padding: "clamp(20px,4vw,36px)" }}>
               {sent ? (
                 <div style={{ textAlign: "center", padding: "48px 0" }}>
                   <CheckCircle2 size={56} color="var(--green)" style={{ margin: "0 auto 16px" }} />
@@ -158,6 +179,19 @@ export default function ContactClient({ profile, social, services }: Props) {
                   <p style={{ fontSize: 12, color: "var(--ink-4)", textAlign: "center", marginTop: 12 }}>
                     I typically reply within 2–4 hours during business hours.
                   </p>
+                  <div style={{ marginTop: 18, display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 10 }}>
+                    {services.slice(0, 3).map((service) => (
+                      <a
+                        key={service._id}
+                        href={`https://wa.me/${profile.whatsapp}?text=${encodeURIComponent(`Hello Chandan, I need help with ${service.title}.`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ minHeight: 44, padding: "12px 14px", borderRadius: 12, border: "1px solid var(--border)", background: "var(--bg-subtle)", color: "var(--ink-2)", textDecoration: "none", fontSize: 13.5, fontWeight: 600, display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center" }}
+                      >
+                        Ask about {service.title}
+                      </a>
+                    ))}
+                  </div>
                 </form>
               )}
             </div>

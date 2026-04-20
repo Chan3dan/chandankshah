@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, CheckCircle2, ExternalLink, Star, Download, MapPin, Clock, Sparkles, ChevronRight, BadgeCheck, MessageCircle, Zap, ShieldCheck } from "lucide-react";
 import type { HeroSettings, ProfileSettings, NiyuktaSettings, PricingSettings } from "@/lib/settings";
 import ServiceIcon, { cleanBadgeLabel, profileHighlights } from "@/components/public/ServiceIcon";
+import { BUSINESS_DISCLAIMER, PROCESS_STEPS, SERVICE_PROMISES } from "@/lib/site-content";
 
 interface Props {
   hero: HeroSettings;
@@ -18,13 +19,35 @@ export default function HomeClient({ hero, profile, niyukta, pricing, services, 
   return (
     <main style={{ paddingTop: 64 }}>
       <HeroSection hero={hero} profile={profile} />
+      <TrustSection />
       <ServicesSection services={services} />
+      <ProcessSection />
       <NiyuktaSection niyukta={niyukta} />
       <ProjectsSection projects={projects} />
       <TestimonialsSection testimonials={testimonials} />
       {pricing.show && <PricingSection pricing={pricing} />}
       <CTASection profile={profile} />
     </main>
+  );
+}
+
+function TrustSection() {
+  return (
+    <section style={{ padding: "clamp(28px,6vw,44px) 0", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", background: "var(--surface)" }}>
+      <div className="site-container">
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: 18 }}>
+          {SERVICE_PROMISES.map((item) => (
+            <div key={item.title} className="card-static" style={{ padding: "20px 20px 18px" }}>
+              <div style={{ width: 42, height: 42, borderRadius: 12, background: "var(--blue-bg)", border: "1px solid var(--blue-border)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 14 }}>
+                <ShieldCheck size={18} color="var(--blue)" />
+              </div>
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--ink-1)", marginBottom: 8 }}>{item.title}</h3>
+              <p style={{ fontSize: "clamp(14px,2vw,15px)", color: "var(--ink-3)", lineHeight: 1.7, margin: 0 }}>{item.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -57,7 +80,7 @@ function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSe
             <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1.1rem,2.5vw,1.7rem)", fontWeight: 400, fontStyle: "italic", color: "var(--blue)", marginBottom: 20 }}>
               {hero.tagline}
             </h2>
-            <p style={{ fontSize: 16, color: "var(--ink-3)", lineHeight: 1.8, maxWidth: 520, marginBottom: 32 }}>
+            <p style={{ fontSize: "clamp(14px,2vw,16px)", color: "var(--ink-3)", lineHeight: 1.8, maxWidth: 520, marginBottom: 32 }}>
               {hero.description}
             </p>
 
@@ -166,6 +189,41 @@ function ServicesSection({ services }: { services: any[] }) {
               </div>
             </Link>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ProcessSection() {
+  return (
+    <section className="section" style={{ borderTop: "1px solid var(--border)" }}>
+      <div className="site-container">
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 28, alignItems: "start" }}>
+          <div>
+            <p className="section-eyebrow">How It Works</p>
+            <h2 className="section-title" style={{ marginBottom: 12 }}>A cleaner process from first message to final delivery</h2>
+            <p className="section-desc" style={{ marginBottom: 18 }}>
+              Designed for clients who want help without confusion, hidden steps, or unnecessary back and forth.
+            </p>
+            <div style={{ padding: "14px 16px", border: "1px solid var(--border)", borderRadius: 14, background: "var(--bg-subtle)" }}>
+              <p style={{ fontSize: 12.5, lineHeight: 1.7, color: "var(--ink-3)", margin: 0 }}>
+                {BUSINESS_DISCLAIMER}
+              </p>
+            </div>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))", gap: 16 }}>
+            {PROCESS_STEPS.map((step, index) => (
+              <div key={step.title} className="card-static" style={{ padding: "22px 20px" }}>
+                <div style={{ width: 36, height: 36, borderRadius: 10, background: "var(--green-bg)", color: "var(--green)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, marginBottom: 14 }}>
+                  {index + 1}
+                </div>
+                <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--ink-1)", marginBottom: 8 }}>{step.title}</h3>
+                <p style={{ fontSize: "clamp(14px,2vw,15px)", color: "var(--ink-3)", lineHeight: 1.7, margin: 0 }}>{step.description}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -360,7 +418,10 @@ function CTASection({ profile }: { profile: ProfileSettings }) {
             <h2 className="dark-panel-title" style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1.8rem,3vw,2.8rem)", fontWeight: 400, marginBottom: 8, lineHeight: 1.2 }}>
               Ready to get started?
             </h2>
-            <p className="dark-panel-copy" style={{ fontSize: 16 }}>Get in touch — I&apos;ll reply within a few hours.</p>
+            <p className="dark-panel-copy" style={{ fontSize: "clamp(14px,2vw,16px)", marginBottom: 10 }}>Get in touch — I&apos;ll reply within a few hours with the next steps, document needs, and expected timing.</p>
+            <p style={{ fontSize: 12.5, lineHeight: 1.7, color: "rgba(255,255,255,0.68)", margin: 0, maxWidth: 560 }}>
+              Independent digital service support for Nepal-based documentation, online processes, finance setup, and web work. Not an official government body.
+            </p>
           </div>
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
             <Link href="/contact" className="light-on-dark-btn">

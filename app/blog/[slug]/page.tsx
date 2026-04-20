@@ -38,7 +38,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       <Navbar />
       <main style={{ paddingTop: 64 }}>
         {/* Header */}
-        <section style={{ background: "var(--bg-subtle)", borderBottom: "1px solid var(--border)", padding: "52px 0 44px" }}>
+        <section style={{ background: "var(--bg-subtle)", borderBottom: "1px solid var(--border)", padding: "clamp(40px,8vw,52px) 0 clamp(36px,7vw,44px)" }}>
           <div className="site-container" style={{ maxWidth: 800 }}>
             <nav style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "var(--ink-4)", marginBottom: 20 }}>
               <Link href="/" style={{ color: "var(--ink-4)", textDecoration: "none" }}>Home</Link>
@@ -61,7 +61,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             <h1 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1.15, marginBottom: 14 }}>
               {p.title}
             </h1>
-            {p.excerpt && <p style={{ fontSize: 16, color: "var(--ink-3)", lineHeight: 1.75 }}>{p.excerpt}</p>}
+            {p.excerpt && <p style={{ fontSize: "clamp(14px,2vw,16px)", color: "var(--ink-3)", lineHeight: 1.75 }}>{p.excerpt}</p>}
           </div>
         </section>
 

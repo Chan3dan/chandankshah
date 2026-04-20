@@ -25,7 +25,7 @@ export default async function ServicesPage() {
     <>
       <Navbar />
       <main style={{ paddingTop: 64 }}>
-        <section style={{ background: "var(--bg-subtle)", borderBottom: "1px solid var(--border)", padding: "56px 0 48px" }}>
+        <section style={{ background: "var(--bg-subtle)", borderBottom: "1px solid var(--border)", padding: "clamp(40px,8vw,56px) 0 clamp(36px,7vw,48px)" }}>
           <div className="site-container">
             <nav style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "var(--ink-4)", marginBottom: 16 }}>
               <Link href="/" style={{ color: "var(--ink-4)", textDecoration: "none" }}>Home</Link>
@@ -45,7 +45,7 @@ export default async function ServicesPage() {
               return (
                 <div key={cat} style={{ marginBottom: 56 }}>
                   <h2 style={{ fontSize: 12, fontWeight: 700, letterSpacing: 1.5, textTransform: "uppercase", color: "var(--ink-4)", marginBottom: 20 }}>{cat}</h2>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 18 }}>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 18 }}>
                     {catServices.map((svc: any) => (
                       <Link key={svc._id} href={`/services/${svc.slug}`} style={{ textDecoration: "none" }}>
                         <div className="card" style={{ padding: 26, height: "100%", position: "relative", overflow: "hidden" }}>
@@ -74,7 +74,7 @@ export default async function ServicesPage() {
               </div>
             )}
 
-            <div style={{ background: "var(--bg-subtle)", border: "1px solid var(--border)", borderRadius: 20, padding: "36px 40px", display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: 24, marginTop: 24 }}>
+            <div style={{ background: "var(--bg-subtle)", border: "1px solid var(--border)", borderRadius: 20, padding: "clamp(24px,5vw,36px) clamp(20px,5vw,40px)", display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: 24, marginTop: 24 }}>
               <div>
                 <h3 style={{ fontWeight: 700, fontSize: 18, color: "var(--ink-1)", marginBottom: 4 }}>Don&apos;t see what you need?</h3>
                 <p style={{ color: "var(--ink-3)", fontSize: 14 }}>Reach out — I handle many more services.</p>

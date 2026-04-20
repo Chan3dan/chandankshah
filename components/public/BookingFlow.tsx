@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import TurnstileWidget from "./TurnstileWidget";
 import type { ProfileSettings } from "@/lib/settings";
 import ServiceIcon from "@/components/public/ServiceIcon";
+import { BUSINESS_DISCLAIMER, PROCESS_STEPS } from "@/lib/site-content";
 
 interface Service { _id: string; title: string; slug?: string; icon: string; description: string; price: string; color: string; category: string; }
 
@@ -105,6 +106,11 @@ export default function BookingFlow({ services, preselectedService, profile }: P
 
       {/* Step content */}
       <div className="site-container" style={{ maxWidth: 740, padding: "40px 24px" }}>
+        <div style={{ marginBottom: 24, padding: "14px 16px", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 14 }}>
+          <p style={{ fontSize: 12.5, lineHeight: 1.7, color: "var(--ink-3)", margin: 0 }}>
+            {BUSINESS_DISCLAIMER}
+          </p>
+        </div>
 
         {/* STEP 0 — Choose Service */}
         {step === 0 && (
@@ -182,6 +188,17 @@ export default function BookingFlow({ services, preselectedService, profile }: P
                 <label className="form-label">Additional Details</label>
                 <textarea className="input" placeholder="Describe your specific requirements, documents you have, or anything else I should know…" value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} style={{ minHeight: 100 }} />
               </div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 12 }}>
+                {PROCESS_STEPS.map((stepItem, index) => (
+                  <div key={stepItem.title} style={{ padding: "14px 14px 12px", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 12 }}>
+                    <div style={{ width: 30, height: 30, borderRadius: 9, background: "var(--bg-subtle)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, color: "var(--blue)", marginBottom: 10 }}>
+                      {index + 1}
+                    </div>
+                    <div style={{ fontSize: 13.5, fontWeight: 700, color: "var(--ink-1)", marginBottom: 6 }}>{stepItem.title}</div>
+                    <div style={{ fontSize: 12.5, color: "var(--ink-4)", lineHeight: 1.6 }}>{stepItem.description}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         )}
@@ -226,6 +243,12 @@ export default function BookingFlow({ services, preselectedService, profile }: P
             <div style={{ marginTop: 16, padding: "12px 16px", background: "rgba(37,99,235,0.05)", border: "1px solid rgba(37,99,235,0.15)", borderRadius: 10, fontSize: 13, color: "var(--ink-3)", display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
               <Mail size={15} color="var(--blue)" />
               I&apos;ll reply to <strong style={{ color: "var(--ink-1)" }}>{form.phone}</strong>{form.email ? ` / ${form.email}` : ""} within 2–4 hours.
+            </div>
+            <div style={{ marginTop: 12, padding: "12px 16px", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 10 }}>
+              <p style={{ fontSize: 13.5, fontWeight: 700, color: "var(--ink-1)", margin: "0 0 8px" }}>After you submit</p>
+              <p style={{ fontSize: 13, color: "var(--ink-3)", lineHeight: 1.7, margin: 0 }}>
+                Your request is reviewed, any missing requirements are confirmed, and you receive the next step by WhatsApp, phone, or email. Complex requests may need a short follow-up before work begins.
+              </p>
             </div>
           </div>
         )}
