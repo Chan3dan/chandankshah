@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import {
   Archive,
+  Copy,
   ChevronDown,
   ChevronUp,
   Mail,
@@ -107,6 +108,25 @@ export default function AdminMessages() {
       toast.error("Failed");
     }
     setSavingId(null);
+  };
+
+  const copyTrackingCode = async (trackingCode: string) => {
+    try {
+      await navigator.clipboard.writeText(trackingCode);
+      toast.success("Tracking code copied");
+    } catch {
+      toast.error("Could not copy tracking code");
+    }
+  };
+
+  const buildReplyTemplate = (message: Message, type: "received" | "documents" | "progress") => {
+    if (type === "received") {
+      return `Hello ${message.name}, your request has been received. Tracking code: ${message.trackingCode}. I will review it and send the next steps shortly.`;
+    }
+    if (type === "documents") {
+      return `Hello ${message.name}, to continue with your request (${message.trackingCode}), please send the missing documents or details. Once received, I can move it forward.`;
+    }
+    return `Hello ${message.name}, your request (${message.trackingCode}) is currently in progress. I will update you again if anything else is needed before completion.`;
   };
 
   const counts = useMemo(() => ({
@@ -291,6 +311,29 @@ export default function AdminMessages() {
                   <p style={{ fontSize: 13, color: "var(--ink-4)", marginBottom: 8 }}>
                     Tracking code: <strong style={{ color: "var(--ink-1)" }}>{msg.trackingCode}</strong>
                   </p>
+                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 12 }}>
+                    <button type="button" className="btn btn-secondary btn-sm" onClick={() => copyTrackingCode(msg.trackingCode)}>
+                      <Copy size={13} /> Copy Tracking Code
+                    </button>
+                    <a
+                      href={`mailto:${msg.email}?subject=${encodeURIComponent(`Update on your request ${msg.trackingCode}`)}&body=${encodeURIComponent(buildReplyTemplate(msg, "received"))}`}
+                      className="btn btn-secondary btn-sm"
+                    >
+                      Template: Received
+                    </a>
+                    <a
+                      href={`mailto:${msg.email}?subject=${encodeURIComponent(`Documents needed for ${msg.trackingCode}`)}&body=${encodeURIComponent(buildReplyTemplate(msg, "documents"))}`}
+                      className="btn btn-secondary btn-sm"
+                    >
+                      Template: Documents
+                    </a>
+                    <a
+                      href={`mailto:${msg.email}?subject=${encodeURIComponent(`Progress update for ${msg.trackingCode}`)}&body=${encodeURIComponent(buildReplyTemplate(msg, "progress"))}`}
+                      className="btn btn-secondary btn-sm"
+                    >
+                      Template: Progress
+                    </a>
+                  </div>
                   <p style={{ fontSize: 14, color: "var(--ink-2)", lineHeight: 1.75, background: "var(--bg-subtle)", padding: "14px 16px", borderRadius: 10 }}>{msg.message}</p>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginTop: 12 }} className="grid-2">
                     <div>

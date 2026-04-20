@@ -5,6 +5,8 @@ import Navbar from "@/components/public/NavbarServer";
 import Footer from "@/components/public/Footer";
 import ContactClient from "@/components/public/ContactClient";
 import type { ProfileSettings, SocialSettings } from "@/lib/settings";
+import { FAQSchema } from "@/components/public/StructuredData";
+import { CONTACT_FAQS } from "@/lib/site-content";
 
 export const metadata = { title: "Contact Me" };
 export const dynamic = "force-dynamic";
@@ -21,6 +23,7 @@ export default async function ContactPage() {
 
   return (
     <>
+      <FAQSchema faqs={CONTACT_FAQS} />
       <Navbar />
       <ContactClient profile={profile} social={social} services={services} />
       <Footer profile={{ phone: profile.phone, email: profile.email, whatsapp: profile.whatsapp, location: profile.location }} social={social} meta={meta} />

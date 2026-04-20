@@ -7,6 +7,8 @@ import Link from "next/link";
 import { ArrowRight, ChevronRight, CheckCircle2, Sparkles } from "lucide-react";
 import type { ProfileSettings, SocialSettings } from "@/lib/settings";
 import ServiceIcon from "@/components/public/ServiceIcon";
+import { FAQSchema } from "@/components/public/StructuredData";
+import { SERVICES_PAGE_FAQS } from "@/lib/site-content";
 
 export const metadata = { title: "Services" };
 export const dynamic = "force-dynamic";
@@ -23,6 +25,7 @@ export default async function ServicesPage() {
 
   return (
     <>
+      <FAQSchema faqs={SERVICES_PAGE_FAQS} />
       <Navbar />
       <main style={{ paddingTop: 64 }}>
         <section style={{ background: "var(--bg-subtle)", borderBottom: "1px solid var(--border)", padding: "clamp(40px,8vw,56px) 0 clamp(36px,7vw,48px)" }}>
@@ -129,6 +132,21 @@ export default async function ServicesPage() {
                 <p style={{ color: "var(--ink-3)", fontSize: 14 }}>Reach out — I handle many more services.</p>
               </div>
               <Link href="/contact" className="btn btn-primary">Contact Me <ArrowRight size={15} /></Link>
+            </div>
+
+            <div style={{ marginTop: 40 }}>
+              <div style={{ marginBottom: 18 }}>
+                <p className="section-eyebrow">FAQ</p>
+                <h2 className="section-title" style={{ marginBottom: 10 }}>Common questions before booking</h2>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                {SERVICES_PAGE_FAQS.map((faq) => (
+                  <div key={faq.question} className="card-static" style={{ padding: "18px 20px" }}>
+                    <h3 style={{ fontSize: 15, fontWeight: 700, color: "var(--ink-1)", marginBottom: 8 }}>{faq.question}</h3>
+                    <p style={{ fontSize: 14, color: "var(--ink-3)", lineHeight: 1.7, margin: 0 }}>{faq.answer}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>

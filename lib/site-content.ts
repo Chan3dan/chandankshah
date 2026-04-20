@@ -40,6 +40,36 @@ export const PROCESS_STEPS = [
   },
 ];
 
+export const SERVICES_PAGE_FAQS = [
+  {
+    question: "How do I choose the right service?",
+    answer: "Start with the service that matches your main outcome. If your case includes multiple connected steps, ask about a bundle so the process can be handled more efficiently.",
+  },
+  {
+    question: "Can I ask for help even if my exact task is not listed?",
+    answer: "Yes. The listed services cover common needs, but related digital assistance, documentation help, and process support can often be handled after a quick review.",
+  },
+  {
+    question: "Do you guarantee approval for official forms or accounts?",
+    answer: `${BUSINESS_DISCLAIMER} Final approval, acceptance, issuance, and platform decisions remain with the relevant institution or authority.`,
+  },
+];
+
+export const CONTACT_FAQS = [
+  {
+    question: "How quickly do you reply after a message is sent?",
+    answer: "Most enquiries receive a reply within a few hours during business hours. Complex cases may need a short review before the next steps are confirmed.",
+  },
+  {
+    question: "What should I include in my first message?",
+    answer: "Include the service you need, your deadline, the stage you are at, and any document or account details that affect the work. Clear details help move the request faster.",
+  },
+  {
+    question: "Can I contact by WhatsApp instead of email?",
+    answer: "Yes. WhatsApp is a good option for quick follow-up, while email is helpful when you want a written thread or need to share structured details.",
+  },
+];
+
 export function isOfficialProcessService(service: {
   slug?: string;
   title?: string;

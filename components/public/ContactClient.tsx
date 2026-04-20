@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Phone, Mail, MapPin, Clock, MessageCircle, Send, ChevronRight, CheckCircle2, ShieldCheck, FileText, TimerReset } from "lucide-react";
 import toast from "react-hot-toast";
 import type { ProfileSettings, SocialSettings } from "@/lib/settings";
-import { BUSINESS_DISCLAIMER, CONTACT_EXPECTATIONS } from "@/lib/site-content";
+import { BUSINESS_DISCLAIMER, CONTACT_EXPECTATIONS, CONTACT_FAQS } from "@/lib/site-content";
 
 interface Props {
   profile: ProfileSettings;
@@ -209,6 +209,21 @@ export default function ContactClient({ profile, social, services }: Props) {
                   </div>
                 </form>
               )}
+            </div>
+          </div>
+
+          <div style={{ marginTop: 36 }}>
+            <div style={{ marginBottom: 18 }}>
+              <p className="section-eyebrow">FAQ</p>
+              <h2 className="section-title" style={{ marginBottom: 10 }}>Questions clients usually ask first</h2>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              {CONTACT_FAQS.map((faq) => (
+                <div key={faq.question} className="card-static" style={{ padding: "18px 20px" }}>
+                  <h3 style={{ fontSize: 15, fontWeight: 700, color: "var(--ink-1)", marginBottom: 8 }}>{faq.question}</h3>
+                  <p style={{ fontSize: 14, color: "var(--ink-3)", lineHeight: 1.7, margin: 0 }}>{faq.answer}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
