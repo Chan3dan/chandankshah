@@ -16,6 +16,7 @@ const FOOTER_LINKS = {
     { label: "Blog", href: "/blog" },
     { label: "Free Resources", href: "/resources" },
     { label: "Book a Service", href: "/book" },
+    { label: "Track Request", href: "/track" },
     { label: "About Me", href: "/about" },
     { label: "Contact", href: "/contact" },
   ],

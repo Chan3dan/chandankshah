@@ -10,7 +10,12 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     await connectDB();
     const { id } = await params;
     const body = await req.json();
-    const updated = await Message.findByIdAndUpdate(id, body, { new: true });
+    const allowed = {
+      status: body.status,
+      progressStatus: body.progressStatus,
+      adminNotes: body.adminNotes,
+    };
+    const updated = await Message.findByIdAndUpdate(id, allowed, { new: true });
     return NextResponse.json(updated);
   } catch { return NextResponse.json({ error: "Failed" }, { status: 500 }); }
 }

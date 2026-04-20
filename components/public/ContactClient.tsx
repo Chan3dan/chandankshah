@@ -16,6 +16,7 @@ export default function ContactClient({ profile, social, services }: Props) {
   const [form, setForm] = useState({ name: "", email: "", phone: "", service: "", subject: "", message: "" });
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
+  const [trackingCode, setTrackingCode] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,9 +25,11 @@ export default function ContactClient({ profile, social, services }: Props) {
       const res = await fetch("/api/messages", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, requestType: "contact" }),
       });
+      const data = await res.json();
       if (!res.ok) throw new Error("Failed");
+      setTrackingCode(data.trackingCode || "");
       setSent(true);
       toast.success("Message sent! I'll reply soon.");
     } catch {
@@ -130,6 +133,18 @@ export default function ContactClient({ profile, social, services }: Props) {
                   <CheckCircle2 size={56} color="var(--green)" style={{ margin: "0 auto 16px" }} />
                   <h2 style={{ fontFamily: "var(--font-serif)", fontSize: 26, fontWeight: 400, marginBottom: 8 }}>Message Sent!</h2>
                   <p style={{ color: "var(--ink-3)", marginBottom: 24 }}>Thanks {form.name}! I&apos;ll get back to you within a few hours.</p>
+                  {trackingCode && (
+                    <div style={{ margin: "0 auto 20px", maxWidth: 360, padding: "14px 16px", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 12 }}>
+                      <div style={{ fontSize: 12, color: "var(--ink-4)", marginBottom: 4, textTransform: "uppercase", letterSpacing: 0.8 }}>Tracking code</div>
+                      <div style={{ fontFamily: "var(--font-serif)", fontSize: 26, color: "var(--ink-1)" }}>{trackingCode}</div>
+                      <p style={{ fontSize: 12.5, color: "var(--ink-4)", margin: "8px 0 0" }}>
+                        Use this on the track request page if you want to check progress later.
+                      </p>
+                    </div>
+                  )}
+                  <div style={{ display: "flex", justifyContent: "center", marginBottom: 16 }}>
+                    <Link href="/track" className="btn btn-primary">Track Request</Link>
+                  </div>
                   <button onClick={() => { setSent(false); setForm({ name: "", email: "", phone: "", service: "", subject: "", message: "" }); }} className="btn btn-secondary">
                     Send Another
                   </button>

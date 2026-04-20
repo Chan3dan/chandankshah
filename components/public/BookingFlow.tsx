@@ -30,6 +30,7 @@ export default function BookingFlow({ services, preselectedService, profile }: P
   const [cfToken, setCfToken] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  const [trackingCode, setTrackingCode] = useState("");
 
   const canProceed = () => {
     if (step === 0) return !!selected;
@@ -50,10 +51,13 @@ export default function BookingFlow({ services, preselectedService, profile }: P
           service: selected?.title || "",
           subject: `Booking Request — ${selected?.title}`,
           message: `${form.message}\n\nPreferred Date: ${form.preferredDate || "Flexible"}\nUrgency: ${form.urgency}`,
+          requestType: "booking",
           cfToken,
         }),
       });
-      if (!res.ok) throw new Error((await res.json()).error);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      setTrackingCode(data.trackingCode || "");
       setDone(true);
       toast.success("Booking request sent!");
     } catch (err: any) {
@@ -63,7 +67,7 @@ export default function BookingFlow({ services, preselectedService, profile }: P
     }
   };
 
-  if (done) return <BookingSuccess name={form.name} service={selected?.title || ""} profile={profile} />;
+  if (done) return <BookingSuccess name={form.name} service={selected?.title || ""} profile={profile} trackingCode={trackingCode} />;
 
   return (
     <main style={{ paddingTop: 64, minHeight: "100vh", background: "var(--bg-subtle)" }}>
@@ -283,7 +287,7 @@ export default function BookingFlow({ services, preselectedService, profile }: P
   );
 }
 
-function BookingSuccess({ name, service, profile }: { name: string; service: string; profile: ProfileSettings }) {
+function BookingSuccess({ name, service, profile, trackingCode }: { name: string; service: string; profile: ProfileSettings; trackingCode: string }) {
   return (
     <main style={{ paddingTop: 64, minHeight: "100vh", background: "var(--bg-subtle)", display: "flex", alignItems: "center", justifyContent: "center" }}>
       <div style={{ maxWidth: 520, width: "100%", padding: "0 20px", textAlign: "center" }}>
@@ -294,7 +298,17 @@ function BookingSuccess({ name, service, profile }: { name: string; service: str
         <p style={{ color: "var(--ink-3)", fontSize: 16, lineHeight: 1.75, marginBottom: 28 }}>
           Thanks <strong>{name}</strong>! Your request for <strong>{service}</strong> has been received. I'll get back to you within 2–4 hours.
         </p>
+        {trackingCode && (
+          <div style={{ marginBottom: 22, padding: "16px 18px", borderRadius: 14, background: "var(--surface)", border: "1px solid var(--border)" }}>
+            <div style={{ fontSize: 12, color: "var(--ink-4)", marginBottom: 4, textTransform: "uppercase", letterSpacing: 0.8 }}>Tracking code</div>
+            <div style={{ fontFamily: "var(--font-serif)", fontSize: 28, color: "var(--ink-1)", lineHeight: 1 }}>{trackingCode}</div>
+            <p style={{ fontSize: 12.5, color: "var(--ink-4)", margin: "8px 0 0" }}>
+              Use this on the tracking page to check progress later.
+            </p>
+          </div>
+        )}
         <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+          <Link href="/track" className="btn btn-primary">Track Request</Link>
           <a href={`https://wa.me/${profile.whatsapp}`} target="_blank" rel="noopener noreferrer"
             style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "11px 22px", background: "#25d366", color: "#fff", borderRadius: 10, fontWeight: 700, textDecoration: "none" }}>
             <MessageCircle size={16} />

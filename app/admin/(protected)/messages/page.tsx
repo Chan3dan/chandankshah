@@ -3,15 +3,38 @@ import { useState, useEffect } from "react";
 import { Trash2, Mail, MailOpen, Archive, Phone, ChevronDown, ChevronUp } from "lucide-react";
 import toast from "react-hot-toast";
 
-interface Message { _id: string; name: string; email: string; phone: string; service: string; subject: string; message: string; status: "new" | "read" | "replied" | "archived"; createdAt: string; }
+interface Message {
+  _id: string;
+  name: string;
+  email: string;
+  phone: string;
+  service: string;
+  subject: string;
+  message: string;
+  requestType: "contact" | "booking" | "resource";
+  status: "new" | "read" | "replied" | "archived";
+  progressStatus: "received" | "in_review" | "documents_needed" | "in_progress" | "completed" | "cancelled";
+  trackingCode: string;
+  adminNotes: string;
+  createdAt: string;
+}
 
 const STATUS_COLORS: Record<string, string> = { new: "badge-blue", read: "badge-neutral", replied: "badge-green", archived: "badge-neutral" };
+const PROGRESS_OPTIONS = [
+  ["received", "Received"],
+  ["in_review", "In Review"],
+  ["documents_needed", "Documents Needed"],
+  ["in_progress", "In Progress"],
+  ["completed", "Completed"],
+  ["cancelled", "Cancelled"],
+];
 
 export default function AdminMessages() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState<string | null>(null);
   const [filter, setFilter] = useState<string>("all");
+  const [savingId, setSavingId] = useState<string | null>(null);
 
   useEffect(() => { load(); }, []);
   const load = async () => { setLoading(true); const r = await fetch("/api/messages"); setMessages(await r.json()); setLoading(false); };
@@ -25,6 +48,24 @@ export default function AdminMessages() {
     if (!confirm("Delete this message?")) return;
     const r = await fetch(`/api/messages/${id}`, { method: "DELETE" });
     if (r.ok) { toast.success("Deleted"); load(); } else toast.error("Failed");
+  };
+
+  const updateProgress = async (id: string, progressStatus: string, adminNotes?: string) => {
+    setSavingId(id);
+    const body: Record<string, string> = { progressStatus };
+    if (typeof adminNotes === "string") body.adminNotes = adminNotes;
+    const r = await fetch(`/api/messages/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    if (r.ok) {
+      toast.success("Progress updated");
+      load();
+    } else {
+      toast.error("Failed");
+    }
+    setSavingId(null);
   };
 
   const filtered = filter === "all" ? messages : messages.filter(m => m.status === filter);
@@ -64,6 +105,12 @@ export default function AdminMessages() {
                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                       <span style={{ fontWeight: 700, fontSize: 14 }}>{msg.name}</span>
                       <span className={`badge ${STATUS_COLORS[msg.status]}`}>{msg.status}</span>
+                      <span style={{ padding: "3px 8px", borderRadius: 999, fontSize: 11, fontWeight: 700, background: "var(--bg-subtle)", border: "1px solid var(--border)", color: "var(--ink-3)", textTransform: "capitalize" }}>
+                        {msg.progressStatus.replace(/_/g, " ")}
+                      </span>
+                      <span style={{ padding: "3px 8px", borderRadius: 999, fontSize: 11, fontWeight: 700, background: "var(--surface)", border: "1px solid var(--border)", color: "var(--ink-4)", textTransform: "capitalize" }}>
+                        {msg.requestType}
+                      </span>
                       {msg.service && <span style={{ fontSize: 12, color: "var(--ink-4)" }}>· {msg.service}</span>}
                     </div>
                     <div style={{ display: "flex", gap: 12, marginTop: 2 }}>
@@ -89,7 +136,39 @@ export default function AdminMessages() {
               {expanded === msg._id && (
                 <div style={{ marginTop: 16, paddingTop: 16, borderTop: "1px solid var(--border)" }}>
                   {msg.subject && <p style={{ fontSize: 13, fontWeight: 700, color: "var(--ink-2)", marginBottom: 8 }}>Subject: {msg.subject}</p>}
+                  <p style={{ fontSize: 13, color: "var(--ink-4)", marginBottom: 8 }}>
+                    Tracking code: <strong style={{ color: "var(--ink-1)" }}>{msg.trackingCode}</strong>
+                  </p>
                   <p style={{ fontSize: 14, color: "var(--ink-2)", lineHeight: 1.75, background: "var(--bg-subtle)", padding: "14px 16px", borderRadius: 10 }}>{msg.message}</p>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginTop: 12 }} className="grid-2">
+                    <div>
+                      <label className="form-label">Public progress</label>
+                      <select
+                        className="input"
+                        value={msg.progressStatus}
+                        onChange={(e) => updateProgress(msg._id, e.target.value, msg.adminNotes || "")}
+                        disabled={savingId === msg._id}
+                      >
+                        {PROGRESS_OPTIONS.map(([value, label]) => (
+                          <option key={value} value={value}>{label}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="form-label">Internal/admin note</label>
+                      <textarea
+                        className="input"
+                        defaultValue={msg.adminNotes || ""}
+                        placeholder="Short update shown on the tracking page"
+                        style={{ minHeight: 90 }}
+                        onBlur={(e) => {
+                          if (e.target.value !== (msg.adminNotes || "")) {
+                            updateProgress(msg._id, msg.progressStatus, e.target.value);
+                          }
+                        }}
+                      />
+                    </div>
+                  </div>
                   <div style={{ display: "flex", gap: 10, marginTop: 12 }}>
                     <a href={`mailto:${msg.email}?subject=Re: ${msg.subject || "Your enquiry"}`} className="btn btn-primary btn-sm">
                       <Mail size={13} /> Reply via Email

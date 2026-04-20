@@ -145,7 +145,11 @@ export interface IMessage extends Document {
   service: string;
   subject: string;
   message: string;
+  requestType: "contact" | "booking" | "resource";
   status: "new" | "read" | "replied" | "archived";
+  progressStatus: "received" | "in_review" | "documents_needed" | "in_progress" | "completed" | "cancelled";
+  trackingCode: string;
+  adminNotes: string;
   ip: string;
   createdAt: Date;
 }
@@ -158,7 +162,15 @@ const MessageSchema = new Schema<IMessage>(
     service: { type: String, default: "" },
     subject: { type: String, default: "" },
     message: { type: String, required: true },
+    requestType: { type: String, enum: ["contact", "booking", "resource"], default: "contact" },
     status: { type: String, enum: ["new", "read", "replied", "archived"], default: "new" },
+    progressStatus: {
+      type: String,
+      enum: ["received", "in_review", "documents_needed", "in_progress", "completed", "cancelled"],
+      default: "received",
+    },
+    trackingCode: { type: String, required: true, unique: true },
+    adminNotes: { type: String, default: "" },
     ip: { type: String, default: "" },
   },
   { timestamps: true }

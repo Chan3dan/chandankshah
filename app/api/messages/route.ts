@@ -4,6 +4,7 @@ import { Message } from "@/models";
 import { requireAdmin } from "@/lib/admin-guard";
 import { sendContactNotification, sendAutoReply } from "@/lib/email";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { createTrackingCode } from "@/lib/message-tracking";
 
 export async function GET() {
   const { error } = await requireAdmin();
@@ -54,7 +55,18 @@ export async function POST(req: NextRequest) {
 
     // Strip cfToken from stored data
     const { cfToken: _cf, ...messageData } = body;
-    const message = await Message.create({ ...messageData, ip });
+    let trackingCode = createTrackingCode();
+    while (await Message.exists({ trackingCode })) {
+      trackingCode = createTrackingCode();
+    }
+
+    const message = await Message.create({
+      ...messageData,
+      requestType: messageData.requestType || "contact",
+      progressStatus: "received",
+      trackingCode,
+      ip,
+    });
 
     // Send emails (non-blocking — failures don't affect response)
     await Promise.all([
