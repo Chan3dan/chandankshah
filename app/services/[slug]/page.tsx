@@ -9,7 +9,7 @@ import { CheckCircle2, ArrowRight, ChevronRight, MessageCircle, Clock3, Sparkles
 import { ServiceSchema, BreadcrumbSchema, FAQSchema } from "@/components/public/StructuredData";
 import type { ProfileSettings, SocialSettings } from "@/lib/settings";
 import ServiceIcon from "@/components/public/ServiceIcon";
-import { BUSINESS_DISCLAIMER, buildServiceFaqs, PROCESS_STEPS } from "@/lib/site-content";
+import { BUSINESS_DISCLAIMER, OFFICIAL_PROCESS_NOTICE, buildServiceFaqs, isOfficialProcessService, PROCESS_STEPS } from "@/lib/site-content";
 
 export const dynamic = "force-dynamic";
 
@@ -34,6 +34,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
   const related = JSON.parse(JSON.stringify(relatedRaw));
   const BASE = (meta as any).siteUrl || "https://chandankshah.com.np";
   const faqs = buildServiceFaqs(svc);
+  const showOfficialNotice = isOfficialProcessService(svc);
 
   return (
     <>
@@ -224,6 +225,11 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                   <p style={{ fontSize: 13, color: "var(--ink-3)", lineHeight: 1.7, margin: 0 }}>
                     {BUSINESS_DISCLAIMER}
                   </p>
+                  {showOfficialNotice && (
+                    <p style={{ fontSize: 13, color: "var(--ink-3)", lineHeight: 1.7, margin: "10px 0 0" }}>
+                      {OFFICIAL_PROCESS_NOTICE}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>

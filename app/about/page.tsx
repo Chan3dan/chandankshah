@@ -6,6 +6,7 @@ import Footer from "@/components/public/Footer";
 import Link from "next/link";
 import { GraduationCap, Award, ChevronRight, Star, Download, ArrowRight, Mail, MapPin, Phone, Clock3, Languages, Medal } from "lucide-react";
 import type { ProfileSettings, SocialSettings } from "@/lib/settings";
+import { BUSINESS_DISCLAIMER, OFFICIAL_PROCESS_NOTICE } from "@/lib/site-content";
 
 export const metadata = { title: "About Me" };
 export const dynamic = "force-dynamic";
@@ -48,6 +49,11 @@ export default async function AboutPage() {
                 </h1>
                 <p style={{ fontSize: "clamp(14px,2vw,16px)", color: "var(--ink-3)", lineHeight: 1.8, marginBottom: 16 }}>{profile.bio1}</p>
                 <p style={{ fontSize: "clamp(14px,2vw,16px)", color: "var(--ink-3)", lineHeight: 1.8, marginBottom: 32 }}>{profile.bio2}</p>
+                <div style={{ padding: "16px 18px", borderRadius: 16, background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.18)", marginBottom: 28 }}>
+                  <h2 style={{ fontSize: 15, fontWeight: 700, color: "var(--ink-1)", marginBottom: 8 }}>Independent service notice</h2>
+                  <p style={{ fontSize: 13.5, color: "var(--ink-3)", lineHeight: 1.7, margin: "0 0 8px" }}>{BUSINESS_DISCLAIMER}</p>
+                  <p style={{ fontSize: 13.5, color: "var(--ink-3)", lineHeight: 1.7, margin: 0 }}>{OFFICIAL_PROCESS_NOTICE}</p>
+                </div>
                 <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                   <Link href="/contact" className="btn btn-primary">Contact Me <ArrowRight size={15} /></Link>
                   <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">

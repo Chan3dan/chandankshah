@@ -1,6 +1,9 @@
 export const BUSINESS_DISCLAIMER =
   "Chandan Kumar Shah provides independent digital assistance and consultation services. This website and its services are not affiliated with, endorsed by, or acting on behalf of any government office, regulator, bank, or public authority.";
 
+export const OFFICIAL_PROCESS_NOTICE =
+  "For services involving official forms, public notices, exams, regulated financial accounts, or submission portals, support is provided as independent guidance and assistance only. Final approval, acceptance, issuance, and platform decisions remain with the relevant institution or authority.";
+
 export const SERVICE_PROMISES = [
   {
     title: "Clear communication",
@@ -36,6 +39,26 @@ export const PROCESS_STEPS = [
     description: "I handle the task, keep you updated when needed, and confirm the final output or submission status.",
   },
 ];
+
+export function isOfficialProcessService(service: {
+  slug?: string;
+  title?: string;
+  category?: string;
+}) {
+  const value = `${service.slug || ""} ${service.title || ""} ${service.category || ""}`.toLowerCase();
+  return [
+    "loksewa",
+    "psc",
+    "demat",
+    "mero share",
+    "mero share",
+    "documentation",
+    "document",
+    "government",
+    "form",
+    "ipo",
+  ].some((keyword) => value.includes(keyword));
+}
 
 export function buildServiceFaqs(service: {
   title: string;

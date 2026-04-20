@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight, CheckCircle2, ExternalLink, Star, Download, MapPin, Clock, Sparkles, ChevronRight, BadgeCheck, MessageCircle, Zap, ShieldCheck } from "lucide-react";
 import type { HeroSettings, ProfileSettings, NiyuktaSettings, PricingSettings } from "@/lib/settings";
 import ServiceIcon, { cleanBadgeLabel, profileHighlights } from "@/components/public/ServiceIcon";
-import { BUSINESS_DISCLAIMER, PROCESS_STEPS, SERVICE_PROMISES } from "@/lib/site-content";
+import { BUSINESS_DISCLAIMER, OFFICIAL_PROCESS_NOTICE, PROCESS_STEPS, SERVICE_PROMISES } from "@/lib/site-content";
 
 interface Props {
   hero: HeroSettings;
@@ -154,6 +154,27 @@ function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSe
             <p style={{ fontSize: "clamp(14px,2vw,16px)", color: "var(--ink-3)", lineHeight: 1.8, maxWidth: 520, marginBottom: 32 }}>
               {hero.description}
             </p>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 10, maxWidth: 700, marginBottom: 28 }}>
+              {[
+                { label: "What I do", text: "Documentation, forms, DEMAT help, and web services" },
+                { label: "Who I help", text: "Individuals, students, job applicants, and small businesses" },
+                { label: "Where I work", text: "Nepal-based remote support with direct follow-up" },
+                { label: "Why trust me", text: "Clear communication, careful handling, and transparent steps" },
+                { label: "How to contact", text: "WhatsApp, phone, email, or the booking form" },
+              ].map((item) => (
+                <div key={item.label} style={{ padding: "12px 14px", borderRadius: 14, background: "var(--surface)", border: "1px solid var(--border)", boxShadow: "var(--shadow-xs)" }}>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: "var(--ink-4)", letterSpacing: 0.8, textTransform: "uppercase", marginBottom: 5 }}>{item.label}</div>
+                  <div style={{ fontSize: 13.5, color: "var(--ink-2)", lineHeight: 1.6 }}>{item.text}</div>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ padding: "14px 16px", borderRadius: 14, background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.18)", maxWidth: 700, marginBottom: 36 }}>
+              <p style={{ margin: 0, fontSize: 13.5, color: "var(--ink-3)", lineHeight: 1.7 }}>
+                {OFFICIAL_PROCESS_NOTICE}
+              </p>
+            </div>
 
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 36 }}>
               {hero.badges.map((b, i) => (
