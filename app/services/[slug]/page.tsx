@@ -35,6 +35,12 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
   const BASE = (meta as any).siteUrl || "https://chandankshah.com.np";
   const faqs = buildServiceFaqs(svc);
   const showOfficialNotice = isOfficialProcessService(svc);
+  const whatsappText = encodeURIComponent(
+    `Hello Chandan, I need help with ${svc.title}. Please share the process, required documents, timeline, and pricing details.`,
+  );
+  const docsWhatsappText = encodeURIComponent(
+    `Hello Chandan, before booking ${svc.title}, please tell me what documents or details I should prepare.`,
+  );
 
   return (
     <>
@@ -76,11 +82,20 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                 <Link href={`/book?service=${encodeURIComponent(svc.title)}`} className="btn btn-primary" style={{ width: "100%", justifyContent: "center", marginBottom: 10, display: "flex" }}>
                   Book This Service <ArrowRight size={15} />
                 </Link>
-                <a href={`https://wa.me/${profile.whatsapp}?text=Hello%20Chandan%2C%20I%20need%20help%20with%20${encodeURIComponent(svc.title)}`}
+                <a href={`https://wa.me/${profile.whatsapp}?text=${whatsappText}`}
                   target="_blank" rel="noopener noreferrer"
                   className="success-panel"
                   style={{ justifyContent: "center", gap: 8, padding: "10px" }}>
-                  <MessageCircle size={15} /> WhatsApp Me
+                  <MessageCircle size={15} /> WhatsApp for Quick Help
+                </a>
+                <a
+                  href={`https://wa.me/${profile.whatsapp}?text=${docsWhatsappText}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-secondary"
+                  style={{ width: "100%", justifyContent: "center", marginTop: 10 }}
+                >
+                  Ask What Documents Are Needed
                 </a>
                 <div style={{ marginTop: 14, padding: "10px", background: "var(--bg-subtle)", borderRadius: 8, fontSize: 12, color: "var(--ink-4)", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
                   <Clock3 size={13} />
@@ -214,10 +229,28 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                     <Sparkles size={15} />
                     Ready to get started?
                   </p>
-                  <p style={{ fontSize: 13, color: "var(--ink-3)", marginBottom: 14, lineHeight: 1.6 }}>Book instantly or send a quick WhatsApp message.</p>
+                  <p style={{ fontSize: 13, color: "var(--ink-3)", marginBottom: 14, lineHeight: 1.6 }}>
+                    Book instantly, ask for required documents, or send a prefilled WhatsApp message for this exact service.
+                  </p>
                   <Link href={`/book?service=${encodeURIComponent(svc.title)}`} className="btn btn-primary btn-sm" style={{ width: "100%", justifyContent: "center", display: "flex" }}>
                     Book Now <ArrowRight size={13} />
                   </Link>
+                  <a
+                    href={`https://wa.me/${profile.whatsapp}?text=${whatsappText}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-secondary btn-sm"
+                    style={{ width: "100%", justifyContent: "center", display: "flex", marginTop: 10 }}
+                  >
+                    WhatsApp About {svc.title}
+                  </a>
+                  <a
+                    href={`mailto:${profile.email}?subject=${encodeURIComponent(`Need help with ${svc.title}`)}&body=${encodeURIComponent(`Hello Chandan,\n\nI need help with ${svc.title}. Please share the process, required documents, timeline, and pricing details.\n`)}`}
+                    className="btn btn-ghost btn-sm"
+                    style={{ width: "100%", justifyContent: "center", display: "flex", marginTop: 10 }}
+                  >
+                    Email for a Written Quote
+                  </a>
                 </div>
 
                 <div className="card-static" style={{ padding: 22 }}>

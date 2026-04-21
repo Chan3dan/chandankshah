@@ -1,6 +1,7 @@
 "use client";
+import { useMemo, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, ExternalLink, Star, Download, MapPin, Clock, Sparkles, ChevronRight, BadgeCheck, MessageCircle, Zap, ShieldCheck } from "lucide-react";
+import { ArrowRight, CheckCircle2, ExternalLink, Star, Download, MapPin, Clock, Sparkles, ChevronRight, BadgeCheck, MessageCircle, Zap, ShieldCheck, Search } from "lucide-react";
 import type { HeroSettings, ProfileSettings, NiyuktaSettings, PricingSettings } from "@/lib/settings";
 import ServiceIcon, { cleanBadgeLabel, profileHighlights } from "@/components/public/ServiceIcon";
 import { BUSINESS_DISCLAIMER, OFFICIAL_PROCESS_NOTICE, PROCESS_STEPS, SERVICE_PROMISES } from "@/lib/site-content";
@@ -19,6 +20,7 @@ export default function HomeClient({ hero, profile, niyukta, pricing, services, 
   return (
     <main style={{ paddingTop: 64 }}>
       <HeroSection hero={hero} profile={profile} />
+      <QuickServiceFinder services={services} profile={profile} />
       <TrustSection />
       <ConversionSection />
       <ServicesSection services={services} />
@@ -29,6 +31,89 @@ export default function HomeClient({ hero, profile, niyukta, pricing, services, 
       {pricing.show && <PricingSection pricing={pricing} />}
       <CTASection profile={profile} />
     </main>
+  );
+}
+
+function QuickServiceFinder({ services, profile }: { services: any[]; profile: ProfileSettings }) {
+  const [selectedSlug, setSelectedSlug] = useState<string>(services[0]?.slug || "");
+  const selectedService = useMemo(
+    () => services.find((service) => service.slug === selectedSlug) ?? services[0],
+    [selectedSlug, services],
+  );
+
+  if (!selectedService) return null;
+
+  const whatsappText = encodeURIComponent(
+    `Hello Chandan, I need help with ${selectedService.title}. Please guide me with the next steps and required documents.`,
+  );
+
+  return (
+    <section style={{ padding: "clamp(26px,6vw,44px) 0", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", background: "var(--bg-subtle)" }}>
+      <div className="site-container">
+        <div className="card-static" style={{ padding: "clamp(20px,4vw,30px)" }}>
+          <div className="home-finder-grid">
+            <div>
+              <p className="section-eyebrow" style={{ marginBottom: 10 }}>Quick Service Finder</p>
+              <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1.6rem,3vw,2.2rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1.15, marginBottom: 10 }}>
+                Reach the right service in one click
+              </h2>
+              <p style={{ fontSize: 14.5, color: "var(--ink-3)", lineHeight: 1.75, marginBottom: 18, maxWidth: 620 }}>
+                Choose what you need and jump straight to the service page, booking form, or a prefilled WhatsApp message without searching manually.
+              </p>
+
+              <div style={{ position: "relative", marginBottom: 18 }}>
+                <Search size={16} color="var(--ink-4)" style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)" }} />
+                <select
+                  className="input home-finder-select"
+                  value={selectedSlug}
+                  onChange={(event) => setSelectedSlug(event.target.value)}
+                  style={{ paddingLeft: 40, paddingRight: 18 }}
+                >
+                  {services.map((service) => (
+                    <option key={service._id} value={service.slug}>
+                      {service.title} · {service.category}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="home-finder-actions">
+                <Link href={`/services/${selectedService.slug}`} className="btn btn-primary">
+                  Open Service <ArrowRight size={14} />
+                </Link>
+                <Link href={`/book?service=${encodeURIComponent(selectedService.title)}`} className="btn btn-secondary">
+                  Book This Service
+                </Link>
+                <a href={`https://wa.me/${profile.whatsapp}?text=${whatsappText}`} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
+                  WhatsApp About This
+                </a>
+              </div>
+            </div>
+
+            <div className="card-subtle" style={{ padding: "18px 18px 16px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
+                <div style={{ width: 46, height: 46, borderRadius: 13, background: `${selectedService.color}12`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <ServiceIcon service={selectedService} color={selectedService.color} />
+                </div>
+                <div>
+                  <div style={{ fontWeight: 700, fontSize: 15, color: "var(--ink-1)" }}>{selectedService.title}</div>
+                  <div style={{ fontSize: 13, color: selectedService.color, fontWeight: 700 }}>{selectedService.price}</div>
+                </div>
+              </div>
+              <p style={{ fontSize: 14, color: "var(--ink-3)", lineHeight: 1.7, marginBottom: 14 }}>{selectedService.description}</p>
+              <div className="home-finder-list">
+                {(selectedService.features || []).slice(0, 3).map((feature: string) => (
+                  <div key={feature} className="home-finder-chip">
+                    <CheckCircle2 size={14} color="var(--green)" />
+                    {feature}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -133,7 +218,7 @@ function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSe
       <div className="site-container" style={{ position: "relative", padding: "clamp(56px,10vw,80px) 0", width: "100%" }}>
         <div className="hero-grid">
           {/* Left */}
-          <div>
+          <div className="hero-copy-grid">
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 28 }}>
               <span style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 12px", background: "var(--green-bg)", border: "1px solid rgba(22,163,74,0.2)", borderRadius: 99, fontSize: 12, fontWeight: 600, color: "var(--green)" }}>
                 <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--green)", display: "inline-block" }} />
@@ -176,7 +261,7 @@ function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSe
               </p>
             </div>
 
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 36 }}>
+            <div className="hero-badges-row" style={{ gap: 8, marginBottom: 36 }}>
               {hero.badges.map((b, i) => (
                 <span key={i} style={{ padding: "6px 14px", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 99, fontSize: 13, fontWeight: 500, color: "var(--ink-2)", boxShadow: "var(--shadow-xs)" }}>
                   {cleanBadgeLabel(b)}
@@ -184,7 +269,7 @@ function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSe
               ))}
             </div>
 
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 48 }}>
+            <div className="hero-action-row" style={{ marginBottom: 48 }}>
               <Link href="/services" className="btn btn-primary btn-lg">{hero.ctaPrimary} <ArrowRight size={16} /></Link>
               <Link href="/projects" className="btn btn-secondary btn-lg">{hero.ctaSecondary}</Link>
               <a href={hero.resumeUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost btn-lg">
@@ -203,8 +288,8 @@ function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSe
           </div>
 
           {/* Right — Profile card (hidden on mobile via hero-grid css) */}
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <div style={{ position: "relative", width: 300 }}>
+          <div className="hero-profile-wrap">
+            <div className="hero-profile-card">
               <div className="card" style={{ padding: 32 }}>
                 <div style={{ width: 88, height: 88, borderRadius: "50%", background: "linear-gradient(135deg, #2563eb, #0ea5e9)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 18px", fontFamily: "var(--font-serif)", fontSize: 36, color: "#fff" }}>
                   {hero.avatarLetter}
@@ -227,11 +312,11 @@ function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSe
                   </span>
                 </div>
               </div>
-              <div className="anim-float" style={{ position: "absolute", top: -16, right: -24, background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 12, padding: "9px 14px", fontSize: 13, fontWeight: 700, color: "var(--ink-1)", boxShadow: "var(--shadow-md)", display: "flex", alignItems: "center", gap: 8 }}>
+              <div className="anim-float hero-floating-chip hero-floating-chip--top">
                 <Zap size={14} color="var(--amber)" />
                 Fast Delivery
               </div>
-              <div className="anim-float" style={{ animationDelay: "1.2s", position: "absolute", bottom: -12, left: -28, background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 12, padding: "9px 14px", fontSize: 13, fontWeight: 700, color: "var(--ink-1)", boxShadow: "var(--shadow-md)", display: "flex", alignItems: "center", gap: 8 }}>
+              <div className="anim-float hero-floating-chip hero-floating-chip--bottom" style={{ animationDelay: "1.2s" }}>
                 <BadgeCheck size={14} color="var(--green)" />
                 98% Success
               </div>

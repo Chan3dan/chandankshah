@@ -42,6 +42,12 @@ export default async function AdminDashboard() {
     recentMessages,
     lastSevenDaysMessages,
     serviceInterest,
+    bookingCount,
+    resourceLeadCount,
+    contactLeadCount,
+    documentsNeededCount,
+    inProgressCount,
+    completedCount,
   ] = await Promise.all([
     Service.countDocuments({ isActive: true }),
     Project.countDocuments({ isActive: true }),
@@ -62,6 +68,12 @@ export default async function AdminDashboard() {
       { $sort: { count: -1 } },
       { $limit: 3 },
     ]),
+    Message.countDocuments({ requestType: "booking" }),
+    Message.countDocuments({ requestType: "resource" }),
+    Message.countDocuments({ requestType: "contact" }),
+    Message.countDocuments({ progressStatus: "documents_needed" }),
+    Message.countDocuments({ progressStatus: "in_progress" }),
+    Message.countDocuments({ progressStatus: "completed" }),
   ]);
 
   const pendingMessages = Math.max(messageCount - repliedMessages - archivedMessages, 0);
@@ -148,6 +160,18 @@ export default async function AdminDashboard() {
     { label: "Need action", value: pendingMessages, color: "#2563eb" },
   ];
 
+  const leadSourceStats = [
+    { label: "Contact leads", value: contactLeadCount, note: "General enquiries", color: "#2563eb" },
+    { label: "Bookings", value: bookingCount, note: "Paid service intent", color: "#16a34a" },
+    { label: "Resource leads", value: resourceLeadCount, note: "Download follow-up", color: "#7c3aed" },
+  ];
+
+  const progressStats = [
+    { label: "Documents needed", value: documentsNeededCount, note: "Waiting on client", color: "#d97706" },
+    { label: "In progress", value: inProgressCount, note: "Active work", color: "#0ea5e9" },
+    { label: "Completed", value: completedCount, note: "Closed successfully", color: "#16a34a" },
+  ];
+
   return (
     <div>
       <div style={{ marginBottom: 28 }}>
@@ -194,6 +218,44 @@ export default async function AdminDashboard() {
             </div>
           </Link>
         ))}
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 24 }} className="grid-2">
+        <div style={cardStyle}>
+          <div style={{ marginBottom: 16 }}>
+            <h2 style={{ fontWeight: 700, fontSize: 15, color: "var(--ink-1)", marginBottom: 4 }}>Lead source breakdown</h2>
+            <p style={{ fontSize: 12.5, color: "var(--ink-4)", margin: 0 }}>
+              See where new business is coming from so the homepage and offers can be adjusted with confidence.
+            </p>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: 12 }}>
+            {leadSourceStats.map((item) => (
+              <div key={item.label} style={{ padding: "16px 16px 14px", borderRadius: 12, background: "var(--bg-subtle)", border: "1px solid var(--border)" }}>
+                <div style={{ fontFamily: "var(--font-serif)", fontSize: 28, color: item.color, lineHeight: 1, marginBottom: 6 }}>{item.value}</div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: "var(--ink-2)", marginBottom: 2 }}>{item.label}</div>
+                <div style={{ fontSize: 12, color: "var(--ink-4)" }}>{item.note}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div style={cardStyle}>
+          <div style={{ marginBottom: 16 }}>
+            <h2 style={{ fontWeight: 700, fontSize: 15, color: "var(--ink-1)", marginBottom: 4 }}>Request progress status</h2>
+            <p style={{ fontSize: 12.5, color: "var(--ink-4)", margin: 0 }}>
+              A quick operations snapshot of what is blocked, active, or completed across client requests.
+            </p>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: 12 }}>
+            {progressStats.map((item) => (
+              <div key={item.label} style={{ padding: "16px 16px 14px", borderRadius: 12, background: "var(--bg-subtle)", border: "1px solid var(--border)" }}>
+                <div style={{ fontFamily: "var(--font-serif)", fontSize: 28, color: item.color, lineHeight: 1, marginBottom: 6 }}>{item.value}</div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: "var(--ink-2)", marginBottom: 2 }}>{item.label}</div>
+                <div style={{ fontSize: 12, color: "var(--ink-4)" }}>{item.note}</div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "1.2fr 0.8fr", gap: 24, marginBottom: 24 }} className="grid-2">
