@@ -170,7 +170,7 @@ export default function AdminMessages() {
         </p>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(170px,1fr))", gap: 12, marginBottom: 20 }}>
+      <div className="admin-card-grid" style={{ marginBottom: 20 }}>
         {[
           { label: "Total inbox", value: counts.all, note: "All request types" },
           { label: "Bookings", value: counts.bookings, note: "Service orders" },
@@ -187,7 +187,7 @@ export default function AdminMessages() {
       </div>
 
       <div className="card-static" style={{ padding: 18, marginBottom: 20 }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr 1fr 1fr", gap: 12 }} className="grid-2">
+        <div className="admin-form-grid-4">
           <div style={{ gridColumn: "span 1" }}>
             <label className="form-label">Search inbox</label>
             <div style={{ position: "relative" }}>
@@ -335,7 +335,7 @@ export default function AdminMessages() {
                     </a>
                   </div>
                   <p style={{ fontSize: 14, color: "var(--ink-2)", lineHeight: 1.75, background: "var(--bg-subtle)", padding: "14px 16px", borderRadius: 10 }}>{msg.message}</p>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginTop: 12 }} className="grid-2">
+                  <div className="admin-form-grid-2" style={{ marginTop: 12 }}>
                     <div>
                       <label className="form-label">Public progress</label>
                       <select

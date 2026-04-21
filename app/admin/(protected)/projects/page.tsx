@@ -47,7 +47,7 @@ export default function AdminProjects() {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
+      <div className="admin-page-header">
         <div>
           <h1 style={{ fontFamily: "var(--font-serif)", fontSize: 26, fontWeight: 400, marginBottom: 2 }}>Projects</h1>
           <p style={{ color: "var(--ink-4)", fontSize: 13 }}>{projects.length} project{projects.length !== 1 ? "s" : ""}</p>
@@ -72,6 +72,8 @@ export default function AdminProjects() {
             <button onClick={() => setShowForm(true)} className="btn btn-primary btn-sm"><Plus size={14} /> Add First Project</button>
           </div>
         ) : (
+          <>
+          <div className="desktop-only admin-table-scroll">
           <table className="data-table">
             <thead><tr><th>Project</th><th>Category</th><th>Featured</th><th>Status</th><th>Actions</th></tr></thead>
             <tbody>
@@ -104,6 +106,36 @@ export default function AdminProjects() {
               ))}
             </tbody>
           </table>
+          </div>
+          <div className="mobile-only admin-mobile-list">
+            {projects.map((p) => (
+              <div key={p._id} className="admin-mobile-card">
+                <div style={{ fontWeight: 700, fontSize: 15, color: "var(--ink-1)", marginBottom: 4 }}>{p.title}</div>
+                <div style={{ fontSize: 12, color: "var(--ink-4)", marginBottom: 10 }}>{p.tags?.slice(0, 3).join(", ")}</div>
+                <div className="admin-mobile-meta">
+                  <div>
+                    <div style={{ fontSize: 11, color: "var(--ink-4)", marginBottom: 4, textTransform: "uppercase", letterSpacing: 0.6 }}>Category</div>
+                    <span className="badge badge-blue">{p.category}</span>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 11, color: "var(--ink-4)", marginBottom: 4, textTransform: "uppercase", letterSpacing: 0.6 }}>Featured</div>
+                    <Star size={16} fill={p.featured ? "var(--amber)" : "none"} color={p.featured ? "var(--amber)" : "var(--ink-4)"} />
+                  </div>
+                </div>
+                <div className="admin-mobile-actions">
+                  <button onClick={() => handleUpdate(p._id, { featured: !p.featured })} className="btn btn-ghost btn-sm">
+                    <Star size={13} /> {p.featured ? "Unfeature" : "Feature"}
+                  </button>
+                  <button onClick={() => handleUpdate(p._id, { isActive: !p.isActive })} className={`badge ${p.isActive ? "badge-green" : "badge-red"}`} style={{ cursor: "pointer", border: "none" }}>
+                    {p.isActive ? "Active" : "Hidden"}
+                  </button>
+                  <button onClick={() => setEditing(editing === p._id ? null : p._id)} className="btn btn-ghost btn-sm"><Edit2 size={13} /> Edit</button>
+                  <button onClick={() => handleDelete(p._id, p.title)} style={{ padding: "6px 10px", background: "rgba(220,38,38,0.07)", border: "1px solid rgba(220,38,38,0.15)", borderRadius: 8, cursor: "pointer", color: "var(--red)" }}><Trash2 size={13} /></button>
+                </div>
+              </div>
+            ))}
+          </div>
+          </>
         )}
       </div>
     </div>
@@ -122,13 +154,13 @@ function ProjectForm({ initial, onSave, onCancel, saving, isEdit }: any) {
         <button onClick={onCancel} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--ink-4)" }}><X size={18} /></button>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 14, marginBottom: 14 }}>
+      <div className="admin-form-grid-2" style={{ marginBottom: 14 }}>
         <div><label className="form-label">Title *</label><input className="input" value={form.title} onChange={e => set("title", e.target.value)} /></div>
         <div><label className="form-label">Category</label><input className="input" value={form.category} onChange={e => set("category", e.target.value)} /></div>
       </div>
       <div className="form-group"><label className="form-label">Short Description *</label><textarea className="input" value={form.description} onChange={e => set("description", e.target.value)} style={{ minHeight: 70 }} /></div>
       <div className="form-group"><label className="form-label">Long Description</label><textarea className="input" value={form.longDescription} onChange={e => set("longDescription", e.target.value)} style={{ minHeight: 100 }} /></div>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 14, marginBottom: 14 }}>
+      <div className="admin-form-grid-3" style={{ marginBottom: 14 }}>
         <div><label className="form-label">Live URL</label><input className="input" value={form.link} onChange={e => set("link", e.target.value)} placeholder="https://..." /></div>
         <div><label className="form-label">GitHub URL</label><input className="input" value={form.githubLink} onChange={e => set("githubLink", e.target.value)} placeholder="https://github.com/..." /></div>
         <div><label className="form-label">Cover Image URL</label><input className="input" value={form.imageUrl} onChange={e => set("imageUrl", e.target.value)} placeholder="https://..." /></div>

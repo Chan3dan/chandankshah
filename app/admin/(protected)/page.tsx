@@ -183,7 +183,7 @@ export default async function AdminDashboard() {
         </p>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))", gap: 14, marginBottom: 32 }}>
+      <div className="admin-card-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))", marginBottom: 32 }}>
         {overviewStats.map((stat) => (
           <Link key={stat.label} href={stat.href} style={{ textDecoration: "none" }}>
             <div
@@ -220,7 +220,7 @@ export default async function AdminDashboard() {
         ))}
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 24 }} className="grid-2">
+      <div className="grid-2" style={{ gap: 24, marginBottom: 24 }}>
         <div style={cardStyle}>
           <div style={{ marginBottom: 16 }}>
             <h2 style={{ fontWeight: 700, fontSize: 15, color: "var(--ink-1)", marginBottom: 4 }}>Lead source breakdown</h2>
@@ -228,7 +228,7 @@ export default async function AdminDashboard() {
               See where new business is coming from so the homepage and offers can be adjusted with confidence.
             </p>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: 12 }}>
+          <div className="admin-card-grid">
             {leadSourceStats.map((item) => (
               <div key={item.label} style={{ padding: "16px 16px 14px", borderRadius: 12, background: "var(--bg-subtle)", border: "1px solid var(--border)" }}>
                 <div style={{ fontFamily: "var(--font-serif)", fontSize: 28, color: item.color, lineHeight: 1, marginBottom: 6 }}>{item.value}</div>
@@ -246,7 +246,7 @@ export default async function AdminDashboard() {
               A quick operations snapshot of what is blocked, active, or completed across client requests.
             </p>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: 12 }}>
+          <div className="admin-card-grid">
             {progressStats.map((item) => (
               <div key={item.label} style={{ padding: "16px 16px 14px", borderRadius: 12, background: "var(--bg-subtle)", border: "1px solid var(--border)" }}>
                 <div style={{ fontFamily: "var(--font-serif)", fontSize: 28, color: item.color, lineHeight: 1, marginBottom: 6 }}>{item.value}</div>
@@ -258,7 +258,7 @@ export default async function AdminDashboard() {
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1.2fr 0.8fr", gap: 24, marginBottom: 24 }} className="grid-2">
+      <div className="grid-2" style={{ gap: 24, marginBottom: 24 }}>
         <div style={cardStyle}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18, gap: 12 }}>
             <div>
@@ -272,7 +272,7 @@ export default async function AdminDashboard() {
             </Link>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12, marginBottom: 18 }}>
+          <div className="admin-card-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", marginBottom: 18 }}>
             {inboxStats.map((item) => (
               <div key={item.label} style={{ padding: "14px 16px", borderRadius: 12, background: "var(--bg-subtle)", border: "1px solid var(--border)" }}>
                 <div style={{ fontFamily: "var(--font-serif)", fontSize: 26, color: item.color, lineHeight: 1, marginBottom: 6 }}>{item.value}</div>

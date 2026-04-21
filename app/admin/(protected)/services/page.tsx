@@ -73,7 +73,7 @@ export default function AdminServices() {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
+      <div className="admin-page-header">
         <div>
           <h1 style={{ fontFamily: "var(--font-serif)", fontSize: 26, fontWeight: 400, color: "var(--ink-1)", marginBottom: 2 }}>Services</h1>
           <p style={{ color: "var(--ink-4)", fontSize: 13 }}>{services.length} service{services.length !== 1 ? "s" : ""} listed</p>
@@ -108,6 +108,8 @@ export default function AdminServices() {
             <button onClick={() => setShowForm(true)} className="btn btn-primary btn-sm"><Plus size={14} /> Add First Service</button>
           </div>
         ) : (
+          <>
+          <div className="desktop-only admin-table-scroll">
           <table className="data-table">
             <thead>
               <tr>
@@ -153,6 +155,42 @@ export default function AdminServices() {
               ))}
             </tbody>
           </table>
+          </div>
+          <div className="mobile-only admin-mobile-list">
+            {services.map((svc) => (
+              <div key={svc._id} className="admin-mobile-card">
+                <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
+                  <div style={{ width: 40, height: 40, borderRadius: 11, background: `${svc.color}14`, border: `1px solid ${svc.color}25`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, flexShrink: 0 }}>{svc.icon}</div>
+                  <div style={{ minWidth: 0, flex: 1 }}>
+                    <div style={{ fontWeight: 700, fontSize: 15, color: "var(--ink-1)", marginBottom: 4 }}>{svc.title}</div>
+                    <div style={{ fontSize: 12, color: "var(--ink-4)", marginBottom: 10 }}>/{svc.slug}</div>
+                    <div className="admin-mobile-meta">
+                      <div>
+                        <div style={{ fontSize: 11, color: "var(--ink-4)", marginBottom: 4, textTransform: "uppercase", letterSpacing: 0.6 }}>Category</div>
+                        <span className="badge badge-neutral">{svc.category}</span>
+                      </div>
+                      <div>
+                        <div style={{ fontSize: 11, color: "var(--ink-4)", marginBottom: 4, textTransform: "uppercase", letterSpacing: 0.6 }}>Price</div>
+                        <div style={{ fontWeight: 700, color: "var(--blue)", fontSize: 14 }}>{svc.price}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="admin-mobile-actions">
+                  <button onClick={() => handleUpdate(svc._id, { isActive: !svc.isActive })} className={`badge ${svc.isActive ? "badge-green" : "badge-red"}`} style={{ cursor: "pointer", border: "none" }}>
+                    {svc.isActive ? "Active" : "Hidden"}
+                  </button>
+                  <button onClick={() => setEditing(editing === svc._id ? null : svc._id)} className="btn btn-ghost btn-sm">
+                    <Edit2 size={13} /> Edit
+                  </button>
+                  <button onClick={() => handleDelete(svc._id, svc.title)} style={{ padding: "6px 10px", background: "rgba(220,38,38,0.07)", border: "1px solid rgba(220,38,38,0.15)", borderRadius: 8, cursor: "pointer", color: "var(--red)" }}>
+                    <Trash2 size={13} />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+          </>
         )}
       </div>
     </div>
@@ -176,7 +214,7 @@ function ServiceForm({ form, setForm, onSave, onCancel, saving, isEdit, categori
         <button onClick={onCancel} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--ink-4)" }}><X size={18} /></button>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 14, marginBottom: 14 }}>
+      <div className="admin-form-grid-4" style={{ marginBottom: 14 }}>
         <div className="form-group" style={{ marginBottom: 0 }}>
           <label className="form-label">Title *</label>
           <input className="input" value={localForm.title} onChange={e => set("title", e.target.value)} placeholder="Service name" />
@@ -200,7 +238,7 @@ function ServiceForm({ form, setForm, onSave, onCancel, saving, isEdit, categori
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 14, marginBottom: 14 }}>
+      <div className="admin-form-grid-3" style={{ marginBottom: 14 }}>
         <div className="form-group" style={{ marginBottom: 0 }}>
           <label className="form-label">Starting Price</label>
           <input className="input" value={localForm.price} onChange={e => set("price", e.target.value)} placeholder="Rs. 500–800" />
@@ -235,7 +273,7 @@ function ServiceForm({ form, setForm, onSave, onCancel, saving, isEdit, categori
             </span>
           ))}
         </div>
-        <div style={{ display: "flex", gap: 8 }}>
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
           <input className="input" value={newFeature} onChange={e => setNewFeature(e.target.value)} placeholder="Add a feature…" onKeyDown={e => e.key === "Enter" && (e.preventDefault(), addFeature())} style={{ flex: 1 }} />
           <button onClick={addFeature} className="btn btn-secondary btn-sm">Add</button>
         </div>

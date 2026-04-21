@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ChevronDown, ExternalLink } from "lucide-react";
+import { Menu, X, ChevronDown, ExternalLink, House, Layers3, CalendarClock, MessageSquareMore } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
 import type { NavSettings } from "@/lib/settings";
 
@@ -25,6 +25,13 @@ const STATIC_NAV = [
   { label: "Resources", href: "/resources" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
+];
+
+const MOBILE_PRIMARY_NAV = [
+  { label: "Home", href: "/", icon: <House size={18} /> },
+  { label: "Services", href: "/services", icon: <Layers3 size={18} /> },
+  { label: "Book", href: "/book", icon: <CalendarClock size={18} /> },
+  { label: "Contact", href: "/contact", icon: <MessageSquareMore size={18} /> },
 ];
 
 interface Props {
@@ -243,6 +250,19 @@ export default function Navbar({ navSettings }: Props) {
           <ThemeToggle />
         </div>
       </aside>
+
+      <nav className="mobile-bottom-nav" aria-label="Primary mobile navigation">
+        {MOBILE_PRIMARY_NAV.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={`mobile-bottom-nav__item ${isActive(item.href) ? "active" : ""}`}
+          >
+            {item.icon}
+            <span>{item.label}</span>
+          </Link>
+        ))}
+      </nav>
     </>
   );
 }
