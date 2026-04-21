@@ -32,56 +32,58 @@ export default async function AboutPage() {
       <Navbar />
       <main style={{ paddingTop: 64 }}>
         {/* Hero */}
-        <section style={{ background: "var(--bg-subtle)", borderBottom: "1px solid var(--border)", padding: "clamp(40px,8vw,72px) 0 clamp(36px,7vw,60px)", position: "relative", overflow: "hidden" }}>
+        <section className="public-page-hero" style={{ position: "relative", overflow: "hidden", paddingBottom: "clamp(36px,7vw,60px)" }}>
           <div className="grid-pattern" style={{ position: "absolute", inset: 0, opacity: 0.4 }} />
           <div className="site-container" style={{ position: "relative" }}>
-            <nav style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "var(--ink-4)", marginBottom: 28 }}>
-              <Link href="/" style={{ color: "var(--ink-4)", textDecoration: "none" }}>Home</Link>
-              <ChevronRight size={13} />
-              <span>About</span>
-            </nav>
+            <div className="public-page-head" style={{ maxWidth: "100%", gap: 28 }}>
+              <nav className="public-page-breadcrumbs" style={{ marginBottom: 0 }}>
+                <Link href="/" style={{ color: "var(--ink-4)", textDecoration: "none" }}>Home</Link>
+                <ChevronRight size={13} />
+                <span>About</span>
+              </nav>
 
-            <div className="split-2" style={{ gap: 64 }}>
-              <div>
-                <p className="section-eyebrow">About Me</p>
-                <h1 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(2.5rem,5vw,4rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1.1, marginBottom: 16 }}>
-                  {profile.fullName}
-                </h1>
-                <p style={{ fontSize: "clamp(14px,2vw,16px)", color: "var(--ink-3)", lineHeight: 1.8, marginBottom: 16 }}>{profile.bio1}</p>
-                <p style={{ fontSize: "clamp(14px,2vw,16px)", color: "var(--ink-3)", lineHeight: 1.8, marginBottom: 32 }}>{profile.bio2}</p>
-                <div style={{ padding: "16px 18px", borderRadius: 16, background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.18)", marginBottom: 28 }}>
-                  <h2 style={{ fontSize: 15, fontWeight: 700, color: "var(--ink-1)", marginBottom: 8 }}>Independent service notice</h2>
-                  <p style={{ fontSize: 13.5, color: "var(--ink-3)", lineHeight: 1.7, margin: "0 0 8px" }}>{BUSINESS_DISCLAIMER}</p>
-                  <p style={{ fontSize: 13.5, color: "var(--ink-3)", lineHeight: 1.7, margin: 0 }}>{OFFICIAL_PROCESS_NOTICE}</p>
+              <div className="split-2" style={{ gap: 64, alignItems: "start" }}>
+                <div className="public-page-copy" style={{ justifyItems: "start", textAlign: "left", maxWidth: "100%" }}>
+                  <p className="section-eyebrow">About Me</p>
+                  <h1 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(2.5rem,5vw,4rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1.1, margin: 0 }}>
+                    {profile.fullName}
+                  </h1>
+                  <p style={{ fontSize: "clamp(14px,2vw,16px)", color: "var(--ink-3)", lineHeight: 1.8, margin: 0 }}>{profile.bio1}</p>
+                  <p style={{ fontSize: "clamp(14px,2vw,16px)", color: "var(--ink-3)", lineHeight: 1.8, margin: 0 }}>{profile.bio2}</p>
+                  <div style={{ padding: "16px 18px", borderRadius: 16, background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.18)", width: "100%" }}>
+                    <h2 style={{ fontSize: 15, fontWeight: 700, color: "var(--ink-1)", marginBottom: 8 }}>Independent service notice</h2>
+                    <p style={{ fontSize: 13.5, color: "var(--ink-3)", lineHeight: 1.7, margin: "0 0 8px" }}>{BUSINESS_DISCLAIMER}</p>
+                    <p style={{ fontSize: 13.5, color: "var(--ink-3)", lineHeight: 1.7, margin: 0 }}>{OFFICIAL_PROCESS_NOTICE}</p>
+                  </div>
+                  <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+                    <Link href="/contact" className="btn btn-primary">Contact Me <ArrowRight size={15} /></Link>
+                    <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
+                      <Download size={15} /> Download CV
+                    </a>
+                  </div>
                 </div>
-                <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-                  <Link href="/contact" className="btn btn-primary">Contact Me <ArrowRight size={15} /></Link>
-                  <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
-                    <Download size={15} /> Download CV
-                  </a>
-                </div>
-              </div>
 
-              <div className="card" style={{ padding: 32 }}>
-                <div style={{ width: 80, height: 80, borderRadius: "50%", background: "linear-gradient(135deg,#2563eb,#0ea5e9)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-serif)", fontSize: 32, color: "#fff", margin: "0 auto 20px" }}>
-                  {profile.fullName.charAt(0)}
-                </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                  {[
-                    { label: "Location", value: profile.location, icon: MapPin },
-                    { label: "Phone", value: profile.phone, icon: Phone },
-                    { label: "Email", value: profile.email, icon: Mail },
-                    { label: "Available", value: profile.availability, icon: Clock3 },
-                    { label: "Languages", value: profile.languages?.join(", "), icon: Languages },
-                  ].map(item => (
-                    <div key={item.label} className="detail-list-row" style={{ padding: "10px 14px", background: "var(--bg-subtle)", borderRadius: 10 }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "var(--ink-4)", flexShrink: 0 }}>
-                        <item.icon size={14} />
-                        {item.label}
+                <div className="card" style={{ padding: 32 }}>
+                  <div style={{ width: 80, height: 80, borderRadius: "50%", background: "linear-gradient(135deg,#2563eb,#0ea5e9)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-serif)", fontSize: 32, color: "#fff", margin: "0 auto 20px" }}>
+                    {profile.fullName.charAt(0)}
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                    {[
+                      { label: "Location", value: profile.location, icon: MapPin },
+                      { label: "Phone", value: profile.phone, icon: Phone },
+                      { label: "Email", value: profile.email, icon: Mail },
+                      { label: "Available", value: profile.availability, icon: Clock3 },
+                      { label: "Languages", value: profile.languages?.join(", "), icon: Languages },
+                    ].map(item => (
+                      <div key={item.label} className="detail-list-row" style={{ padding: "10px 14px", background: "var(--bg-subtle)", borderRadius: 10 }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "var(--ink-4)", flexShrink: 0 }}>
+                          <item.icon size={14} />
+                          {item.label}
+                        </div>
+                        <span style={{ fontSize: 13, fontWeight: 600, color: "var(--ink-2)" }}>{item.value}</span>
                       </div>
-                      <span style={{ fontSize: 13, fontWeight: 600, color: "var(--ink-2)" }}>{item.value}</span>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

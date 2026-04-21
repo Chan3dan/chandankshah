@@ -27,21 +27,25 @@ export default async function ProjectsPage() {
     <>
       <Navbar />
       <main style={{ paddingTop: 64 }}>
-        <section style={{ background: "var(--bg-subtle)", borderBottom: "1px solid var(--border)", padding: "clamp(40px,8vw,56px) 0 clamp(32px,7vw,48px)" }}>
+        <section className="public-page-hero">
           <div className="site-container">
-            <nav style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "var(--ink-4)", marginBottom: 16 }}>
-              <Link href="/" style={{ color: "var(--ink-4)", textDecoration: "none" }}>Home</Link>
-              <ChevronRight size={13} />
-              <span style={{ color: "var(--ink-2)" }}>Portfolio</span>
-            </nav>
-            <p className="section-eyebrow">My Work</p>
-            <h1 className="section-title" style={{ marginBottom: 12 }}>Portfolio & Projects</h1>
-            <p className="section-desc">Web apps I&apos;ve built, services I&apos;ve delivered, and problems I&apos;ve solved.</p>
+            <div className="public-page-head">
+              <nav className="public-page-breadcrumbs">
+                <Link href="/" style={{ color: "var(--ink-4)", textDecoration: "none" }}>Home</Link>
+                <ChevronRight size={13} />
+                <span style={{ color: "var(--ink-2)" }}>Portfolio</span>
+              </nav>
+              <div className="public-page-copy">
+                <p className="section-eyebrow">My Work</p>
+                <h1 className="section-title">Portfolio & Projects</h1>
+                <p className="section-desc">Selected websites, platforms, and service delivery projects designed to work smoothly on real devices, not just large desktop screens.</p>
+              </div>
+            </div>
           </div>
         </section>
 
         <section className="section">
-          <div className="site-container">
+          <div className="site-container public-page-shell">
             {featured.length > 0 && (
               <div style={{ marginBottom: 52 }}>
                 <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: "var(--ink-4)", marginBottom: 20 }}>Featured</p>

@@ -1,7 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Plus, Trash2, Edit2, Save, X, GripVertical } from "lucide-react";
+import { Plus, Trash2, Edit2, Save } from "lucide-react";
 import toast from "react-hot-toast";
+import AdminModal from "@/components/admin/AdminModal";
 
 interface Service {
   _id: string;
@@ -36,6 +37,7 @@ export default function AdminServices() {
   const [form, setForm] = useState(EMPTY);
   const [saving, setSaving] = useState(false);
   const [newFeature, setNewFeature] = useState("");
+  const editingService = editing ? services.find((service) => service._id === editing) : null;
 
   useEffect(() => { load(); }, []);
 
@@ -84,18 +86,24 @@ export default function AdminServices() {
       </div>
 
       {/* Create / Edit form */}
-      {(showForm || editing) && (
-        <ServiceForm
-          form={editing ? (services.find(s => s._id === editing) as any) : form}
-          setForm={editing ? () => {} : setForm}
-          onSave={editing ? (data: any) => handleUpdate(editing, data) : handleCreate}
-          onCancel={() => { setShowForm(false); setEditing(null); }}
-          saving={saving}
-          isEdit={!!editing}
-          categories={CATEGORIES}
-          newFeature={newFeature}
-          setNewFeature={setNewFeature}
-        />
+      {(showForm || editingService) && (
+        <AdminModal
+          title={editingService ? "Edit service" : "Add service"}
+          subtitle="Manage public service cards, pricing, details, and mobile-safe content in one place."
+          onClose={() => { setShowForm(false); setEditing(null); setNewFeature(""); }}
+          width={980}
+        >
+          <ServiceForm
+            form={editingService || form}
+            onSave={editingService ? (data: any) => handleUpdate(editingService._id, data) : handleCreate}
+            onCancel={() => { setShowForm(false); setEditing(null); setNewFeature(""); }}
+            saving={saving}
+            isEdit={!!editingService}
+            categories={CATEGORIES}
+            newFeature={newFeature}
+            setNewFeature={setNewFeature}
+          />
+        </AdminModal>
       )}
 
       {/* Table */}
@@ -143,7 +151,7 @@ export default function AdminServices() {
                   </td>
                   <td>
                     <div style={{ display: "flex", gap: 6 }}>
-                      <button onClick={() => setEditing(editing === svc._id ? null : svc._id)} className="btn btn-ghost btn-sm">
+                      <button onClick={() => { setEditing(svc._id); setShowForm(false); }} className="btn btn-ghost btn-sm">
                         <Edit2 size={13} /> Edit
                       </button>
                       <button onClick={() => handleDelete(svc._id, svc.title)} style={{ padding: "6px 10px", background: "rgba(220,38,38,0.07)", border: "1px solid rgba(220,38,38,0.15)", borderRadius: 8, cursor: "pointer", color: "var(--red)" }}>
@@ -180,7 +188,7 @@ export default function AdminServices() {
                   <button onClick={() => handleUpdate(svc._id, { isActive: !svc.isActive })} className={`badge ${svc.isActive ? "badge-green" : "badge-red"}`} style={{ cursor: "pointer", border: "none" }}>
                     {svc.isActive ? "Active" : "Hidden"}
                   </button>
-                  <button onClick={() => setEditing(editing === svc._id ? null : svc._id)} className="btn btn-ghost btn-sm">
+                  <button onClick={() => { setEditing(svc._id); setShowForm(false); }} className="btn btn-ghost btn-sm">
                     <Edit2 size={13} /> Edit
                   </button>
                   <button onClick={() => handleDelete(svc._id, svc.title)} style={{ padding: "6px 10px", background: "rgba(220,38,38,0.07)", border: "1px solid rgba(220,38,38,0.15)", borderRadius: 8, cursor: "pointer", color: "var(--red)" }}>
@@ -197,9 +205,13 @@ export default function AdminServices() {
   );
 }
 
-function ServiceForm({ form, setForm, onSave, onCancel, saving, isEdit, categories, newFeature, setNewFeature }: any) {
+function ServiceForm({ form, onSave, onCancel, saving, isEdit, categories, newFeature, setNewFeature }: any) {
   const [localForm, setLocal] = useState(form);
   const set = (k: string, v: any) => setLocal((p: any) => ({ ...p, [k]: v }));
+
+  useEffect(() => {
+    setLocal(form);
+  }, [form]);
 
   const addFeature = () => {
     if (!newFeature.trim()) return;
@@ -208,12 +220,7 @@ function ServiceForm({ form, setForm, onSave, onCancel, saving, isEdit, categori
   };
 
   return (
-    <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 16, padding: 28, marginBottom: 20 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 22 }}>
-        <h2 style={{ fontWeight: 700, fontSize: 16 }}>{isEdit ? "Edit Service" : "New Service"}</h2>
-        <button onClick={onCancel} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--ink-4)" }}><X size={18} /></button>
-      </div>
-
+    <div>
       <div className="admin-form-grid-4" style={{ marginBottom: 14 }}>
         <div className="form-group" style={{ marginBottom: 0 }}>
           <label className="form-label">Title *</label>
@@ -279,7 +286,7 @@ function ServiceForm({ form, setForm, onSave, onCancel, saving, isEdit, categori
         </div>
       </div>
 
-      <div style={{ display: "flex", gap: 10, marginTop: 4 }}>
+      <div className="stack-actions" style={{ marginTop: 4 }}>
         <button onClick={() => onSave(localForm)} className="btn btn-primary" disabled={saving}>
           <Save size={15} /> {saving ? "Saving…" : isEdit ? "Update Service" : "Create Service"}
         </button>

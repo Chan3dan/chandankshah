@@ -25,21 +25,25 @@ export default async function BlogPage() {
     <>
       <Navbar />
       <main style={{ paddingTop: 64 }}>
-        <section style={{ background: "var(--bg-subtle)", borderBottom: "1px solid var(--border)", padding: "clamp(40px,8vw,56px) 0 clamp(36px,7vw,48px)" }}>
+        <section className="public-page-hero">
           <div className="site-container">
-            <nav style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "var(--ink-4)", marginBottom: 16 }}>
-              <Link href="/" style={{ color: "var(--ink-4)", textDecoration: "none" }}>Home</Link>
-              <ChevronRight size={13} />
-              <span>Blog</span>
-            </nav>
-            <p className="section-eyebrow">Articles & Updates</p>
-            <h1 className="section-title" style={{ marginBottom: 12 }}>Blog</h1>
-            <p className="section-desc">Tips, guides, and insights on Loksewa preparation, DEMAT investing, and digital services in Nepal.</p>
+            <div className="public-page-head">
+              <nav className="public-page-breadcrumbs">
+                <Link href="/" style={{ color: "var(--ink-4)", textDecoration: "none" }}>Home</Link>
+                <ChevronRight size={13} />
+                <span>Blog</span>
+              </nav>
+              <div className="public-page-copy">
+                <p className="section-eyebrow">Articles & Updates</p>
+                <h1 className="section-title">Blog</h1>
+                <p className="section-desc">Practical tips, service guides, and digital insights written to be easy to read on mobile, tablet, and desktop alike.</p>
+              </div>
+            </div>
           </div>
         </section>
 
         <section className="section">
-          <div className="site-container">
+          <div className="site-container public-page-shell">
             <BlogIndexClient posts={posts} />
           </div>
         </section>

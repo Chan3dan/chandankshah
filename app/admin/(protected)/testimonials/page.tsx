@@ -1,7 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Plus, Trash2, Edit2, Save, X, Star } from "lucide-react";
+import { Plus, Trash2, Edit2, Save, Star } from "lucide-react";
 import toast from "react-hot-toast";
+import AdminModal from "@/components/admin/AdminModal";
 
 interface Testimonial { _id: string; name: string; role: string; company: string; text: string; rating: number; avatarInitial: string; avatarColor: string; service: string; isActive: boolean; isFeatured: boolean; }
 const EMPTY = { name: "", role: "", company: "", text: "", rating: 5, avatarInitial: "", avatarColor: "#2563eb", service: "", isActive: true, isFeatured: false };
@@ -49,12 +50,19 @@ export default function AdminTestimonials() {
       </div>
 
       {(showForm || editing) && (
-        <TestimonialForm
-          initial={editing ? items.find(t => t._id === editing) || EMPTY : EMPTY}
-          onSave={editing ? (d: any) => handleUpdate(editing, d) : handleCreate}
-          onCancel={() => { setShowForm(false); setEditing(null); }}
-          saving={saving} isEdit={!!editing}
-        />
+        <AdminModal
+          title={editing ? "Edit testimonial" : "Add testimonial"}
+          subtitle="Edit reviews in a modal so the list stays stable and easy to scan on mobile."
+          onClose={() => { setShowForm(false); setEditing(null); }}
+          width={860}
+        >
+          <TestimonialForm
+            initial={editing ? items.find(t => t._id === editing) || EMPTY : EMPTY}
+            onSave={editing ? (d: any) => handleUpdate(editing, d) : handleCreate}
+            onCancel={() => { setShowForm(false); setEditing(null); }}
+            saving={saving} isEdit={!!editing}
+          />
+        </AdminModal>
       )}
 
       <div className="admin-card-stack">
@@ -73,7 +81,7 @@ export default function AdminTestimonials() {
               </div>
             </div>
             <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-              <button onClick={() => setEditing(editing === t._id ? null : t._id)} className="btn btn-ghost btn-sm"><Edit2 size={12} /> Edit</button>
+              <button onClick={() => { setEditing(t._id); setShowForm(false); }} className="btn btn-ghost btn-sm"><Edit2 size={12} /> Edit</button>
               <button onClick={() => handleUpdate(t._id, { isFeatured: !t.isFeatured })} className={`btn btn-sm ${t.isFeatured ? "btn-secondary" : "btn-ghost"}`}>{t.isFeatured ? "Unfeature" : "Feature"}</button>
               <button onClick={() => handleUpdate(t._id, { isActive: !t.isActive })} className={`badge ${t.isActive ? "badge-green" : "badge-red"}`} style={{ cursor: "pointer", border: "none", padding: "6px 12px" }}>{t.isActive ? "Active" : "Hidden"}</button>
               <button onClick={() => handleDelete(t._id, t.name)} style={{ marginLeft: "auto", padding: "6px 10px", background: "rgba(220,38,38,0.07)", border: "1px solid rgba(220,38,38,0.15)", borderRadius: 8, cursor: "pointer", color: "var(--red)" }}><Trash2 size={13} /></button>
@@ -89,12 +97,12 @@ function TestimonialForm({ initial, onSave, onCancel, saving, isEdit }: any) {
   const [form, setForm] = useState({ ...EMPTY, ...initial });
   const set = (k: string, v: any) => setForm((p: any) => ({ ...p, [k]: v }));
 
+  useEffect(() => {
+    setForm({ ...EMPTY, ...initial });
+  }, [initial]);
+
   return (
-      <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 16, padding: 28, marginBottom: 20 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 22 }}>
-        <h2 style={{ fontWeight: 700, fontSize: 16 }}>{isEdit ? "Edit Review" : "New Review"}</h2>
-        <button onClick={onCancel} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--ink-4)" }}><X size={18} /></button>
-      </div>
+      <div>
       <div className="admin-form-grid-3" style={{ marginBottom: 14 }}>
         <div><label className="form-label">Client Name *</label><input className="input" value={form.name} onChange={e => set("name", e.target.value)} /></div>
         <div><label className="form-label">Role / Title</label><input className="input" value={form.role} onChange={e => set("role", e.target.value)} /></div>

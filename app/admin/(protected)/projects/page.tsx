@@ -1,7 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Plus, Trash2, Edit2, Save, X, Star } from "lucide-react";
+import { Plus, Trash2, Edit2, Save, Star } from "lucide-react";
 import toast from "react-hot-toast";
+import AdminModal from "@/components/admin/AdminModal";
 
 interface Project {
   _id: string; title: string; slug: string; category: string;
@@ -56,13 +57,20 @@ export default function AdminProjects() {
       </div>
 
       {(showForm || editingProject) && (
-        <ProjectForm
-          initial={editingProject || EMPTY}
-          onSave={editingProject ? (d: any) => handleUpdate(editingProject._id, d) : handleCreate}
-          onCancel={() => { setShowForm(false); setEditing(null); }}
-          saving={saving}
-          isEdit={!!editingProject}
-        />
+        <AdminModal
+          title={editingProject ? "Edit project" : "Add project"}
+          subtitle="Keep portfolio entries clean, structured, and ready for every screen size."
+          onClose={() => { setShowForm(false); setEditing(null); }}
+          width={960}
+        >
+          <ProjectForm
+            initial={editingProject || EMPTY}
+            onSave={editingProject ? (d: any) => handleUpdate(editingProject._id, d) : handleCreate}
+            onCancel={() => { setShowForm(false); setEditing(null); }}
+            saving={saving}
+            isEdit={!!editingProject}
+          />
+        </AdminModal>
       )}
 
       <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 16, overflow: "hidden" }}>
@@ -98,7 +106,7 @@ export default function AdminProjects() {
                   </td>
                   <td>
                     <div style={{ display: "flex", gap: 6 }}>
-                      <button onClick={() => setEditing(editing === p._id ? null : p._id)} className="btn btn-ghost btn-sm"><Edit2 size={13} /> Edit</button>
+                      <button onClick={() => { setEditing(p._id); setShowForm(false); }} className="btn btn-ghost btn-sm"><Edit2 size={13} /> Edit</button>
                       <button onClick={() => handleDelete(p._id, p.title)} style={{ padding: "6px 10px", background: "rgba(220,38,38,0.07)", border: "1px solid rgba(220,38,38,0.15)", borderRadius: 8, cursor: "pointer", color: "var(--red)" }}><Trash2 size={13} /></button>
                     </div>
                   </td>
@@ -129,7 +137,7 @@ export default function AdminProjects() {
                   <button onClick={() => handleUpdate(p._id, { isActive: !p.isActive })} className={`badge ${p.isActive ? "badge-green" : "badge-red"}`} style={{ cursor: "pointer", border: "none" }}>
                     {p.isActive ? "Active" : "Hidden"}
                   </button>
-                  <button onClick={() => setEditing(editing === p._id ? null : p._id)} className="btn btn-ghost btn-sm"><Edit2 size={13} /> Edit</button>
+                  <button onClick={() => { setEditing(p._id); setShowForm(false); }} className="btn btn-ghost btn-sm"><Edit2 size={13} /> Edit</button>
                   <button onClick={() => handleDelete(p._id, p.title)} style={{ padding: "6px 10px", background: "rgba(220,38,38,0.07)", border: "1px solid rgba(220,38,38,0.15)", borderRadius: 8, cursor: "pointer", color: "var(--red)" }}><Trash2 size={13} /></button>
                 </div>
               </div>
@@ -147,13 +155,12 @@ function ProjectForm({ initial, onSave, onCancel, saving, isEdit }: any) {
   const [newTag, setNewTag] = useState("");
   const set = (k: string, v: any) => setForm((p: any) => ({ ...p, [k]: v }));
 
-  return (
-    <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 16, padding: 28, marginBottom: 20 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 22 }}>
-        <h2 style={{ fontWeight: 700, fontSize: 16 }}>{isEdit ? "Edit Project" : "New Project"}</h2>
-        <button onClick={onCancel} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--ink-4)" }}><X size={18} /></button>
-      </div>
+  useEffect(() => {
+    setForm({ ...EMPTY, ...initial });
+  }, [initial]);
 
+  return (
+    <div>
       <div className="admin-form-grid-2" style={{ marginBottom: 14 }}>
         <div><label className="form-label">Title *</label><input className="input" value={form.title} onChange={e => set("title", e.target.value)} /></div>
         <div><label className="form-label">Category</label><input className="input" value={form.category} onChange={e => set("category", e.target.value)} /></div>
@@ -187,7 +194,7 @@ function ProjectForm({ initial, onSave, onCancel, saving, isEdit }: any) {
         <label htmlFor="featured" style={{ fontSize: 14, fontWeight: 600, cursor: "pointer" }}>⭐ Mark as Featured Project</label>
       </div>
 
-      <div style={{ display: "flex", gap: 10 }}>
+      <div className="stack-actions">
         <button onClick={() => onSave(form)} className="btn btn-primary" disabled={saving}><Save size={15} /> {saving ? "Saving…" : isEdit ? "Update" : "Create"}</button>
         <button onClick={onCancel} className="btn btn-secondary">Cancel</button>
       </div>

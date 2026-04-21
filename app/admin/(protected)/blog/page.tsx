@@ -1,7 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Plus, Trash2, Edit2, Save, X, Eye, EyeOff } from "lucide-react";
+import { Plus, Trash2, Edit2, Save, Eye, EyeOff } from "lucide-react";
 import toast from "react-hot-toast";
+import AdminModal from "@/components/admin/AdminModal";
 
 interface Post { _id: string; title: string; slug: string; excerpt: string; content: string; coverImage: string; tags: string[]; category: string; isPublished: boolean; readTime: number; publishedAt: string; createdAt: string; }
 const EMPTY = { title: "", excerpt: "", content: "", coverImage: "", tags: [] as string[], category: "General", isPublished: false };
@@ -50,12 +51,19 @@ export default function AdminBlog() {
       </div>
 
       {(showForm || editingPost) && (
-        <BlogForm
-          initial={editingPost || EMPTY}
-          onSave={editingPost ? (d: any) => handleUpdate(editingPost._id, d) : handleCreate}
-          onCancel={() => { setShowForm(false); setEditing(null); }}
-          saving={saving} isEdit={!!editingPost}
-        />
+        <AdminModal
+          title={editingPost ? "Edit blog post" : "Create blog post"}
+          subtitle="Write once, publish cleanly, and keep editing focused inside a modal instead of shifting the page."
+          onClose={() => { setShowForm(false); setEditing(null); }}
+          width={980}
+        >
+          <BlogForm
+            initial={editingPost || EMPTY}
+            onSave={editingPost ? (d: any) => handleUpdate(editingPost._id, d) : handleCreate}
+            onCancel={() => { setShowForm(false); setEditing(null); }}
+            saving={saving} isEdit={!!editingPost}
+          />
+        </AdminModal>
       )}
 
       <div className="admin-section-card">
@@ -87,7 +95,7 @@ export default function AdminBlog() {
                         <td style={{ fontSize: 12, color: "var(--ink-4)" }}>{new Date(p.createdAt).toLocaleDateString()}</td>
                         <td>
                           <div style={{ display: "flex", gap: 6 }}>
-                            <button onClick={() => setEditing(editing === p._id ? null : p._id)} className="btn btn-ghost btn-sm"><Edit2 size={13} /> Edit</button>
+                            <button onClick={() => { setEditing(p._id); setShowForm(false); }} className="btn btn-ghost btn-sm"><Edit2 size={13} /> Edit</button>
                             <button onClick={() => handleDelete(p._id, p.title)} style={{ padding: "6px 10px", background: "rgba(220,38,38,0.07)", border: "1px solid rgba(220,38,38,0.15)", borderRadius: 8, cursor: "pointer", color: "var(--red)" }}><Trash2 size={13} /></button>
                           </div>
                         </td>
@@ -115,7 +123,7 @@ export default function AdminBlog() {
                       <button onClick={() => handleUpdate(post._id, { isPublished: !post.isPublished })} className={`badge ${post.isPublished ? "badge-green" : "badge-amber"}`} style={{ cursor: "pointer", border: "none", display: "flex", alignItems: "center", gap: 5 }}>
                         {post.isPublished ? <><Eye size={11} /> Published</> : <><EyeOff size={11} /> Draft</>}
                       </button>
-                      <button onClick={() => setEditing(editing === post._id ? null : post._id)} className="btn btn-ghost btn-sm"><Edit2 size={13} /> Edit</button>
+                      <button onClick={() => { setEditing(post._id); setShowForm(false); }} className="btn btn-ghost btn-sm"><Edit2 size={13} /> Edit</button>
                       <button onClick={() => handleDelete(post._id, post.title)} style={{ padding: "6px 10px", background: "rgba(220,38,38,0.07)", border: "1px solid rgba(220,38,38,0.15)", borderRadius: 8, cursor: "pointer", color: "var(--red)" }}><Trash2 size={13} /></button>
                     </div>
                   </div>
@@ -133,13 +141,12 @@ function BlogForm({ initial, onSave, onCancel, saving, isEdit }: any) {
   const [newTag, setNewTag] = useState("");
   const set = (k: string, v: any) => setForm((p: any) => ({ ...p, [k]: v }));
 
-  return (
-      <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 16, padding: 28, marginBottom: 20 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 22 }}>
-        <h2 style={{ fontWeight: 700, fontSize: 16 }}>{isEdit ? "Edit Post" : "New Post"}</h2>
-        <button onClick={onCancel} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--ink-4)" }}><X size={18} /></button>
-      </div>
+  useEffect(() => {
+    setForm({ ...EMPTY, ...initial });
+  }, [initial]);
 
+  return (
+      <div>
       <div className="admin-form-grid-2" style={{ marginBottom: 14 }}>
         <div><label className="form-label">Title *</label><input className="input" value={form.title} onChange={e => set("title", e.target.value)} /></div>
         <div><label className="form-label">Category</label><input className="input" value={form.category} onChange={e => set("category", e.target.value)} /></div>

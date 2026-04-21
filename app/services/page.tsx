@@ -27,16 +27,20 @@ export default async function ServicesPage() {
       <FAQSchema faqs={SERVICES_PAGE_FAQS} />
       <Navbar />
       <main style={{ paddingTop: 64 }}>
-        <section style={{ background: "var(--bg-subtle)", borderBottom: "1px solid var(--border)", padding: "clamp(40px,8vw,56px) 0 clamp(36px,7vw,48px)" }}>
+        <section className="public-page-hero">
           <div className="site-container">
-            <nav style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "var(--ink-4)", marginBottom: 16 }}>
-              <Link href="/" style={{ color: "var(--ink-4)", textDecoration: "none" }}>Home</Link>
-              <ChevronRight size={13} />
-              <span style={{ color: "var(--ink-2)" }}>Services</span>
-            </nav>
-            <p className="section-eyebrow">What I Offer</p>
-            <h1 className="section-title" style={{ marginBottom: 12 }}>Services</h1>
-            <p className="section-desc">Professional help for government forms, financial services, documentation, and digital projects.</p>
+            <div className="public-page-head">
+              <nav className="public-page-breadcrumbs">
+                <Link href="/" style={{ color: "var(--ink-4)", textDecoration: "none" }}>Home</Link>
+                <ChevronRight size={13} />
+                <span style={{ color: "var(--ink-2)" }}>Services</span>
+              </nav>
+              <div className="public-page-copy">
+                <p className="section-eyebrow">What I Offer</p>
+                <h1 className="section-title">Services</h1>
+                <p className="section-desc">Professional help for government forms, financial services, documentation, and digital projects delivered with clear steps, honest pricing, and responsive support across Nepal.</p>
+              </div>
+            </div>
           </div>
         </section>
 
