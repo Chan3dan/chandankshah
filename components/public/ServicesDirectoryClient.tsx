@@ -95,7 +95,7 @@ export default function ServicesDirectoryClient({ services }: { services: Servic
             </label>
           </div>
 
-          <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 18 }}>
+          <div className="page-chip-row" style={{ marginTop: 18 }}>
             {categories.map((category) => {
               const active = category === activeCategory;
               return (
@@ -147,7 +147,7 @@ export default function ServicesDirectoryClient({ services }: { services: Servic
             {groupedServices.map(({ category, items }) => (
               <div key={category} style={{ marginBottom: 56 }}>
                 <h2 style={{ fontSize: 12, fontWeight: 700, letterSpacing: 1.5, textTransform: "uppercase", color: "var(--ink-4)", marginBottom: 20 }}>{category}</h2>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 18 }}>
+                <div className="grid-auto">
                   {items.map((service) => (
                     <Link key={service._id} href={`/services/${service.slug}`} style={{ textDecoration: "none" }}>
                       <div className="card" style={{ padding: 26, height: "100%", position: "relative", overflow: "hidden" }}>
@@ -192,7 +192,7 @@ export default function ServicesDirectoryClient({ services }: { services: Servic
               Bundled help works well when one task naturally leads into another. These are positioned for faster completion and fewer back-and-forth steps.
             </p>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: 18 }}>
+          <div className="grid-auto">
             {BUNDLES.map((bundle, index) => (
               <div key={bundle.title} className="card-static" style={{ padding: "24px 22px" }}>
                 <div style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "4px 10px", background: "var(--blue-bg)", border: "1px solid var(--blue-border)", borderRadius: 999, color: "var(--blue)", fontSize: 12, fontWeight: 700, marginBottom: 14 }}>
@@ -217,7 +217,7 @@ export default function ServicesDirectoryClient({ services }: { services: Servic
           </div>
         </div>
 
-        <div style={{ background: "var(--bg-subtle)", border: "1px solid var(--border)", borderRadius: 20, padding: "clamp(24px,5vw,36px) clamp(20px,5vw,40px)", display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: 24, marginTop: 24 }}>
+        <div className="cta-split" style={{ background: "var(--bg-subtle)", border: "1px solid var(--border)", borderRadius: 20, padding: "clamp(24px,5vw,36px) clamp(20px,5vw,40px)", marginTop: 24 }}>
           <div>
             <h3 style={{ fontWeight: 700, fontSize: 18, color: "var(--ink-1)", marginBottom: 4 }}>Don&apos;t see what you need?</h3>
             <p style={{ color: "var(--ink-3)", fontSize: 14 }}>Reach out — I handle many more services.</p>

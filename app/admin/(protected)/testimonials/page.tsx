@@ -40,7 +40,7 @@ export default function AdminTestimonials() {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
+      <div className="admin-page-header">
         <div>
           <h1 style={{ fontFamily: "var(--font-serif)", fontSize: 26, fontWeight: 400, marginBottom: 2 }}>Testimonials</h1>
           <p style={{ color: "var(--ink-4)", fontSize: 13 }}>{items.length} review{items.length !== 1 ? "s" : ""}</p>
@@ -57,7 +57,7 @@ export default function AdminTestimonials() {
         />
       )}
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: 16 }}>
+      <div className="admin-card-stack">
         {loading ? <div style={{ color: "var(--ink-4)", padding: 20 }}>Loading…</div> : items.map(t => (
           <div key={t._id} style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 14, padding: 22, position: "relative" }}>
             {t.isFeatured && <span style={{ position: "absolute", top: 14, right: 14, fontSize: 10, fontWeight: 700, padding: "2px 8px", background: "rgba(217,119,6,0.12)", color: "var(--amber)", borderRadius: 99 }}>⭐ Featured</span>}
@@ -90,29 +90,29 @@ function TestimonialForm({ initial, onSave, onCancel, saving, isEdit }: any) {
   const set = (k: string, v: any) => setForm((p: any) => ({ ...p, [k]: v }));
 
   return (
-    <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 16, padding: 28, marginBottom: 20 }}>
+      <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 16, padding: 28, marginBottom: 20 }}>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 22 }}>
         <h2 style={{ fontWeight: 700, fontSize: 16 }}>{isEdit ? "Edit Review" : "New Review"}</h2>
         <button onClick={onCancel} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--ink-4)" }}><X size={18} /></button>
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 14, marginBottom: 14 }}>
+      <div className="admin-form-grid-3" style={{ marginBottom: 14 }}>
         <div><label className="form-label">Client Name *</label><input className="input" value={form.name} onChange={e => set("name", e.target.value)} /></div>
         <div><label className="form-label">Role / Title</label><input className="input" value={form.role} onChange={e => set("role", e.target.value)} /></div>
         <div><label className="form-label">Company</label><input className="input" value={form.company} onChange={e => set("company", e.target.value)} /></div>
       </div>
       <div className="form-group"><label className="form-label">Review Text *</label><textarea className="input" value={form.text} onChange={e => set("text", e.target.value)} style={{ minHeight: 80 }} /></div>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 14, marginBottom: 14 }}>
+      <div className="admin-form-grid-4" style={{ marginBottom: 14 }}>
         <div><label className="form-label">Rating (1–5)</label><select className="input" value={form.rating} onChange={e => set("rating", +e.target.value)}>{[1,2,3,4,5].map(n=><option key={n}>{n}</option>)}</select></div>
         <div><label className="form-label">Avatar Letter</label><input className="input" value={form.avatarInitial} onChange={e => set("avatarInitial", e.target.value)} placeholder="Auto from name" /></div>
         <div><label className="form-label">Avatar Color</label><input type="color" value={form.avatarColor} onChange={e => set("avatarColor", e.target.value)} style={{ height: 42, width: "100%", borderRadius: 8, border: "1px solid var(--border)", cursor: "pointer", padding: 3 }} /></div>
         <div><label className="form-label">Service Used</label><input className="input" value={form.service} onChange={e => set("service", e.target.value)} placeholder="e.g. Loksewa" /></div>
       </div>
-      <div style={{ display: "flex", gap: 16, marginBottom: 20 }}>
+      <div className="stack-actions" style={{ gap: 16, marginBottom: 20 }}>
         <label style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 600, cursor: "pointer" }}>
           <input type="checkbox" checked={form.isFeatured} onChange={e => set("isFeatured", e.target.checked)} style={{ width: 15, height: 15 }} /> ⭐ Featured
         </label>
       </div>
-      <div style={{ display: "flex", gap: 10 }}>
+      <div className="stack-actions">
         <button onClick={() => onSave(form)} className="btn btn-primary" disabled={saving}><Save size={15} /> {saving ? "Saving…" : isEdit ? "Update" : "Add Review"}</button>
         <button onClick={onCancel} className="btn btn-secondary">Cancel</button>
       </div>

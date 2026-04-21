@@ -192,7 +192,7 @@ export default function BookingFlow({ services, preselectedService, profile }: P
                 <label className="form-label">Additional Details</label>
                 <textarea className="input" placeholder="Describe your specific requirements, documents you have, or anything else I should know…" value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} style={{ minHeight: 100 }} />
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 12 }}>
+              <div className="info-card-grid">
                 {PROCESS_STEPS.map((stepItem, index) => (
                   <div key={stepItem.title} style={{ padding: "14px 14px 12px", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 12 }}>
                     <div style={{ width: 30, height: 30, borderRadius: 9, background: "var(--bg-subtle)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, color: "var(--blue)", marginBottom: 10 }}>
@@ -258,7 +258,7 @@ export default function BookingFlow({ services, preselectedService, profile }: P
         )}
 
         {/* Navigation buttons */}
-        <div style={{ display: "flex", justifyContent: "space-between", marginTop: 32, paddingTop: 24, borderTop: "1px solid var(--border)", gap: 12, flexWrap: "wrap" }}>
+        <div className="cta-split" style={{ marginTop: 32, paddingTop: 24, borderTop: "1px solid var(--border)", gap: 12 }}>
           {step > 0 ? (
             <button onClick={() => setStep(s => s - 1)} className="btn btn-secondary">
               <ArrowLeft size={15} /> Back
@@ -307,7 +307,7 @@ function BookingSuccess({ name, service, profile, trackingCode }: { name: string
             </p>
           </div>
         )}
-        <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+        <div className="stack-actions" style={{ justifyContent: "center" }}>
           <Link href="/track" className="btn btn-primary">Track Request</Link>
           <a href={`https://wa.me/${profile.whatsapp}`} target="_blank" rel="noopener noreferrer"
             style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "11px 22px", background: "#25d366", color: "#fff", borderRadius: 10, fontWeight: 700, textDecoration: "none" }}>

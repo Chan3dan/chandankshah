@@ -69,7 +69,7 @@ export default function BlogIndexClient({ posts }: { posts: BlogPostSummary[] })
           </label>
         </div>
 
-        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 18 }}>
+        <div className="page-chip-row" style={{ marginTop: 18 }}>
           {categories.map((category) => {
             const active = category === activeCategory;
             const count = category === "All" ? posts.length : posts.filter((post) => post.category === category).length;
@@ -134,7 +134,7 @@ export default function BlogIndexClient({ posts }: { posts: BlogPostSummary[] })
               </Link>
             )}
 
-            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+            <div className="card-list">
               {rest.map((post) => (
                 <Link key={post._id} href={`/blog/${post.slug}`} style={{ textDecoration: "none" }}>
                   <div className="card" style={{ padding: 22 }}>
@@ -155,7 +155,7 @@ export default function BlogIndexClient({ posts }: { posts: BlogPostSummary[] })
           <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
             <div className="card-static" style={{ padding: 22 }}>
               <h3 style={{ fontWeight: 700, fontSize: 14, marginBottom: 14 }}>Categories</h3>
-              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <div className="card-list" style={{ gap: 8 }}>
                 {categories.filter((category) => category !== "All").map((category) => (
                   <button
                     key={category}

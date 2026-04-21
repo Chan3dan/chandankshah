@@ -98,7 +98,7 @@ export default function ContactClient({ profile, social, services }: Props) {
               </a>
 
               {/* Social links */}
-              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+              <div className="page-chip-row">
                 {social.facebook && <a href={social.facebook} target="_blank" rel="noopener noreferrer" style={{ padding: "8px 16px", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 9, fontSize: 13, fontWeight: 600, color: "var(--ink-2)", textDecoration: "none" }}>Facebook</a>}
                 {social.instagram && <a href={social.instagram} target="_blank" rel="noopener noreferrer" style={{ padding: "8px 16px", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 9, fontSize: 13, fontWeight: 600, color: "var(--ink-2)", textDecoration: "none" }}>Instagram</a>}
                 {social.github && <a href={social.github} target="_blank" rel="noopener noreferrer" style={{ padding: "8px 16px", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 9, fontSize: 13, fontWeight: 600, color: "var(--ink-2)", textDecoration: "none" }}>GitHub</a>}
@@ -194,7 +194,7 @@ export default function ContactClient({ profile, social, services }: Props) {
                   <p style={{ fontSize: 12, color: "var(--ink-4)", textAlign: "center", marginTop: 12 }}>
                     I typically reply within 2–4 hours during business hours.
                   </p>
-                  <div style={{ marginTop: 18, display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 10 }}>
+                  <div className="info-card-grid" style={{ marginTop: 18 }}>
                     {services.slice(0, 3).map((service) => (
                       <a
                         key={service._id}

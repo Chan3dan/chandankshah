@@ -240,7 +240,7 @@ function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSe
               {hero.description}
             </p>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 10, maxWidth: 700, marginBottom: 28 }}>
+            <div className="info-card-grid" style={{ maxWidth: 760, marginBottom: 28 }}>
               {[
                 { label: "What I do", text: "Documentation, forms, DEMAT help, and web services" },
                 { label: "Who I help", text: "Individuals, students, job applicants, and small businesses" },
@@ -277,7 +277,7 @@ function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSe
               </a>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(140px,1fr))", gap: 16, maxWidth: 620 }}>
+            <div className="page-hero-stats" style={{ maxWidth: 640 }}>
               {hero.stats.map((s, i) => (
                 <div key={i} style={{ padding: "0 12px 0 0", borderRight: "none" }}>
                   <div style={{ fontFamily: "var(--font-serif)", fontSize: 30, fontWeight: 400, color: "var(--ink-1)", lineHeight: 1 }}>{s.value}</div>
@@ -333,7 +333,7 @@ function ServicesSection({ services }: { services: any[] }) {
   return (
     <section className="section" style={{ background: "var(--bg-subtle)", borderTop: "1px solid var(--border)" }}>
       <div className="site-container">
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 20, marginBottom: 52 }}>
+        <div className="cta-split" style={{ marginBottom: 52, alignItems: "flex-end" }}>
           <div>
             <p className="section-eyebrow">What I Offer</p>
             <h2 className="section-title">Services</h2>
@@ -460,7 +460,7 @@ function ProjectsSection({ projects }: { projects: any[] }) {
   return (
     <section className="section" style={{ borderTop: "1px solid var(--border)" }}>
       <div className="site-container">
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 20, marginBottom: 48 }}>
+        <div className="cta-split" style={{ marginBottom: 48, alignItems: "flex-end" }}>
           <div>
             <p className="section-eyebrow">My Work</p>
             <h2 className="section-title">Featured Projects</h2>
@@ -590,7 +590,7 @@ function CTASection({ profile }: { profile: ProfileSettings }) {
   return (
     <section style={{ padding: "clamp(52px,9vw,80px) 0", borderTop: "1px solid var(--border)" }}>
       <div className="site-container">
-        <div className="dark-panel" style={{ borderRadius: 28, padding: "clamp(32px,5vw,56px)", display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: 32 }}>
+        <div className="dark-panel cta-split" style={{ borderRadius: 28, padding: "clamp(32px,5vw,56px)", gap: 32 }}>
           <div>
             <h2 className="dark-panel-title" style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1.8rem,3vw,2.8rem)", fontWeight: 400, marginBottom: 8, lineHeight: 1.2 }}>
               Ready to get started?
@@ -600,7 +600,7 @@ function CTASection({ profile }: { profile: ProfileSettings }) {
               Independent digital service support for Nepal-based documentation, online processes, finance setup, and web work. Not an official government body.
             </p>
           </div>
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+          <div className="stack-actions">
             <Link href="/contact" className="light-on-dark-btn">
               Contact Me <ArrowRight size={15} />
             </Link>

@@ -110,7 +110,7 @@ export default function TrackStatusClient() {
               )}
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+            <div className="card-list">
               <div className="card-static" style={{ padding: 20 }}>
                 <h3 style={{ fontWeight: 700, fontSize: 15, marginBottom: 12 }}>How to use this page</h3>
                 <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>

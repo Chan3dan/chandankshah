@@ -41,7 +41,7 @@ export default function AdminBlog() {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
+      <div className="admin-page-header">
         <div>
           <h1 style={{ fontFamily: "var(--font-serif)", fontSize: 26, fontWeight: 400, marginBottom: 2 }}>Blog Posts</h1>
           <p style={{ color: "var(--ink-4)", fontSize: 13 }}>{posts.filter(p => p.isPublished).length} published · {posts.filter(p => !p.isPublished).length} drafts</p>
@@ -58,7 +58,7 @@ export default function AdminBlog() {
         />
       )}
 
-      <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 16, overflow: "hidden" }}>
+      <div className="admin-section-card">
         {loading ? <div style={{ padding: 40, textAlign: "center", color: "var(--ink-4)" }}>Loading…</div>
           : posts.length === 0 ? (
             <div style={{ padding: 48, textAlign: "center" }}>
@@ -66,33 +66,62 @@ export default function AdminBlog() {
               <button onClick={() => setShowForm(true)} className="btn btn-primary btn-sm"><Plus size={14} /> Write First Post</button>
             </div>
           ) : (
-            <table className="data-table">
-              <thead><tr><th>Title</th><th>Category</th><th>Read Time</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
-              <tbody>
-                {posts.map(p => (
-                  <tr key={p._id}>
-                    <td>
-                      <div style={{ fontWeight: 600, fontSize: 14 }}>{p.title}</div>
-                      <div style={{ fontSize: 12, color: "var(--ink-4)" }}>/{p.slug}</div>
-                    </td>
-                    <td><span className="badge badge-neutral">{p.category}</span></td>
-                    <td style={{ fontSize: 13, color: "var(--ink-4)" }}>{p.readTime} min</td>
-                    <td>
-                      <button onClick={() => handleUpdate(p._id, { isPublished: !p.isPublished })} className={`badge ${p.isPublished ? "badge-green" : "badge-amber"}`} style={{ cursor: "pointer", border: "none", display: "flex", alignItems: "center", gap: 5 }}>
-                        {p.isPublished ? <><Eye size={11} /> Published</> : <><EyeOff size={11} /> Draft</>}
-                      </button>
-                    </td>
-                    <td style={{ fontSize: 12, color: "var(--ink-4)" }}>{new Date(p.createdAt).toLocaleDateString()}</td>
-                    <td>
-                      <div style={{ display: "flex", gap: 6 }}>
-                        <button onClick={() => setEditing(editing === p._id ? null : p._id)} className="btn btn-ghost btn-sm"><Edit2 size={13} /> Edit</button>
-                        <button onClick={() => handleDelete(p._id, p.title)} style={{ padding: "6px 10px", background: "rgba(220,38,38,0.07)", border: "1px solid rgba(220,38,38,0.15)", borderRadius: 8, cursor: "pointer", color: "var(--red)" }}><Trash2 size={13} /></button>
+            <>
+              <div className="desktop-only admin-table-scroll">
+                <table className="data-table">
+                  <thead><tr><th>Title</th><th>Category</th><th>Read Time</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+                  <tbody>
+                    {posts.map(p => (
+                      <tr key={p._id}>
+                        <td>
+                          <div style={{ fontWeight: 600, fontSize: 14 }}>{p.title}</div>
+                          <div style={{ fontSize: 12, color: "var(--ink-4)" }}>/{p.slug}</div>
+                        </td>
+                        <td><span className="badge badge-neutral">{p.category}</span></td>
+                        <td style={{ fontSize: 13, color: "var(--ink-4)" }}>{p.readTime} min</td>
+                        <td>
+                          <button onClick={() => handleUpdate(p._id, { isPublished: !p.isPublished })} className={`badge ${p.isPublished ? "badge-green" : "badge-amber"}`} style={{ cursor: "pointer", border: "none", display: "flex", alignItems: "center", gap: 5 }}>
+                            {p.isPublished ? <><Eye size={11} /> Published</> : <><EyeOff size={11} /> Draft</>}
+                          </button>
+                        </td>
+                        <td style={{ fontSize: 12, color: "var(--ink-4)" }}>{new Date(p.createdAt).toLocaleDateString()}</td>
+                        <td>
+                          <div style={{ display: "flex", gap: 6 }}>
+                            <button onClick={() => setEditing(editing === p._id ? null : p._id)} className="btn btn-ghost btn-sm"><Edit2 size={13} /> Edit</button>
+                            <button onClick={() => handleDelete(p._id, p.title)} style={{ padding: "6px 10px", background: "rgba(220,38,38,0.07)", border: "1px solid rgba(220,38,38,0.15)", borderRadius: 8, cursor: "pointer", color: "var(--red)" }}><Trash2 size={13} /></button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="mobile-only admin-mobile-list">
+                {posts.map((post) => (
+                  <div key={post._id} className="admin-mobile-card">
+                    <div style={{ fontWeight: 700, fontSize: 15, color: "var(--ink-1)" }}>{post.title}</div>
+                    <div style={{ fontSize: 12, color: "var(--ink-4)", marginTop: 4 }}>/{post.slug}</div>
+                    <div className="admin-mobile-meta">
+                      <div>
+                        <div style={{ fontSize: 11, color: "var(--ink-4)", textTransform: "uppercase", letterSpacing: 0.8 }}>Category</div>
+                        <div style={{ marginTop: 6 }}><span className="badge badge-neutral">{post.category}</span></div>
                       </div>
-                    </td>
-                  </tr>
+                      <div>
+                        <div style={{ fontSize: 11, color: "var(--ink-4)", textTransform: "uppercase", letterSpacing: 0.8 }}>Read time</div>
+                        <div style={{ fontSize: 14, fontWeight: 600, color: "var(--ink-1)", marginTop: 6 }}>{post.readTime} min</div>
+                      </div>
+                    </div>
+                    <div className="admin-mobile-actions">
+                      <button onClick={() => handleUpdate(post._id, { isPublished: !post.isPublished })} className={`badge ${post.isPublished ? "badge-green" : "badge-amber"}`} style={{ cursor: "pointer", border: "none", display: "flex", alignItems: "center", gap: 5 }}>
+                        {post.isPublished ? <><Eye size={11} /> Published</> : <><EyeOff size={11} /> Draft</>}
+                      </button>
+                      <button onClick={() => setEditing(editing === post._id ? null : post._id)} className="btn btn-ghost btn-sm"><Edit2 size={13} /> Edit</button>
+                      <button onClick={() => handleDelete(post._id, post.title)} style={{ padding: "6px 10px", background: "rgba(220,38,38,0.07)", border: "1px solid rgba(220,38,38,0.15)", borderRadius: 8, cursor: "pointer", color: "var(--red)" }}><Trash2 size={13} /></button>
+                    </div>
+                  </div>
                 ))}
-              </tbody>
-            </table>
+              </div>
+            </>
           )}
       </div>
     </div>
@@ -105,13 +134,13 @@ function BlogForm({ initial, onSave, onCancel, saving, isEdit }: any) {
   const set = (k: string, v: any) => setForm((p: any) => ({ ...p, [k]: v }));
 
   return (
-    <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 16, padding: 28, marginBottom: 20 }}>
+      <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 16, padding: 28, marginBottom: 20 }}>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 22 }}>
         <h2 style={{ fontWeight: 700, fontSize: 16 }}>{isEdit ? "Edit Post" : "New Post"}</h2>
         <button onClick={onCancel} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--ink-4)" }}><X size={18} /></button>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 14, marginBottom: 14 }}>
+      <div className="admin-form-grid-2" style={{ marginBottom: 14 }}>
         <div><label className="form-label">Title *</label><input className="input" value={form.title} onChange={e => set("title", e.target.value)} /></div>
         <div><label className="form-label">Category</label><input className="input" value={form.category} onChange={e => set("category", e.target.value)} /></div>
       </div>
@@ -133,7 +162,7 @@ function BlogForm({ initial, onSave, onCancel, saving, isEdit }: any) {
             </span>
           ))}
         </div>
-        <div style={{ display: "flex", gap: 8 }}>
+        <div className="stack-actions" style={{ gap: 8 }}>
           <input className="input" value={newTag} onChange={e => setNewTag(e.target.value)} placeholder="Add tag…" onKeyDown={e => { if (e.key === "Enter") { e.preventDefault(); if (newTag.trim()) { set("tags", [...(form.tags || []), newTag.trim()]); setNewTag(""); } } }} style={{ flex: 1 }} />
           <button onClick={() => { if (newTag.trim()) { set("tags", [...(form.tags || []), newTag.trim()]); setNewTag(""); } }} className="btn btn-secondary btn-sm">Add</button>
         </div>
@@ -144,7 +173,7 @@ function BlogForm({ initial, onSave, onCancel, saving, isEdit }: any) {
         <label htmlFor="pub" style={{ fontSize: 14, fontWeight: 600, cursor: "pointer" }}>Publish immediately</label>
       </div>
 
-      <div style={{ display: "flex", gap: 10 }}>
+      <div className="stack-actions">
         <button onClick={() => onSave(form)} className="btn btn-primary" disabled={saving}><Save size={15} /> {saving ? "Saving…" : isEdit ? "Update Post" : "Create Post"}</button>
         <button onClick={onCancel} className="btn btn-secondary">Cancel</button>
       </div>

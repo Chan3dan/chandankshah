@@ -145,7 +145,7 @@ export default function ResourcesClient({ resources, profile }: Props) {
               <ChevronRight size={13} />
               <span>Resources</span>
             </nav>
-            <div className="split-2">
+            <div className="page-hero-grid">
               <div>
                 <span style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "4px 12px", background: "var(--green-bg)", border: "1px solid rgba(22,163,74,0.2)", borderRadius: 99, fontSize: 12, fontWeight: 700, color: "var(--green)", marginBottom: 14 }}>
                   Free resources · Lead-ready follow-up
@@ -159,7 +159,7 @@ export default function ResourcesClient({ resources, profile }: Props) {
                   Loksewa syllabuses, DEMAT guides, practice questions, and digital service tutorials. Download free resources now and keep the door open for future help if you need it.
                 </p>
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 14 }}>
+              <div className="page-hero-stats">
                 {[
                   { icon: <BookOpen size={20} />, value: `${resources.length}+`, label: "Resources Available", color: "var(--blue)" },
                   { icon: <Download size={20} />, value: `${resources.reduce((total, resource) => total + resource.downloadCount, 0)}+`, label: "Total Downloads", color: "var(--green)" },
@@ -183,15 +183,15 @@ export default function ResourcesClient({ resources, profile }: Props) {
 
         <section className="section">
           <div className="site-container">
-            <div style={{ display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap", marginBottom: 32 }}>
+            <div className="page-filter-bar" style={{ marginBottom: 32 }}>
               <input
                 className="input"
                 placeholder="Search resources…"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                style={{ maxWidth: 280, flex: 1 }}
+                style={{ maxWidth: 360 }}
               />
-              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+              <div className="page-chip-row">
                 {categories.map((category) => (
                   <button
                     key={category}
@@ -228,7 +228,7 @@ export default function ResourcesClient({ resources, profile }: Props) {
                 {featured.length > 0 && (
                   <div style={{ marginBottom: 48 }}>
                     <h2 style={{ fontSize: 12, fontWeight: 700, letterSpacing: 1.5, textTransform: "uppercase", color: "var(--ink-4)", marginBottom: 20 }}>Featured Resources</h2>
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20 }}>
+                    <div className="grid-auto">
                       {featured.map((resource) => (
                         <ResourceCard key={resource._id} resource={resource} onDownload={handleDownload} featured />
                       ))}
@@ -239,7 +239,7 @@ export default function ResourcesClient({ resources, profile }: Props) {
                 {regular.length > 0 && (
                   <div>
                     {featured.length > 0 && <h2 style={{ fontSize: 12, fontWeight: 700, letterSpacing: 1.5, textTransform: "uppercase", color: "var(--ink-4)", marginBottom: 20 }}>All Resources</h2>}
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16 }}>
+                    <div className="grid-auto">
                       {regular.map((resource) => (
                         <ResourceCard key={resource._id} resource={resource} onDownload={handleDownload} />
                       ))}
@@ -249,7 +249,7 @@ export default function ResourcesClient({ resources, profile }: Props) {
               </>
             )}
 
-            <div className="dark-panel split-2" style={{ marginTop: 64, borderRadius: 24, padding: "clamp(24px,5vw,48px)", gap: 32 }}>
+            <div className="dark-panel page-hero-grid" style={{ marginTop: 64, borderRadius: 24, padding: "clamp(24px,5vw,48px)", gap: 32 }}>
               <div>
                 <h3 className="dark-panel-title" style={{ fontFamily: "var(--font-serif)", fontSize: 26, fontWeight: 400, marginBottom: 10 }}>
                   Need personalized help with Loksewa or DEMAT?
@@ -273,8 +273,8 @@ export default function ResourcesClient({ resources, profile }: Props) {
       </main>
 
       {selectedResource && (
-        <div style={{ position: "fixed", inset: 0, zIndex: 400, background: "rgba(15,23,42,0.55)", display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
-          <div style={{ width: "100%", maxWidth: 560, background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 20, boxShadow: "var(--shadow-lg)", padding: "clamp(22px,4vw,30px)", position: "relative" }}>
+        <div className="responsive-modal-shell">
+          <div className="responsive-modal-panel" style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 20, boxShadow: "var(--shadow-lg)", padding: "clamp(22px,4vw,30px)", position: "relative" }}>
             <button
               onClick={() => { setSelectedResource(null); setTrackingCode(""); }}
               style={{ position: "absolute", top: 14, right: 14, width: 34, height: 34, borderRadius: 10, border: "1px solid var(--border)", background: "var(--bg-subtle)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}

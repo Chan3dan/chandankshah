@@ -67,7 +67,7 @@ export default function AdminSettings() {
               {/* ── HERO ── */}
               {sec.key === "hero" && (
                 <div>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 14 }}>
+                  <div className="admin-form-grid-2" style={{ marginBottom: 14 }}>
                     <div><label className="form-label">Your Name</label><input className="input" value={S("hero").name || ""} onChange={e => set("hero", "name", e.target.value)} /></div>
                     <div><label className="form-label">Avatar Letter</label><input className="input" value={S("hero").avatarLetter || ""} onChange={e => set("hero", "avatarLetter", e.target.value)} /></div>
                   </div>
@@ -90,7 +90,7 @@ export default function AdminSettings() {
                   </div>
                   <div className="form-group">
                     <label className="form-label">Stats</label>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                    <div className="admin-form-grid-2" style={{ gap: 8 }}>
                       {(S("hero").stats || []).map((s: any, i: number) => (
                         <div key={i} style={{ display: "flex", gap: 6 }}>
                           <input className="input" placeholder="Value" value={s.value} onChange={e => { const arr = [...(S("hero").stats || [])]; arr[i] = { ...s, value: e.target.value }; set("hero", "stats", arr); }} />
@@ -108,7 +108,7 @@ export default function AdminSettings() {
               {sec.key === "profile" && (
                 <div>
                   <div className="form-group"><label className="form-label">Full Name</label><input className="input" value={S("profile").fullName || ""} onChange={e => set("profile", "fullName", e.target.value)} /></div>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 14 }}>
+                  <div className="admin-form-grid-2" style={{ marginBottom: 14 }}>
                     <div><label className="form-label">Phone</label><input className="input" value={S("profile").phone || ""} onChange={e => set("profile", "phone", e.target.value)} /></div>
                     <div><label className="form-label">Email</label><input className="input" value={S("profile").email || ""} onChange={e => set("profile", "email", e.target.value)} /></div>
                     <div><label className="form-label">WhatsApp (with country code)</label><input className="input" value={S("profile").whatsapp || ""} onChange={e => set("profile", "whatsapp", e.target.value)} placeholder="977980000000" /></div>
@@ -120,7 +120,7 @@ export default function AdminSettings() {
                   <div className="form-group">
                     <label className="form-label">Skills</label>
                     {(S("profile").skills || []).map((sk: any, i: number) => (
-                      <div key={i} style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr auto", gap: 8, marginBottom: 8 }}>
+                      <div key={i} className="admin-form-grid-4" style={{ gap: 8, marginBottom: 8 }}>
                         <input className="input" placeholder="Skill name" value={sk.name} onChange={e => { const arr = [...(S("profile").skills || [])]; arr[i] = { ...sk, name: e.target.value }; set("profile", "skills", arr); }} />
                         <input className="input" placeholder="Category" value={sk.category} onChange={e => { const arr = [...(S("profile").skills || [])]; arr[i] = { ...sk, category: e.target.value }; set("profile", "skills", arr); }} />
                         <input type="number" className="input" min={0} max={100} value={sk.level} onChange={e => { const arr = [...(S("profile").skills || [])]; arr[i] = { ...sk, level: +e.target.value }; set("profile", "skills", arr); }} />
@@ -139,7 +139,7 @@ export default function AdminSettings() {
                     <input type="checkbox" id="show-niyukta" checked={S("niyukta").show ?? true} onChange={e => set("niyukta", "show", e.target.checked)} style={{ width: 16, height: 16 }} />
                     <label htmlFor="show-niyukta" style={{ fontWeight: 600, fontSize: 14, cursor: "pointer" }}>Show Niyukta promo section on homepage</label>
                   </div>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 14 }}>
+                  <div className="admin-form-grid-2" style={{ marginBottom: 14 }}>
                     <div><label className="form-label">Badge Text</label><input className="input" value={S("niyukta").subheadline || ""} onChange={e => set("niyukta", "subheadline", e.target.value)} /></div>
                     <div><label className="form-label">Website URL</label><input className="input" value={S("niyukta").url || ""} onChange={e => set("niyukta", "url", e.target.value)} /></div>
                   </div>
@@ -162,7 +162,7 @@ export default function AdminSettings() {
               {/* ── NAV ── */}
               {sec.key === "nav" && (
                 <div>
-                  <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 14, marginBottom: 14 }}>
+                  <div className="admin-form-grid-2" style={{ marginBottom: 14 }}>
                     <div>
                       <label className="form-label">Niyukta URL</label>
                       <input className="input" value={S("nav").niyuktaUrl || ""} onChange={e => set("nav", "niyuktaUrl", e.target.value)} placeholder="https://niyukta.com" />
@@ -181,7 +181,7 @@ export default function AdminSettings() {
                   <div>
                     <label className="form-label">Extra Nav Links (optional custom links)</label>
                     {(S("nav").extraLinks || []).map((l: { label: string; href: string; external: boolean }, i: number) => (
-                      <div key={i} style={{ display: "grid", gridTemplateColumns: "1fr 2fr auto auto", gap: 10, marginBottom: 10, alignItems: "center" }}>
+                      <div key={i} className="admin-form-grid-4" style={{ gap: 10, marginBottom: 10, alignItems: "center" }}>
                         <input className="input" placeholder="Label" value={l.label} onChange={e => { const arr = [...(S("nav").extraLinks || [])]; arr[i] = { ...l, label: e.target.value }; set("nav", "extraLinks", arr); }} />
                         <input className="input" placeholder="URL (https://...)" value={l.href} onChange={e => { const arr = [...(S("nav").extraLinks || [])]; arr[i] = { ...l, href: e.target.value }; set("nav", "extraLinks", arr); }} />
                         <label style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12, fontWeight: 600, cursor: "pointer", whiteSpace: "nowrap" }}>
@@ -201,7 +201,7 @@ export default function AdminSettings() {
 
               {/* ── SOCIAL ── */}
               {sec.key === "social" && (
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                <div className="admin-form-grid-2">
                   {["facebook", "instagram", "github", "linkedin", "twitter", "youtube"].map(platform => (
                     <div key={platform}>
                       <label className="form-label" style={{ textTransform: "capitalize" }}>{platform}</label>
@@ -218,13 +218,13 @@ export default function AdminSettings() {
                     <input type="checkbox" id="show-pricing" checked={S("pricing").show ?? true} onChange={e => set("pricing", "show", e.target.checked)} style={{ width: 16, height: 16 }} />
                     <label htmlFor="show-pricing" style={{ fontWeight: 600, fontSize: 14, cursor: "pointer" }}>Show pricing section on homepage</label>
                   </div>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 20 }}>
+                  <div className="admin-form-grid-2" style={{ marginBottom: 20 }}>
                     <div><label className="form-label">Section Heading</label><input className="input" value={S("pricing").heading || ""} onChange={e => set("pricing", "heading", e.target.value)} /></div>
                     <div><label className="form-label">Sub-heading</label><input className="input" value={S("pricing").subheading || ""} onChange={e => set("pricing", "subheading", e.target.value)} /></div>
                   </div>
                   {(S("pricing").plans || []).map((plan: any, i: number) => (
                     <div key={i} style={{ background: "var(--bg-subtle)", border: "1px solid var(--border)", borderRadius: 12, padding: 20, marginBottom: 14 }}>
-                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 12, marginBottom: 12 }}>
+                      <div className="admin-form-grid-4" style={{ marginBottom: 12 }}>
                         <div><label className="form-label">Plan Name</label><input className="input" value={plan.name} onChange={e => { const arr = [...(S("pricing").plans)]; arr[i] = { ...plan, name: e.target.value }; set("pricing", "plans", arr); }} /></div>
                         <div><label className="form-label">Price (NPR)</label><input className="input" value={plan.price} onChange={e => { const arr = [...(S("pricing").plans)]; arr[i] = { ...plan, price: e.target.value }; set("pricing", "plans", arr); }} /></div>
                         <div><label className="form-label">Period</label><input className="input" value={plan.period} onChange={e => { const arr = [...(S("pricing").plans)]; arr[i] = { ...plan, period: e.target.value }; set("pricing", "plans", arr); }} /></div>
@@ -245,7 +245,7 @@ export default function AdminSettings() {
               {/* ── META ── */}
               {sec.key === "meta" && (
                 <div>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 14 }}>
+                  <div className="admin-form-grid-2" style={{ marginBottom: 14 }}>
                     <div><label className="form-label">Site Name</label><input className="input" value={S("meta").siteName || ""} onChange={e => set("meta", "siteName", e.target.value)} /></div>
                     <div><label className="form-label">Site Tagline</label><input className="input" value={S("meta").siteTagline || ""} onChange={e => set("meta", "siteTagline", e.target.value)} /></div>
                     <div><label className="form-label">Site URL</label><input className="input" value={S("meta").siteUrl || ""} onChange={e => set("meta", "siteUrl", e.target.value)} /></div>
