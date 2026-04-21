@@ -130,7 +130,7 @@ function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSe
       <div style={{ position: "absolute", top: "10%", right: "5%", width: 480, height: 480, borderRadius: "50%", background: "radial-gradient(circle, rgba(37,99,235,0.07) 0%, transparent 65%)", pointerEvents: "none" }} />
       <div style={{ position: "absolute", bottom: "5%", left: "10%", width: 320, height: 320, borderRadius: "50%", background: "radial-gradient(circle, rgba(14,165,233,0.06) 0%, transparent 65%)", pointerEvents: "none" }} />
 
-      <div className="site-container" style={{ position: "relative", padding: "80px 24px", width: "100%" }}>
+      <div className="site-container" style={{ position: "relative", padding: "clamp(56px,10vw,80px) 0", width: "100%" }}>
         <div className="hero-grid">
           {/* Left */}
           <div>
@@ -192,9 +192,9 @@ function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSe
               </a>
             </div>
 
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 0 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(140px,1fr))", gap: 16, maxWidth: 620 }}>
               {hero.stats.map((s, i) => (
-                <div key={i} style={{ paddingRight: i < hero.stats.length - 1 ? 28 : 0, borderRight: i < hero.stats.length - 1 ? "1px solid var(--border)" : "none", paddingLeft: i > 0 ? 28 : 0 }}>
+                <div key={i} style={{ padding: "0 12px 0 0", borderRight: "none" }}>
                   <div style={{ fontFamily: "var(--font-serif)", fontSize: 30, fontWeight: 400, color: "var(--ink-1)", lineHeight: 1 }}>{s.value}</div>
                   <div style={{ fontSize: 12, color: "var(--ink-4)", marginTop: 4, fontWeight: 500 }}>{s.label}</div>
                 </div>
@@ -326,7 +326,7 @@ function ProcessSection() {
 function NiyuktaSection({ niyukta }: { niyukta: NiyuktaSettings }) {
   if (!niyukta.show) return null;
   return (
-    <section style={{ padding: "80px 0" }}>
+    <section style={{ padding: "clamp(52px,9vw,80px) 0" }}>
       <div className="site-container">
         <div className="niyukta-gradient" style={{ borderRadius: 28, padding: "clamp(32px,5vw,60px)", position: "relative", overflow: "hidden" }}>
           <div style={{ position: "absolute", top: -80, right: -80, width: 320, height: 320, borderRadius: "50%", background: "rgba(255,255,255,0.04)", pointerEvents: "none" }} />
@@ -503,7 +503,7 @@ function PricingSection({ pricing }: { pricing: PricingSettings }) {
 /* ── CTA ── */
 function CTASection({ profile }: { profile: ProfileSettings }) {
   return (
-    <section style={{ padding: "80px 0", borderTop: "1px solid var(--border)" }}>
+    <section style={{ padding: "clamp(52px,9vw,80px) 0", borderTop: "1px solid var(--border)" }}>
       <div className="site-container">
         <div className="dark-panel" style={{ borderRadius: 28, padding: "clamp(32px,5vw,56px)", display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: 32 }}>
           <div>

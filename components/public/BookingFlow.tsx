@@ -72,7 +72,7 @@ export default function BookingFlow({ services, preselectedService, profile }: P
   return (
     <main style={{ paddingTop: 64, minHeight: "100vh", background: "var(--bg-subtle)" }}>
       {/* Header */}
-      <div style={{ background: "var(--surface)", borderBottom: "1px solid var(--border)", padding: "40px 0 32px" }}>
+      <div style={{ background: "var(--surface)", borderBottom: "1px solid var(--border)", padding: "clamp(32px,7vw,40px) 0 clamp(24px,6vw,32px)" }}>
         <div className="site-container" style={{ maxWidth: 740 }}>
           <nav style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "var(--ink-4)", marginBottom: 20 }}>
             <Link href="/" style={{ color: "var(--ink-4)", textDecoration: "none" }}>Home</Link>
@@ -83,9 +83,9 @@ export default function BookingFlow({ services, preselectedService, profile }: P
           <p style={{ color: "var(--ink-3)", fontSize: 15 }}>Complete the steps below — I'll get back to you within 2–4 hours.</p>
 
           {/* Step indicators */}
-          <div style={{ display: "flex", gap: 0, marginTop: 28 }}>
+          <div className="stepper">
             {STEPS.map((label, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "center", gap: 0, flex: i < STEPS.length - 1 ? 1 : "none" }}>
+              <div key={i} className={`stepper-item ${i < STEPS.length - 1 ? "stepper-item--grow" : ""}`}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
                   <div style={{
                     width: 32, height: 32, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center",
@@ -100,7 +100,7 @@ export default function BookingFlow({ services, preselectedService, profile }: P
                   </span>
                 </div>
                 {i < STEPS.length - 1 && (
-                  <div style={{ flex: 1, height: 2, background: i < step ? "var(--green)" : "var(--bg-muted)", margin: "0 12px", minWidth: 24, transition: "background 0.3s" }} />
+                  <div className="stepper-line" style={{ background: i < step ? "var(--green)" : "var(--bg-muted)" }} />
                 )}
               </div>
             ))}
@@ -109,7 +109,7 @@ export default function BookingFlow({ services, preselectedService, profile }: P
       </div>
 
       {/* Step content */}
-      <div className="site-container" style={{ maxWidth: 740, padding: "40px 24px" }}>
+      <div className="site-container" style={{ maxWidth: 740, padding: "clamp(28px,6vw,40px) 0" }}>
         <div style={{ marginBottom: 24, padding: "14px 16px", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 14 }}>
           <p style={{ fontSize: 12.5, lineHeight: 1.7, color: "var(--ink-3)", margin: 0 }}>
             {BUSINESS_DISCLAIMER}
@@ -120,7 +120,7 @@ export default function BookingFlow({ services, preselectedService, profile }: P
         {step === 0 && (
           <div>
             <h2 style={{ fontFamily: "var(--font-serif)", fontSize: 22, fontWeight: 400, marginBottom: 24 }}>Which service do you need?</h2>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 14 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 14 }}>
               {services.map(svc => (
                 <button key={svc._id} onClick={() => setSelected(svc)} style={{
                   padding: "18px 20px", textAlign: "left", cursor: "pointer",
@@ -160,7 +160,7 @@ export default function BookingFlow({ services, preselectedService, profile }: P
 
             <h2 style={{ fontFamily: "var(--font-serif)", fontSize: 22, fontWeight: 400, marginBottom: 24 }}>Your contact details</h2>
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+              <div className="equal-grid-2">
                 <div>
                   <label className="form-label">Full Name *</label>
                   <input className="input" placeholder="Your name" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
@@ -174,7 +174,7 @@ export default function BookingFlow({ services, preselectedService, profile }: P
                 <label className="form-label">Email Address</label>
                 <input type="email" className="input" placeholder="you@email.com" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+              <div className="equal-grid-2">
                 <div>
                   <label className="form-label">Preferred Date (optional)</label>
                   <input type="date" className="input" value={form.preferredDate} onChange={e => setForm({ ...form, preferredDate: e.target.value })} min={new Date().toISOString().split("T")[0]} />
@@ -228,7 +228,7 @@ export default function BookingFlow({ services, preselectedService, profile }: P
                 ["Preferred Date", form.preferredDate || "Flexible"],
                 ["Urgency", { normal: "Normal (2–3 days)", urgent: "Urgent (same/next day)", flexible: "Flexible (within a week)" }[form.urgency] || form.urgency],
               ].map(([label, value]) => (
-                <div key={label} style={{ display: "flex", gap: 16, padding: "9px 0", borderBottom: "1px solid var(--border)" }}>
+                <div key={label} className="detail-list-row" style={{ padding: "9px 0", borderBottom: "1px solid var(--border)" }}>
                   <span style={{ fontSize: 13, color: "var(--ink-4)", width: 120, flexShrink: 0 }}>{label}</span>
                   <span style={{ fontSize: 14, fontWeight: 600, color: "var(--ink-1)" }}>{value}</span>
                 </div>
@@ -258,7 +258,7 @@ export default function BookingFlow({ services, preselectedService, profile }: P
         )}
 
         {/* Navigation buttons */}
-        <div style={{ display: "flex", justifyContent: "space-between", marginTop: 32, paddingTop: 24, borderTop: "1px solid var(--border)" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", marginTop: 32, paddingTop: 24, borderTop: "1px solid var(--border)", gap: 12, flexWrap: "wrap" }}>
           {step > 0 ? (
             <button onClick={() => setStep(s => s - 1)} className="btn btn-secondary">
               <ArrowLeft size={15} /> Back

@@ -32,7 +32,7 @@ export default async function AboutPage() {
       <Navbar />
       <main style={{ paddingTop: 64 }}>
         {/* Hero */}
-        <section style={{ background: "var(--bg-subtle)", borderBottom: "1px solid var(--border)", padding: "72px 0 60px", position: "relative", overflow: "hidden" }}>
+        <section style={{ background: "var(--bg-subtle)", borderBottom: "1px solid var(--border)", padding: "clamp(40px,8vw,72px) 0 clamp(36px,7vw,60px)", position: "relative", overflow: "hidden" }}>
           <div className="grid-pattern" style={{ position: "absolute", inset: 0, opacity: 0.4 }} />
           <div className="site-container" style={{ position: "relative" }}>
             <nav style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "var(--ink-4)", marginBottom: 28 }}>
@@ -74,8 +74,8 @@ export default async function AboutPage() {
                     { label: "Available", value: profile.availability, icon: Clock3 },
                     { label: "Languages", value: profile.languages?.join(", "), icon: Languages },
                   ].map(item => (
-                    <div key={item.label} style={{ display: "flex", gap: 12, padding: "10px 14px", background: "var(--bg-subtle)", borderRadius: 10, alignItems: "flex-start" }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "var(--ink-4)", flexShrink: 0, width: 124 }}>
+                    <div key={item.label} className="detail-list-row" style={{ padding: "10px 14px", background: "var(--bg-subtle)", borderRadius: 10 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "var(--ink-4)", flexShrink: 0 }}>
                         <item.icon size={14} />
                         {item.label}
                       </div>

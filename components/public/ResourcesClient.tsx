@@ -137,7 +137,7 @@ export default function ResourcesClient({ resources, profile }: Props) {
   return (
     <>
       <main style={{ paddingTop: 64 }}>
-        <section style={{ background: "var(--bg-subtle)", borderBottom: "1px solid var(--border)", padding: "60px 0 48px", position: "relative", overflow: "hidden" }}>
+        <section style={{ background: "var(--bg-subtle)", borderBottom: "1px solid var(--border)", padding: "clamp(40px,8vw,60px) 0 clamp(32px,7vw,48px)", position: "relative", overflow: "hidden" }}>
           <div className="dot-pattern" style={{ position: "absolute", inset: 0, opacity: 0.5 }} />
           <div className="site-container" style={{ position: "relative" }}>
             <nav style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "var(--ink-4)", marginBottom: 20 }}>
@@ -159,7 +159,7 @@ export default function ResourcesClient({ resources, profile }: Props) {
                   Loksewa syllabuses, DEMAT guides, practice questions, and digital service tutorials. Download free resources now and keep the door open for future help if you need it.
                 </p>
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 14 }}>
                 {[
                   { icon: <BookOpen size={20} />, value: `${resources.length}+`, label: "Resources Available", color: "var(--blue)" },
                   { icon: <Download size={20} />, value: `${resources.reduce((total, resource) => total + resource.downloadCount, 0)}+`, label: "Total Downloads", color: "var(--green)" },
@@ -228,7 +228,7 @@ export default function ResourcesClient({ resources, profile }: Props) {
                 {featured.length > 0 && (
                   <div style={{ marginBottom: 48 }}>
                     <h2 style={{ fontSize: 12, fontWeight: 700, letterSpacing: 1.5, textTransform: "uppercase", color: "var(--ink-4)", marginBottom: 20 }}>Featured Resources</h2>
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: 20 }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20 }}>
                       {featured.map((resource) => (
                         <ResourceCard key={resource._id} resource={resource} onDownload={handleDownload} featured />
                       ))}
@@ -239,7 +239,7 @@ export default function ResourcesClient({ resources, profile }: Props) {
                 {regular.length > 0 && (
                   <div>
                     {featured.length > 0 && <h2 style={{ fontSize: 12, fontWeight: 700, letterSpacing: 1.5, textTransform: "uppercase", color: "var(--ink-4)", marginBottom: 20 }}>All Resources</h2>}
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 16 }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16 }}>
                       {regular.map((resource) => (
                         <ResourceCard key={resource._id} resource={resource} onDownload={handleDownload} />
                       ))}
@@ -249,7 +249,7 @@ export default function ResourcesClient({ resources, profile }: Props) {
               </>
             )}
 
-            <div className="dark-panel split-2" style={{ marginTop: 64, borderRadius: 24, padding: "48px 40px", gap: 32 }}>
+            <div className="dark-panel split-2" style={{ marginTop: 64, borderRadius: 24, padding: "clamp(24px,5vw,48px)", gap: 32 }}>
               <div>
                 <h3 className="dark-panel-title" style={{ fontFamily: "var(--font-serif)", fontSize: 26, fontWeight: 400, marginBottom: 10 }}>
                   Need personalized help with Loksewa or DEMAT?

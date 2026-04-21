@@ -27,7 +27,7 @@ export default async function ProjectsPage() {
     <>
       <Navbar />
       <main style={{ paddingTop: 64 }}>
-        <section style={{ background: "var(--bg-subtle)", borderBottom: "1px solid var(--border)", padding: "56px 0 48px" }}>
+        <section style={{ background: "var(--bg-subtle)", borderBottom: "1px solid var(--border)", padding: "clamp(40px,8vw,56px) 0 clamp(32px,7vw,48px)" }}>
           <div className="site-container">
             <nav style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "var(--ink-4)", marginBottom: 16 }}>
               <Link href="/" style={{ color: "var(--ink-4)", textDecoration: "none" }}>Home</Link>
@@ -45,7 +45,7 @@ export default async function ProjectsPage() {
             {featured.length > 0 && (
               <div style={{ marginBottom: 52 }}>
                 <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: "var(--ink-4)", marginBottom: 20 }}>Featured</p>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(360px, 1fr))", gap: 24 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24 }}>
                   {featured.map((p: any) => (
                     <Link key={p._id} href={`/projects/${p.slug}`} style={{ textDecoration: "none" }}>
                       <div className="card" style={{ padding: 30, height: "100%" }}>
@@ -78,7 +78,7 @@ export default async function ProjectsPage() {
             {categories.map((cat) => (
               <div key={cat} style={{ marginBottom: 44 }}>
                 <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: "var(--ink-4)", marginBottom: 18 }}>{cat}</p>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 16 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16 }}>
                   {rest.filter((p: any) => p.category === cat).map((p: any) => (
                     <Link key={p._id} href={`/projects/${p.slug}`} style={{ textDecoration: "none" }}>
                       <div className="card" style={{ padding: 24, height: "100%" }}>

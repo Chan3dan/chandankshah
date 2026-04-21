@@ -40,9 +40,8 @@ interface FooterProps {
 export default function Footer({ profile, social, meta }: FooterProps) {
   return (
     <footer style={{ background: "var(--footer-bg)", color: "var(--footer-ink)", marginTop: 0 }}>
-      <div className="site-container" style={{ padding: "64px 24px 48px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1.5fr repeat(4, minmax(0, 1fr))", gap: 40 }}
-          className="footer-grid">
+      <div className="site-container" style={{ padding: "clamp(48px,8vw,64px) 0 clamp(32px,6vw,48px)" }}>
+        <div className="footer-grid">
           {/* Brand */}
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
@@ -126,7 +125,7 @@ export default function Footer({ profile, social, meta }: FooterProps) {
 
       {/* Bottom */}
       <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", padding: "18px 0" }}>
-        <div className="site-container" style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
+        <div className="site-container footer-bottom">
           <p style={{ fontSize: 13, color: "var(--footer-ink-soft)" }}>© {new Date().getFullYear()} Chandan Kumar Shah. All rights reserved.</p>
           <p style={{ fontSize: 13, color: "var(--footer-ink-soft)", maxWidth: 680 }}>
             This is an independent digital services business and is not affiliated with, endorsed by, or acting on behalf of any government office or public authority.
