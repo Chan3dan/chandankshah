@@ -1,7 +1,7 @@
 "use client";
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, ExternalLink, Star, Download, MapPin, Clock, Sparkles, ChevronRight, BadgeCheck, MessageCircle, Zap, ShieldCheck, Search } from "lucide-react";
+import { ArrowRight, CheckCircle2, ExternalLink, Star, Download, MapPin, Clock, Sparkles, ChevronRight, BadgeCheck, MessageCircle, Zap, ShieldCheck, Search, Orbit, PanelsTopLeft } from "lucide-react";
 import type { HeroSettings, ProfileSettings, NiyuktaSettings, PricingSettings } from "@/lib/settings";
 import ServiceIcon, { cleanBadgeLabel, profileHighlights } from "@/components/public/ServiceIcon";
 import { BUSINESS_DISCLAIMER, OFFICIAL_PROCESS_NOTICE, PROCESS_STEPS, SERVICE_PROMISES } from "@/lib/site-content";
@@ -79,10 +79,13 @@ function QuickServiceFinder({ services, profile }: { services: any[]; profile: P
   return (
     <section style={{ padding: "clamp(26px,6vw,44px) 0", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", background: "var(--bg-subtle)" }}>
       <div className="site-container">
-        <div className="card-static" style={{ padding: "clamp(20px,4vw,30px)" }}>
+        <div className="card-static home-section-shell" style={{ padding: "clamp(20px,4vw,30px)" }}>
           <div className="home-finder-grid">
             <div>
-              <p className="section-eyebrow" style={{ marginBottom: 10 }}>Quick Service Finder</p>
+              <span className="home-kicker" style={{ marginBottom: 12 }}>
+                <Orbit size={13} />
+                Quick Service Finder
+              </span>
               <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1.6rem,3vw,2.2rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1.15, marginBottom: 10 }}>
                 Reach the right service in one click
               </h2>
@@ -150,6 +153,12 @@ function TrustSection() {
   return (
     <section style={{ padding: "clamp(28px,6vw,44px) 0", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", background: "var(--surface)" }}>
       <div className="site-container">
+        <div style={{ marginBottom: 20 }}>
+          <span className="home-kicker">
+            <ShieldCheck size={13} />
+            Why clients feel safe working with me
+          </span>
+        </div>
         <div className="home-trust-grid">
           {SERVICE_PROMISES.map((item) => (
             <div key={item.title} className="card-static" style={{ padding: "20px 20px 18px" }}>
@@ -171,8 +180,8 @@ function ConversionSection() {
     <section className="section" style={{ borderTop: "1px solid var(--border)" }}>
       <div className="site-container">
         <div className="home-conversion-grid">
-          <div className="card-static" style={{ padding: "clamp(22px,4vw,32px)" }}>
-            <p className="section-eyebrow" style={{ marginBottom: 12 }}>Before You Book</p>
+          <div className="card-static home-section-shell" style={{ padding: "clamp(22px,4vw,32px)" }}>
+            <span className="home-kicker" style={{ marginBottom: 12 }}>Before You Book</span>
             <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1.7rem,3vw,2.3rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1.2, marginBottom: 14 }}>
               What helps a request move faster
             </h2>
@@ -191,8 +200,8 @@ function ConversionSection() {
             </div>
           </div>
 
-          <div className="card-static" style={{ padding: "clamp(22px,4vw,32px)" }}>
-            <p className="section-eyebrow" style={{ marginBottom: 12 }}>Popular Bundles</p>
+          <div className="card-static home-section-shell" style={{ padding: "clamp(22px,4vw,32px)" }}>
+            <span className="home-kicker" style={{ marginBottom: 12 }}>Popular Bundles</span>
             <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1.6rem,2.8vw,2.1rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1.2, marginBottom: 14 }}>
               Combinations clients ask for most
             </h2>
@@ -228,7 +237,7 @@ function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSe
       <div style={{ position: "absolute", bottom: "5%", left: "10%", width: "min(42vw, 320px)", height: "min(42vw, 320px)", borderRadius: "50%", background: "radial-gradient(circle, rgba(14,165,233,0.06) 0%, transparent 65%)", pointerEvents: "none" }} />
 
       <div className="site-container" style={{ position: "relative", padding: "clamp(56px,10vw,80px) 0", width: "100%" }}>
-        <div className="hero-grid">
+        <div className="hero-grid home-hero-frame">
           {/* Left */}
           <div className="home-hero-copy">
             <div className="hero-badges-row" style={{ gap: 8, marginBottom: 28 }}>
@@ -241,7 +250,10 @@ function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSe
               </span>
             </div>
 
-            <p style={{ fontSize: 15, color: "var(--ink-3)", fontWeight: 500, marginBottom: 6 }}>{hero.subtitle}</p>
+            <span className="home-kicker" style={{ marginBottom: 10, width: "fit-content" }}>
+              <PanelsTopLeft size={13} />
+              {hero.subtitle}
+            </span>
             <h1 className="home-hero-title" style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(2.6rem,6vw,5rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1.05, letterSpacing: "-0.03em", marginBottom: 10 }}>
               {hero.name}
             </h1>
@@ -296,7 +308,7 @@ function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSe
           {/* Right — Profile card (hidden on mobile via hero-grid css) */}
           <div className="hero-profile-wrap">
             <div className="hero-profile-card">
-              <div className="card" style={{ padding: 32 }}>
+              <div className="card" style={{ padding: 32, backdropFilter: "blur(12px)" }}>
                 <div style={{ width: 88, height: 88, borderRadius: "50%", background: "linear-gradient(135deg, #2563eb, #0ea5e9)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 18px", fontFamily: "var(--font-serif)", fontSize: 36, color: "#fff" }}>
                   {hero.avatarLetter}
                 </div>
@@ -350,7 +362,7 @@ function ServicesSection({ services }: { services: any[] }) {
         <div className="grid-auto">
           {services.map((svc) => (
             <Link key={svc._id} href={`/services/${svc.slug}`} style={{ textDecoration: "none" }}>
-              <div className="card" style={{ padding: 26, height: "100%", position: "relative", overflow: "hidden" }}>
+              <div className="card home-service-card" style={{ padding: 26, height: "100%", position: "relative", overflow: "hidden" }}>
                 <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: svc.color, opacity: 0.6, borderRadius: "20px 20px 0 0" }} />
                 {svc.badge && (
                   <span style={{ position: "absolute", top: 16, right: 16, fontSize: 11, fontWeight: 700, padding: "2px 9px", background: `${svc.color}18`, color: svc.color, borderRadius: 99 }}>{svc.badge}</span>
@@ -365,7 +377,7 @@ function ServicesSection({ services }: { services: any[] }) {
                     <span key={f} style={{ padding: "2px 9px", background: "var(--bg-muted)", borderRadius: 99, fontSize: 11, color: "var(--ink-4)" }}>{f}</span>
                   ))}
                 </div>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div className="home-service-card__footer" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ fontSize: 14, fontWeight: 700, color: svc.color }}>{svc.price}</span>
                   <span style={{ fontSize: 13, color: "var(--blue)", fontWeight: 600, display: "flex", alignItems: "center", gap: 4 }}>View <ArrowRight size={13} /></span>
                 </div>
