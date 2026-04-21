@@ -1,5 +1,4 @@
 .env*
-!.env.example
 .next
 node_modules
 cks-fixed
