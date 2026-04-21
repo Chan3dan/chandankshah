@@ -1,0 +1,10 @@
+.env*
+!.env.example
+.next
+node_modules
+cks-fixed
+new.txt
+.nextauth_url_value.txt
+.auth_trust_host.txt
+.admin_email_value.txt
+*.zip
