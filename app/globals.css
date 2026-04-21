@@ -66,12 +66,13 @@
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
 html, body { margin: 0; padding: 0; min-height: 100%; }
+html, body { max-width: 100%; overflow-x: clip; }
 body {
   background: var(--bg-base);
   color: var(--ink-1);
   font-family: var(--font-sans);
   line-height: 1.6;
-  overflow-x: hidden;
+  overflow-x: clip;
   min-height: 100vh;
 }
 
@@ -561,6 +562,7 @@ select.input { cursor: pointer; }
 .hero-copy-grid {
   display: grid;
   gap: 0;
+  min-width: 0;
 }
 .hero-action-row,
 .hero-badges-row,
@@ -672,10 +674,107 @@ select.input { cursor: pointer; }
 .hero-profile-wrap {
   display: flex;
   justify-content: center;
+  min-width: 0;
 }
 .hero-profile-card {
   position: relative;
   width: min(100%, 300px);
+}
+.home-main {
+  overflow-x: clip;
+}
+.home-hero-section {
+  overflow: clip;
+}
+.home-hero-copy {
+  display: grid;
+  gap: 0;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+.home-hero-title {
+  max-width: 11ch;
+  text-wrap: balance;
+}
+.home-hero-description {
+  max-width: 58ch;
+}
+.home-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 760px;
+}
+.home-pillar-card {
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.78));
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-xs);
+  min-width: 0;
+}
+.home-hero-note {
+  max-width: 720px;
+}
+.home-hero-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  max-width: 760px;
+}
+.home-stat-card {
+  padding: 16px 18px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255,255,255,0.78), rgba(255,255,255,0.62));
+  box-shadow: var(--shadow-xs);
+}
+.home-section-lead {
+  max-width: 680px;
+}
+.home-trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+.home-conversion-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(280px, 0.92fr);
+  gap: 24px;
+  align-items: stretch;
+}
+.home-list-stack {
+  display: grid;
+  gap: 12px;
+}
+.home-process-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: 28px;
+  align-items: start;
+}
+.home-niyukta-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(300px, 1.05fr);
+  gap: 32px;
+  align-items: center;
+}
+.home-niyukta-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.home-section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.home-cta-panel {
+  overflow: hidden;
 }
 .hero-floating-chip {
   position: absolute;
@@ -932,6 +1031,17 @@ select.input { cursor: pointer; }
   .content-sidebar { grid-template-columns: 1fr; gap: 28px; }
   .home-finder-grid { grid-template-columns: 1fr; }
   .page-hero-grid { grid-template-columns: 1fr; }
+  .home-conversion-grid,
+  .home-process-grid,
+  .home-niyukta-grid {
+    grid-template-columns: 1fr;
+  }
+  .home-trust-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .home-hero-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   .hero-floating-chip {
     position: static;
     width: 100%;
@@ -976,6 +1086,27 @@ select.input { cursor: pointer; }
   }
   .hero-copy-grid {
     text-align: left;
+  }
+  .home-hero-copy {
+    gap: 0;
+  }
+  .home-hero-title {
+    max-width: 100%;
+    text-wrap: pretty;
+  }
+  .home-hero-description,
+  .home-hero-note,
+  .home-section-lead {
+    max-width: 100%;
+  }
+  .home-pillars-grid,
+  .home-hero-stats,
+  .home-trust-grid,
+  .home-niyukta-stats {
+    grid-template-columns: 1fr;
+  }
+  .home-section-heading {
+    align-items: stretch;
   }
   .hero-copy-grid .section-eyebrow,
   .hero-copy-grid .section-desc {
@@ -1027,6 +1158,10 @@ select.input { cursor: pointer; }
   .stepper-item { min-width: 170px; }
   .responsive-modal-shell {
     padding: 10px;
+  }
+  .home-pillar-card,
+  .home-stat-card {
+    padding: 14px 14px;
   }
 }
 

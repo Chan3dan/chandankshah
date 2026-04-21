@@ -18,7 +18,7 @@ interface Props {
 
 export default function HomeClient({ hero, profile, niyukta, pricing, services, projects, testimonials }: Props) {
   return (
-    <main style={{ paddingTop: 64 }}>
+    <main className="home-main" style={{ paddingTop: 64 }}>
       <HeroSection hero={hero} profile={profile} />
       <QuickServiceFinder services={services} profile={profile} />
       <TrustSection />
@@ -150,7 +150,7 @@ function TrustSection() {
   return (
     <section style={{ padding: "clamp(28px,6vw,44px) 0", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", background: "var(--surface)" }}>
       <div className="site-container">
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: 18 }}>
+        <div className="home-trust-grid">
           {SERVICE_PROMISES.map((item) => (
             <div key={item.title} className="card-static" style={{ padding: "20px 20px 18px" }}>
               <div style={{ width: 42, height: 42, borderRadius: 12, background: "var(--blue-bg)", border: "1px solid var(--blue-border)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 14 }}>
@@ -170,7 +170,7 @@ function ConversionSection() {
   return (
     <section className="section" style={{ borderTop: "1px solid var(--border)" }}>
       <div className="site-container">
-        <div className="page-hero-grid" style={{ alignItems: "stretch" }}>
+        <div className="home-conversion-grid">
           <div className="card-static" style={{ padding: "clamp(22px,4vw,32px)" }}>
             <p className="section-eyebrow" style={{ marginBottom: 12 }}>Before You Book</p>
             <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1.7rem,3vw,2.3rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1.2, marginBottom: 14 }}>
@@ -196,7 +196,7 @@ function ConversionSection() {
             <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1.6rem,2.8vw,2.1rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1.2, marginBottom: 14 }}>
               Combinations clients ask for most
             </h2>
-            <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 18 }}>
+            <div className="home-list-stack" style={{ marginBottom: 18 }}>
               {POPULAR_BUNDLES.map((bundle) => (
                 <div key={bundle} style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 14px", borderRadius: 12, background: "var(--bg-subtle)", border: "1px solid var(--border)", fontSize: 14, fontWeight: 600, color: "var(--ink-2)" }}>
                   <CheckCircle2 size={15} color="var(--green)" />
@@ -222,7 +222,7 @@ function ConversionSection() {
 /* ── HERO ── */
 function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSettings }) {
   return (
-    <section style={{ minHeight: "calc(100vh - 64px)", display: "flex", alignItems: "center", position: "relative", overflow: "hidden", background: "var(--bg-base)" }}>
+    <section className="home-hero-section" style={{ minHeight: "calc(100vh - 64px)", display: "flex", alignItems: "center", position: "relative", background: "var(--bg-base)" }}>
       <div className="grid-pattern" style={{ position: "absolute", inset: 0, opacity: 0.45 }} />
       <div style={{ position: "absolute", top: "10%", right: "5%", width: "min(58vw, 480px)", height: "min(58vw, 480px)", borderRadius: "50%", background: "radial-gradient(circle, rgba(37,99,235,0.07) 0%, transparent 65%)", pointerEvents: "none" }} />
       <div style={{ position: "absolute", bottom: "5%", left: "10%", width: "min(42vw, 320px)", height: "min(42vw, 320px)", borderRadius: "50%", background: "radial-gradient(circle, rgba(14,165,233,0.06) 0%, transparent 65%)", pointerEvents: "none" }} />
@@ -230,7 +230,7 @@ function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSe
       <div className="site-container" style={{ position: "relative", padding: "clamp(56px,10vw,80px) 0", width: "100%" }}>
         <div className="hero-grid">
           {/* Left */}
-          <div className="hero-copy-grid">
+          <div className="home-hero-copy">
             <div className="hero-badges-row" style={{ gap: 8, marginBottom: 28 }}>
               <span style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 12px", background: "var(--green-bg)", border: "1px solid rgba(22,163,74,0.2)", borderRadius: 99, fontSize: 12, fontWeight: 600, color: "var(--green)" }}>
                 <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--green)", display: "inline-block" }} />
@@ -242,26 +242,26 @@ function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSe
             </div>
 
             <p style={{ fontSize: 15, color: "var(--ink-3)", fontWeight: 500, marginBottom: 6 }}>{hero.subtitle}</p>
-            <h1 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(2.6rem,6vw,5rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1.1, letterSpacing: "-0.03em", marginBottom: 10 }}>
+            <h1 className="home-hero-title" style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(2.6rem,6vw,5rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1.05, letterSpacing: "-0.03em", marginBottom: 10 }}>
               {hero.name}
             </h1>
             <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1.1rem,2.5vw,1.7rem)", fontWeight: 400, fontStyle: "italic", color: "var(--blue)", marginBottom: 20 }}>
               {hero.tagline}
             </h2>
-            <p style={{ fontSize: "clamp(14px,2vw,16px)", color: "var(--ink-3)", lineHeight: 1.8, maxWidth: 520, marginBottom: 32 }}>
+            <p className="home-hero-description" style={{ fontSize: "clamp(14px,2vw,16px)", color: "var(--ink-3)", lineHeight: 1.8, marginBottom: 32 }}>
               {hero.description}
             </p>
 
-            <div className="info-card-grid" style={{ maxWidth: 760, marginBottom: 28 }}>
+            <div className="home-pillars-grid" style={{ marginBottom: 28 }}>
               {HERO_PILLARS.map((item) => (
-                <div key={item.label} style={{ padding: "12px 14px", borderRadius: 14, background: "var(--surface)", border: "1px solid var(--border)", boxShadow: "var(--shadow-xs)" }}>
+                <div key={item.label} className="home-pillar-card">
                   <div style={{ fontSize: 11, fontWeight: 700, color: "var(--ink-4)", letterSpacing: 0.8, textTransform: "uppercase", marginBottom: 5 }}>{item.label}</div>
                   <div style={{ fontSize: 13.5, color: "var(--ink-2)", lineHeight: 1.6 }}>{item.text}</div>
                 </div>
               ))}
             </div>
 
-            <div style={{ padding: "14px 16px", borderRadius: 14, background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.18)", maxWidth: 700, marginBottom: 36 }}>
+            <div className="home-hero-note" style={{ padding: "14px 16px", borderRadius: 14, background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.18)", marginBottom: 36 }}>
               <p style={{ margin: 0, fontSize: 13.5, color: "var(--ink-3)", lineHeight: 1.7 }}>
                 {OFFICIAL_PROCESS_NOTICE}
               </p>
@@ -283,9 +283,9 @@ function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSe
               </a>
             </div>
 
-            <div className="page-hero-stats" style={{ maxWidth: 640 }}>
+            <div className="home-hero-stats">
               {hero.stats.map((s, i) => (
-                <div key={i} style={{ padding: "16px 18px", borderRadius: 16, border: "1px solid var(--border)", background: "rgba(255,255,255,0.7)", boxShadow: "var(--shadow-xs)" }}>
+                <div key={i} className="home-stat-card">
                   <div style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(2rem,5vw,2.3rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1 }}>{s.value}</div>
                   <div style={{ fontSize: 12.5, color: "var(--ink-4)", marginTop: 6, fontWeight: 600 }}>{s.label}</div>
                 </div>
@@ -339,11 +339,11 @@ function ServicesSection({ services }: { services: any[] }) {
   return (
     <section className="section" style={{ background: "var(--bg-subtle)", borderTop: "1px solid var(--border)" }}>
       <div className="site-container">
-        <div className="cta-split" style={{ marginBottom: 52, alignItems: "flex-end" }}>
+        <div className="home-section-heading" style={{ marginBottom: 52 }}>
           <div>
             <p className="section-eyebrow">What I Offer</p>
             <h2 className="section-title">Services</h2>
-            <p className="section-desc" style={{ maxWidth: 480 }}>Affordable, reliable help for government forms, finance, and digital needs.</p>
+            <p className="section-desc home-section-lead">Affordable, reliable help for government forms, finance, and digital needs.</p>
           </div>
           <Link href="/services" className="btn btn-secondary">View All <ChevronRight size={15} /></Link>
         </div>
@@ -382,11 +382,11 @@ function ProcessSection() {
   return (
     <section className="section" style={{ borderTop: "1px solid var(--border)" }}>
       <div className="site-container">
-        <div className="page-hero-grid" style={{ alignItems: "start" }}>
+        <div className="home-process-grid">
           <div>
             <p className="section-eyebrow">How It Works</p>
             <h2 className="section-title" style={{ marginBottom: 12 }}>A cleaner process from first message to final delivery</h2>
-            <p className="section-desc" style={{ marginBottom: 18 }}>
+            <p className="section-desc home-section-lead" style={{ marginBottom: 18 }}>
               Designed for clients who want help without confusion, hidden steps, or unnecessary back and forth.
             </p>
             <div style={{ padding: "14px 16px", border: "1px solid var(--border)", borderRadius: 14, background: "var(--bg-subtle)" }}>
@@ -421,7 +421,7 @@ function NiyuktaSection({ niyukta }: { niyukta: NiyuktaSettings }) {
       <div className="site-container">
         <div className="niyukta-gradient" style={{ borderRadius: 28, padding: "clamp(32px,5vw,60px)", position: "relative", overflow: "hidden" }}>
           <div style={{ position: "absolute", top: -80, right: -80, width: "min(54vw, 320px)", height: "min(54vw, 320px)", borderRadius: "50%", background: "rgba(255,255,255,0.04)", pointerEvents: "none" }} />
-          <div className="page-hero-grid" style={{ gap: 32, alignItems: "center", position: "relative" }}>
+          <div className="home-niyukta-grid" style={{ position: "relative" }}>
             <div>
               <div style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 14px", background: "rgba(255,255,255,0.12)", borderRadius: 99, fontSize: 12, fontWeight: 700, color: "#bfdbfe", marginBottom: 16 }}>
                 <Sparkles size={12} /> {niyukta.subheadline}
@@ -430,9 +430,9 @@ function NiyuktaSection({ niyukta }: { niyukta: NiyuktaSettings }) {
                 {niyukta.headline}
               </h2>
               <p style={{ color: "rgba(255,255,255,0.75)", fontSize: 15, lineHeight: 1.75, marginBottom: 24 }}>{niyukta.description}</p>
-              <div className="page-hero-stats" style={{ marginBottom: 28 }}>
+              <div className="home-niyukta-stats">
                 {niyukta.stats?.map((s) => (
-                  <div key={s.label} style={{ padding: "14px 0" }}>
+                  <div key={s.label} style={{ padding: "14px 0", minWidth: 0 }}>
                     <div style={{ fontFamily: "var(--font-serif)", fontSize: 26, color: "#fff", lineHeight: 1 }}>{s.value}</div>
                     <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginTop: 3 }}>{s.label}</div>
                   </div>
@@ -466,10 +466,13 @@ function ProjectsSection({ projects }: { projects: any[] }) {
   return (
     <section className="section" style={{ borderTop: "1px solid var(--border)" }}>
       <div className="site-container">
-        <div className="cta-split" style={{ marginBottom: 48, alignItems: "flex-end" }}>
+        <div className="home-section-heading" style={{ marginBottom: 48 }}>
           <div>
             <p className="section-eyebrow">My Work</p>
             <h2 className="section-title">Featured Projects</h2>
+            <p className="section-desc home-section-lead" style={{ marginTop: 10 }}>
+              Selected work across digital services, portfolio websites, and product-focused builds.
+            </p>
           </div>
           <Link href="/projects" className="btn btn-secondary">All Projects <ChevronRight size={15} /></Link>
         </div>
@@ -597,7 +600,7 @@ function CTASection({ profile }: { profile: ProfileSettings }) {
   return (
     <section style={{ padding: "clamp(52px,9vw,80px) 0", borderTop: "1px solid var(--border)" }}>
       <div className="site-container">
-        <div className="dark-panel cta-split" style={{ borderRadius: 28, padding: "clamp(32px,5vw,56px)", gap: 32 }}>
+        <div className="dark-panel cta-split home-cta-panel" style={{ borderRadius: 28, padding: "clamp(32px,5vw,56px)", gap: 32 }}>
           <div>
             <h2 className="dark-panel-title" style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1.8rem,3vw,2.8rem)", fontWeight: 400, marginBottom: 8, lineHeight: 1.2 }}>
               Ready to get started?
