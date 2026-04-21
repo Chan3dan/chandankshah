@@ -969,24 +969,25 @@ select.input { cursor: pointer; }
   .footer-bottom { flex-direction: column; align-items: flex-start; }
   .hero-action-row > *,
   .home-finder-actions > *,
-  .hero-badges-row > * {
+  .hero-badges-row > *,
+  .stack-actions > * {
     width: 100%;
     justify-content: center;
   }
   .hero-copy-grid {
-    text-align: center;
+    text-align: left;
   }
   .hero-copy-grid .section-eyebrow,
   .hero-copy-grid .section-desc {
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
+    justify-content: flex-start;
+    margin-left: 0;
+    margin-right: 0;
   }
   .hero-copy-grid p,
   .hero-copy-grid h1,
   .hero-copy-grid h2 {
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 0;
+    margin-right: 0;
   }
   .admin-main-inner { padding: 22px 16px; }
   .admin-topbar { padding: 0 16px; }

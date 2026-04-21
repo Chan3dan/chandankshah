@@ -34,6 +34,35 @@ export default function HomeClient({ hero, profile, niyukta, pricing, services, 
   );
 }
 
+const HERO_PILLARS = [
+  { label: "What I do", text: "Documentation, forms, DEMAT help, and web services" },
+  { label: "Who I help", text: "Individuals, students, job applicants, and small businesses" },
+  { label: "Where I work", text: "Nepal-based remote support with direct follow-up" },
+  { label: "Why trust me", text: "Clear communication, careful handling, and transparent steps" },
+  { label: "How to contact", text: "WhatsApp, phone, email, or the booking form" },
+];
+
+const BOOKING_GUIDE = [
+  {
+    title: "Documents ready",
+    text: "Keep citizenship, academic papers, screenshots, or account details ready before the first message when relevant.",
+  },
+  {
+    title: "Clear deadline",
+    text: "Mention your submission date, exam deadline, or target launch date early so the work can be prioritized properly.",
+  },
+  {
+    title: "Preferred follow-up",
+    text: "Say whether you prefer WhatsApp, call, or email so updates stay consistent and easy to track.",
+  },
+];
+
+const POPULAR_BUNDLES = [
+  "Loksewa Form + Document Review",
+  "DEMAT + Mero Share + IPO Setup",
+  "Portfolio Website + Domain + Deployment",
+];
+
 function QuickServiceFinder({ services, profile }: { services: any[]; profile: ProfileSettings }) {
   const [selectedSlug, setSelectedSlug] = useState<string>(services[0]?.slug || "");
   const selectedService = useMemo(
@@ -141,27 +170,14 @@ function ConversionSection() {
   return (
     <section className="section" style={{ borderTop: "1px solid var(--border)" }}>
       <div className="site-container">
-        <div style={{ display: "grid", gridTemplateColumns: "1.15fr 0.85fr", gap: 24 }} className="grid-2">
+        <div className="page-hero-grid" style={{ alignItems: "stretch" }}>
           <div className="card-static" style={{ padding: "clamp(22px,4vw,32px)" }}>
             <p className="section-eyebrow" style={{ marginBottom: 12 }}>Before You Book</p>
             <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1.7rem,3vw,2.3rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1.2, marginBottom: 14 }}>
               What helps a request move faster
             </h2>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))", gap: 14, marginBottom: 18 }}>
-              {[
-                {
-                  title: "Documents ready",
-                  text: "Keep citizenship, academic papers, screenshots, or account details ready before the first message when relevant.",
-                },
-                {
-                  title: "Clear deadline",
-                  text: "Mention your submission date, exam deadline, or target launch date early so the work can be prioritized properly.",
-                },
-                {
-                  title: "Preferred follow-up",
-                  text: "Say whether you prefer WhatsApp, call, or email so updates stay consistent and easy to track.",
-                },
-              ].map((item) => (
+            <div className="info-card-grid" style={{ marginBottom: 18 }}>
+              {BOOKING_GUIDE.map((item) => (
                 <div key={item.title} style={{ padding: "16px 16px 14px", borderRadius: 14, background: "var(--bg-subtle)", border: "1px solid var(--border)" }}>
                   <h3 style={{ fontSize: 15, fontWeight: 700, color: "var(--ink-1)", marginBottom: 8 }}>{item.title}</h3>
                   <p style={{ margin: 0, fontSize: 13.5, color: "var(--ink-3)", lineHeight: 1.7 }}>{item.text}</p>
@@ -181,18 +197,14 @@ function ConversionSection() {
               Combinations clients ask for most
             </h2>
             <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 18 }}>
-              {[
-                "Loksewa Form + Document Review",
-                "DEMAT + Mero Share + IPO Setup",
-                "Portfolio Website + Domain + Deployment",
-              ].map((bundle) => (
+              {POPULAR_BUNDLES.map((bundle) => (
                 <div key={bundle} style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 14px", borderRadius: 12, background: "var(--bg-subtle)", border: "1px solid var(--border)", fontSize: 14, fontWeight: 600, color: "var(--ink-2)" }}>
                   <CheckCircle2 size={15} color="var(--green)" />
                   {bundle}
                 </div>
               ))}
             </div>
-            <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+            <div className="stack-actions">
               <Link href="/services" className="btn btn-primary">
                 Explore Services <ArrowRight size={14} />
               </Link>
@@ -212,14 +224,14 @@ function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSe
   return (
     <section style={{ minHeight: "calc(100vh - 64px)", display: "flex", alignItems: "center", position: "relative", overflow: "hidden", background: "var(--bg-base)" }}>
       <div className="grid-pattern" style={{ position: "absolute", inset: 0, opacity: 0.45 }} />
-      <div style={{ position: "absolute", top: "10%", right: "5%", width: 480, height: 480, borderRadius: "50%", background: "radial-gradient(circle, rgba(37,99,235,0.07) 0%, transparent 65%)", pointerEvents: "none" }} />
-      <div style={{ position: "absolute", bottom: "5%", left: "10%", width: 320, height: 320, borderRadius: "50%", background: "radial-gradient(circle, rgba(14,165,233,0.06) 0%, transparent 65%)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", top: "10%", right: "5%", width: "min(58vw, 480px)", height: "min(58vw, 480px)", borderRadius: "50%", background: "radial-gradient(circle, rgba(37,99,235,0.07) 0%, transparent 65%)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", bottom: "5%", left: "10%", width: "min(42vw, 320px)", height: "min(42vw, 320px)", borderRadius: "50%", background: "radial-gradient(circle, rgba(14,165,233,0.06) 0%, transparent 65%)", pointerEvents: "none" }} />
 
       <div className="site-container" style={{ position: "relative", padding: "clamp(56px,10vw,80px) 0", width: "100%" }}>
         <div className="hero-grid">
           {/* Left */}
           <div className="hero-copy-grid">
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 28 }}>
+            <div className="hero-badges-row" style={{ gap: 8, marginBottom: 28 }}>
               <span style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 12px", background: "var(--green-bg)", border: "1px solid rgba(22,163,74,0.2)", borderRadius: 99, fontSize: 12, fontWeight: 600, color: "var(--green)" }}>
                 <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--green)", display: "inline-block" }} />
                 Available for Work
@@ -241,13 +253,7 @@ function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSe
             </p>
 
             <div className="info-card-grid" style={{ maxWidth: 760, marginBottom: 28 }}>
-              {[
-                { label: "What I do", text: "Documentation, forms, DEMAT help, and web services" },
-                { label: "Who I help", text: "Individuals, students, job applicants, and small businesses" },
-                { label: "Where I work", text: "Nepal-based remote support with direct follow-up" },
-                { label: "Why trust me", text: "Clear communication, careful handling, and transparent steps" },
-                { label: "How to contact", text: "WhatsApp, phone, email, or the booking form" },
-              ].map((item) => (
+              {HERO_PILLARS.map((item) => (
                 <div key={item.label} style={{ padding: "12px 14px", borderRadius: 14, background: "var(--surface)", border: "1px solid var(--border)", boxShadow: "var(--shadow-xs)" }}>
                   <div style={{ fontSize: 11, fontWeight: 700, color: "var(--ink-4)", letterSpacing: 0.8, textTransform: "uppercase", marginBottom: 5 }}>{item.label}</div>
                   <div style={{ fontSize: 13.5, color: "var(--ink-2)", lineHeight: 1.6 }}>{item.text}</div>
@@ -261,7 +267,7 @@ function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSe
               </p>
             </div>
 
-            <div className="hero-badges-row" style={{ gap: 8, marginBottom: 36 }}>
+            <div className="hero-badges-row" style={{ gap: 8, marginBottom: 28 }}>
               {hero.badges.map((b, i) => (
                 <span key={i} style={{ padding: "6px 14px", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 99, fontSize: 13, fontWeight: 500, color: "var(--ink-2)", boxShadow: "var(--shadow-xs)" }}>
                   {cleanBadgeLabel(b)}
@@ -269,7 +275,7 @@ function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSe
               ))}
             </div>
 
-            <div className="hero-action-row" style={{ marginBottom: 48 }}>
+            <div className="stack-actions" style={{ marginBottom: 40 }}>
               <Link href="/services" className="btn btn-primary btn-lg">{hero.ctaPrimary} <ArrowRight size={16} /></Link>
               <Link href="/projects" className="btn btn-secondary btn-lg">{hero.ctaSecondary}</Link>
               <a href={hero.resumeUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost btn-lg">
@@ -279,9 +285,9 @@ function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSe
 
             <div className="page-hero-stats" style={{ maxWidth: 640 }}>
               {hero.stats.map((s, i) => (
-                <div key={i} style={{ padding: "0 12px 0 0", borderRight: "none" }}>
-                  <div style={{ fontFamily: "var(--font-serif)", fontSize: 30, fontWeight: 400, color: "var(--ink-1)", lineHeight: 1 }}>{s.value}</div>
-                  <div style={{ fontSize: 12, color: "var(--ink-4)", marginTop: 4, fontWeight: 500 }}>{s.label}</div>
+                <div key={i} style={{ padding: "16px 18px", borderRadius: 16, border: "1px solid var(--border)", background: "rgba(255,255,255,0.7)", boxShadow: "var(--shadow-xs)" }}>
+                  <div style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(2rem,5vw,2.3rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1 }}>{s.value}</div>
+                  <div style={{ fontSize: 12.5, color: "var(--ink-4)", marginTop: 6, fontWeight: 600 }}>{s.label}</div>
                 </div>
               ))}
             </div>
@@ -376,7 +382,7 @@ function ProcessSection() {
   return (
     <section className="section" style={{ borderTop: "1px solid var(--border)" }}>
       <div className="site-container">
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 28, alignItems: "start" }}>
+        <div className="page-hero-grid" style={{ alignItems: "start" }}>
           <div>
             <p className="section-eyebrow">How It Works</p>
             <h2 className="section-title" style={{ marginBottom: 12 }}>A cleaner process from first message to final delivery</h2>
@@ -390,7 +396,7 @@ function ProcessSection() {
             </div>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))", gap: 16 }}>
+          <div className="info-card-grid">
             {PROCESS_STEPS.map((step, index) => (
               <div key={step.title} className="card-static" style={{ padding: "22px 20px" }}>
                 <div style={{ width: 36, height: 36, borderRadius: 10, background: "var(--green-bg)", color: "var(--green)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, marginBottom: 14 }}>
@@ -414,8 +420,8 @@ function NiyuktaSection({ niyukta }: { niyukta: NiyuktaSettings }) {
     <section style={{ padding: "clamp(52px,9vw,80px) 0" }}>
       <div className="site-container">
         <div className="niyukta-gradient" style={{ borderRadius: 28, padding: "clamp(32px,5vw,60px)", position: "relative", overflow: "hidden" }}>
-          <div style={{ position: "absolute", top: -80, right: -80, width: 320, height: 320, borderRadius: "50%", background: "rgba(255,255,255,0.04)", pointerEvents: "none" }} />
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "center", position: "relative" }} className="grid-2">
+          <div style={{ position: "absolute", top: -80, right: -80, width: "min(54vw, 320px)", height: "min(54vw, 320px)", borderRadius: "50%", background: "rgba(255,255,255,0.04)", pointerEvents: "none" }} />
+          <div className="page-hero-grid" style={{ gap: 32, alignItems: "center", position: "relative" }}>
             <div>
               <div style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 14px", background: "rgba(255,255,255,0.12)", borderRadius: 99, fontSize: 12, fontWeight: 700, color: "#bfdbfe", marginBottom: 16 }}>
                 <Sparkles size={12} /> {niyukta.subheadline}
@@ -424,9 +430,9 @@ function NiyuktaSection({ niyukta }: { niyukta: NiyuktaSettings }) {
                 {niyukta.headline}
               </h2>
               <p style={{ color: "rgba(255,255,255,0.75)", fontSize: 15, lineHeight: 1.75, marginBottom: 24 }}>{niyukta.description}</p>
-              <div style={{ display: "flex", gap: 28, marginBottom: 28, flexWrap: "wrap" }}>
+              <div className="page-hero-stats" style={{ marginBottom: 28 }}>
                 {niyukta.stats?.map((s) => (
-                  <div key={s.label}>
+                  <div key={s.label} style={{ padding: "14px 0" }}>
                     <div style={{ fontFamily: "var(--font-serif)", fontSize: 26, color: "#fff", lineHeight: 1 }}>{s.value}</div>
                     <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginTop: 3 }}>{s.label}</div>
                   </div>
@@ -437,7 +443,7 @@ function NiyuktaSection({ niyukta }: { niyukta: NiyuktaSettings }) {
                 {niyukta.cta} <ExternalLink size={15} />
               </a>
             </div>
-            <div style={{ background: "rgba(255,255,255,0.08)", borderRadius: 18, padding: 28, backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.12)" }}>
+            <div style={{ background: "rgba(255,255,255,0.08)", borderRadius: 18, padding: "clamp(20px,4vw,28px)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.12)" }}>
               <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.5, textTransform: "uppercase", color: "rgba(255,255,255,0.5)", marginBottom: 18 }}>Platform Features</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 {niyukta.features.map((f, i) => (
@@ -538,14 +544,15 @@ function PricingSection({ pricing }: { pricing: PricingSettings }) {
           <h2 className="section-title">{pricing.heading}</h2>
           <p className="section-desc" style={{ margin: "12px auto 0", textAlign: "center" }}>{pricing.subheading}</p>
         </div>
-        <div className="grid-auto" style={{ alignItems: "center" }}>
+        <div className="grid-auto" style={{ alignItems: "stretch" }}>
           {pricing.plans.map((plan) => (
             <div key={plan.name} style={{
               background: plan.highlighted ? "linear-gradient(135deg,#1e3a8a,#2563eb)" : "var(--surface)",
               border: plan.highlighted ? "none" : "1px solid var(--border)",
               borderRadius: 20, padding: "clamp(24px,4vw,32px)", position: "relative",
-              transform: plan.highlighted ? "translateY(-6px)" : "none",
+              transform: "none",
               boxShadow: plan.highlighted ? "0 8px 40px rgba(37,99,235,0.22)" : "var(--shadow-sm)",
+              height: "100%",
             }}>
               {plan.badge && (
                 <div style={{ position: "absolute", top: -13, left: "50%", transform: "translateX(-50%)", background: "var(--amber)", color: "#fff", padding: "4px 16px", borderRadius: 99, fontSize: 12, fontWeight: 700, whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: 6 }}>
