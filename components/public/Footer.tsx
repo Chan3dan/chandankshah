@@ -49,14 +49,14 @@ export default function Footer({ profile, social, meta }: FooterProps) {
                 <span style={{ fontWeight: 800, fontSize: 15 }}>C</span>
               </div>
               <div>
-                <div style={{ fontWeight: 700, fontSize: 15, color: "#fff" }}>{meta?.siteName || "Chandan Shah"}</div>
+                <div style={{ fontWeight: 700, fontSize: 15, color: "var(--footer-ink)" }}>{meta?.siteName || "Chandan Shah"}</div>
                 <div style={{ fontSize: 11, color: "var(--footer-ink-soft)" }}>{meta?.siteTagline || "Digital Services"}</div>
               </div>
             </div>
             <p style={{ fontSize: 13.5, lineHeight: 1.7, color: "var(--footer-ink-muted)", marginBottom: 20 }}>
               Independent digital support for documentation, forms, DEMAT setup, and online services in Nepal.
             </p>
-            <div style={{ padding: "12px 14px", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, background: "rgba(255,255,255,0.03)", marginBottom: 20 }}>
+            <div style={{ padding: "12px 14px", border: "1px solid var(--footer-border)", borderRadius: 12, background: "var(--footer-surface)", marginBottom: 20 }}>
               <p style={{ fontSize: 12.5, lineHeight: 1.7, color: "var(--footer-ink-soft)", margin: 0 }}>
                 Professional assistance for digital processes, documentation, and online support.
                 Official approval and final decisions remain with the relevant institution or authority.
@@ -91,7 +91,7 @@ export default function Footer({ profile, social, meta }: FooterProps) {
                 { url: social?.linkedin, label: "in", color: "#0ea5e9" },
               ].filter(s => s.url).map(s => (
                 <a key={s.label} href={s.url!} target="_blank" rel="noopener noreferrer"
-                  style={{ width: 34, height: 34, borderRadius: 9, background: "rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: "#fff", textDecoration: "none", transition: "background 0.15s, transform 0.15s", border: `1px solid ${s.color}25` }}
+                  style={{ width: 34, height: 34, borderRadius: 9, background: "var(--footer-surface)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: "var(--footer-ink)", textDecoration: "none", transition: "background 0.15s, transform 0.15s", border: `1px solid ${s.color}25` }}
                   className="hover-lift">
                   {s.label}
                 </a>
@@ -102,7 +102,7 @@ export default function Footer({ profile, social, meta }: FooterProps) {
           {/* Link columns */}
           {Object.entries(FOOTER_LINKS).map(([heading, links]) => (
             <div key={heading} className="footer-link-column">
-              <h4 style={{ color: "rgba(255,255,255,0.9)", fontWeight: 700, fontSize: 13, letterSpacing: 0.5, marginBottom: 16 }}>{heading}</h4>
+              <h4 style={{ color: "var(--footer-ink)", fontWeight: 700, fontSize: 13, letterSpacing: 0.5, marginBottom: 16 }}>{heading}</h4>
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 {links.map((l) => (
                   ("external" in l && l.external) ? (
@@ -124,7 +124,7 @@ export default function Footer({ profile, social, meta }: FooterProps) {
       </div>
 
       {/* Bottom */}
-      <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", padding: "18px 0" }}>
+      <div style={{ borderTop: "1px solid var(--footer-border)", padding: "18px 0" }}>
         <div className="site-container footer-bottom">
           <p className="footer-bottom-copy" style={{ fontSize: 13, color: "var(--footer-ink-soft)" }}>© {new Date().getFullYear()} Chandan Kumar Shah. All rights reserved.</p>
           <p className="footer-bottom-copy" style={{ fontSize: 13, color: "var(--footer-ink-soft)", maxWidth: 680 }}>

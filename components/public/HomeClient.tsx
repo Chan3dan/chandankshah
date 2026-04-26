@@ -657,7 +657,7 @@ function CTASection({ profile }: { profile: ProfileSettings }) {
               Ready to get started?
             </h2>
             <p className="dark-panel-copy" style={{ fontSize: "clamp(14px,2vw,16px)", marginBottom: 10 }}>Get in touch — I&apos;ll reply within a few hours with the next steps, document needs, and expected timing.</p>
-            <p style={{ fontSize: 12.5, lineHeight: 1.7, color: "rgba(255,255,255,0.68)", margin: 0, maxWidth: 560 }}>
+            <p style={{ fontSize: 12.5, lineHeight: 1.7, color: "var(--ink-3)", margin: 0, maxWidth: 560 }}>
               Independent digital service support for Nepal-based documentation, online processes, finance setup, and web work. Not an official government body.
             </p>
           </div>
