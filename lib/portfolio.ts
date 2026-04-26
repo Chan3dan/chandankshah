@@ -102,6 +102,26 @@ export const DEFAULT_PORTFOLIO_PROJECTS: PortfolioProjectSeed[] = [
   },
 ];
 
+function normalizeUrlForPortfolio(url?: string) {
+  if (!url) return "";
+  try {
+    const parsed = new URL(url);
+    const pathname = parsed.pathname.replace(/\/+$/, "") || "/";
+    return `${parsed.hostname}${pathname}`;
+  } catch {
+    return "";
+  }
+}
+
+function normalizeTitleForPortfolio(title?: string) {
+  return (title || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/\b(personal|website|platform|site|project)\b/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 export function mergePortfolioProjects(rawProjects: any[] = []) {
   const dbProjects = rawProjects.map((project) => ({
     ...project,
@@ -115,7 +135,24 @@ export function mergePortfolioProjects(rawProjects: any[] = []) {
     ...(bySlug.get(seed.slug) || {}),
   }));
 
-  const extra = dbProjects.filter((project) => !DEFAULT_PORTFOLIO_PROJECTS.some((seed) => seed.slug === project.slug));
+  const canonicalSeeds = merged.map((project) => ({
+    slug: project.slug,
+    urlKey: normalizeUrlForPortfolio(project.link),
+    titleKey: normalizeTitleForPortfolio(project.title),
+  }));
+
+  const extra = dbProjects.filter((project) => {
+    if (DEFAULT_PORTFOLIO_PROJECTS.some((seed) => seed.slug === project.slug)) return false;
+
+    const urlKey = normalizeUrlForPortfolio(project.link);
+    const titleKey = normalizeTitleForPortfolio(project.title);
+
+    return !canonicalSeeds.some((seed) => {
+      if (urlKey && seed.urlKey && urlKey === seed.urlKey) return true;
+      if (titleKey && seed.titleKey && titleKey === seed.titleKey) return true;
+      return false;
+    });
+  });
 
   return [...merged, ...extra].sort((a, b) => {
     if ((a.sortOrder ?? 0) !== (b.sortOrder ?? 0)) return (a.sortOrder ?? 0) - (b.sortOrder ?? 0);
