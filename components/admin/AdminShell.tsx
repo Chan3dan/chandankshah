@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LayoutDashboard, Layers, Briefcase, Star, MessageSquare, Settings, FileText, LogOut, Menu, X, ExternalLink, BookOpen } from "lucide-react";
 import { signOut } from "next-auth/react";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const NAV = [
   { section: "Content" },
@@ -99,6 +100,7 @@ export default function AdminShell({ children, user }: { children: React.ReactNo
             <Menu size={18} />
           </button>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <ThemeToggle compact />
             <a href="/" target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 13, color: "var(--ink-3)", textDecoration: "none" }}>
               <ExternalLink size={14} /> View Site
             </a>

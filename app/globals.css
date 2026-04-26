@@ -71,6 +71,7 @@ body {
   background: var(--bg-base);
   color: var(--ink-1);
   font-family: var(--font-sans);
+  font-size: 16px;
   line-height: 1.6;
   overflow-x: clip;
   min-height: 100vh;
@@ -121,7 +122,7 @@ h1,h2,h3,h4 { line-height: 1.2; color: var(--ink-1); }
 /* ── BUTTONS ── */
 .btn {
   display: inline-flex; align-items: center; gap: 7px;
-  font-family: var(--font-sans); font-weight: 600; font-size: 14px;
+  font-family: var(--font-sans); font-weight: 600; font-size: 15px;
   border-radius: var(--r-md); padding: 10px 20px;
   cursor: pointer; transition: all 0.18s ease;
   border: none; text-decoration: none; white-space: nowrap;
@@ -155,7 +156,7 @@ h1,h2,h3,h4 { line-height: 1.2; color: var(--ink-1); }
 .btn-danger { background: var(--red); color: #fff; }
 .btn-danger:hover { background: #b91c1c; }
 .btn-success { background: var(--green); color: #fff; }
-.btn-sm { padding: 7px 14px; font-size: 13px; border-radius: var(--r-sm); }
+.btn-sm { padding: 7px 14px; font-size: 14px; border-radius: var(--r-sm); }
 .btn-lg { padding: 13px 26px; font-size: 15px; border-radius: var(--r-lg); }
 .btn-xl { padding: 15px 32px; font-size: 16px; border-radius: var(--r-lg); }
 .btn-icon { padding: 9px; border-radius: var(--r-md); }
@@ -177,10 +178,10 @@ h1,h2,h3,h4 { line-height: 1.2; color: var(--ink-1); }
 /* ── FORM ELEMENTS ── */
 .form-group { margin-bottom: 18px; }
 .form-label {
-  display: block; font-size: 13px; font-weight: 600;
+  display: block; font-size: 14px; font-weight: 600;
   color: var(--ink-2); margin-bottom: 6px; letter-spacing: -0.01em;
 }
-.form-hint { font-size: 12px; color: var(--ink-4); margin-top: 5px; }
+.form-hint { font-size: 13px; color: var(--ink-4); margin-top: 5px; }
 .input {
   width: 100%; padding: 10px 13px;
   background: var(--surface); border: 1.5px solid var(--border);
@@ -215,7 +216,7 @@ select.input { cursor: pointer; }
 .section-sm { padding: clamp(40px, 7vw, 72px) 0; }
 .section-lg { padding: clamp(72px, 12vw, 128px) 0; }
 .section-eyebrow {
-  font-size: 12px; font-weight: 700; letter-spacing: 1.5px;
+  font-size: 12.5px; font-weight: 700; letter-spacing: 1.5px;
   text-transform: uppercase; color: var(--blue);
   display: flex; align-items: center; gap: 8px;
   margin-bottom: 10px;
@@ -229,11 +230,11 @@ select.input { cursor: pointer; }
   font-weight: 400; color: var(--ink-1);
   line-height: 1.15; letter-spacing: -0.02em;
 }
-.section-desc { font-size: clamp(14px, 2vw, 16px); color: var(--ink-3); line-height: 1.75; }
+.section-desc { font-size: clamp(15px, 2vw, 17px); color: var(--ink-3); line-height: 1.8; }
 
 /* ── PROSE ── */
 .prose {
-  font-size: clamp(14px, 2vw, 16px); line-height: 1.8; color: var(--ink-2);
+  font-size: clamp(15px, 2vw, 17px); line-height: 1.85; color: var(--ink-2);
 }
 .prose h2 { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 400; margin: 2rem 0 0.75rem; }
 .prose h3 { font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 0.5rem; }
@@ -357,7 +358,7 @@ select.input { cursor: pointer; }
 .admin-nav-link {
   display: flex; align-items: center; gap: 10px;
   padding: 8px 12px; border-radius: var(--r-md);
-  font-size: 13.5px; font-weight: 500; color: var(--ink-3);
+  font-size: 14px; font-weight: 500; color: var(--ink-3);
   text-decoration: none; transition: all 0.15s;
   cursor: pointer; border: none; background: none; width: 100%;
   letter-spacing: -0.01em;
@@ -526,11 +527,22 @@ select.input { cursor: pointer; }
 [data-theme="dark"] .home-stat-card {
   background: linear-gradient(180deg, rgba(22,22,22,0.92), rgba(17,17,17,0.82));
 }
+[data-theme="dark"] .home-pillars-grid .home-pillar-card:nth-child(1),
+[data-theme="dark"] .home-pillars-grid .home-pillar-card:nth-child(2) {
+  background: linear-gradient(180deg, rgba(24,24,24,0.98), rgba(18,18,18,0.88));
+}
 [data-theme="dark"] .home-section-shell::before {
   background:
     linear-gradient(180deg, rgba(26,26,26,0.82), rgba(18,18,18,0.72)),
     radial-gradient(circle at top left, rgba(59,130,246,0.08), transparent 30%);
   border-color: rgba(42,42,42,0.9);
+}
+[data-theme="dark"] .home-kicker {
+  background: rgba(96,165,250,0.12);
+  border-color: rgba(96,165,250,0.24);
+}
+[data-theme="dark"] .glass-header {
+  background: rgba(15, 15, 15, 0.78);
 }
 
 /* ── HOVER UTILITIES (CSS-only, safe in server components) ── */
@@ -1060,7 +1072,7 @@ select.input { cursor: pointer; }
   border-radius: 999px;
   background: rgba(37,99,235,0.08);
   border: 1px solid rgba(37,99,235,0.14);
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 700;
   color: var(--blue);
 }
