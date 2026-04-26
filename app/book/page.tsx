@@ -5,8 +5,15 @@ import Navbar from "@/components/public/NavbarServer";
 import Footer from "@/components/public/Footer";
 import BookingFlow from "@/components/public/BookingFlow";
 import type { ProfileSettings, SocialSettings } from "@/lib/settings";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata = { title: "Book a Service" };
+export const metadata = buildMetadata({
+  title: "Book a Service",
+  path: "/book",
+  description:
+    "Book a digital service with Chandan Kumar Shah for documentation, Loksewa support, DEMAT setup, and web development work with a clear process and direct follow-up.",
+  keywords: ["book digital service Nepal", "book web developer Nepal", "book Loksewa help", "book DEMAT setup"],
+});
 export const dynamic = "force-dynamic";
 
 export default async function BookPage({

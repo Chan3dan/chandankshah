@@ -155,3 +155,23 @@ export function BlogPostSchema({ title, description, url, author, publishedAt, u
   };
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
 }
+
+interface WebSiteSchemaProps {
+  name: string;
+  url: string;
+  description?: string;
+}
+
+export function WebSiteSchema({ name, url, description }: WebSiteSchemaProps) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${url}/#website`,
+    name,
+    url,
+    description,
+    inLanguage: "en-US",
+  };
+
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
+}

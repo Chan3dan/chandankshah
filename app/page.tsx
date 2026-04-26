@@ -4,7 +4,7 @@ import { Service, Project, Testimonial } from "@/models";
 import Navbar from "@/components/public/NavbarServer";
 import Footer from "@/components/public/Footer";
 import HomeClient from "@/components/public/HomeClient";
-import { PersonSchema, LocalBusinessSchema } from "@/components/public/StructuredData";
+import { PersonSchema, LocalBusinessSchema, WebSiteSchema } from "@/components/public/StructuredData";
 import type { HeroSettings, ProfileSettings, NiyuktaSettings, PricingSettings, SocialSettings } from "@/lib/settings";
 
 export const dynamic = "force-dynamic";
@@ -45,6 +45,11 @@ export default async function HomePage() {
         email={profile.email}
         location={profile.location}
         services={(services as any[]).map(s => s.title)}
+      />
+      <WebSiteSchema
+        name={meta.siteName}
+        url={BASE}
+        description={(meta as any).siteDescription}
       />
 
       <Navbar />

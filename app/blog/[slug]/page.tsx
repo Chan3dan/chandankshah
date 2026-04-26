@@ -7,6 +7,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Clock, ChevronRight, ArrowLeft, Calendar } from "lucide-react";
 import type { ProfileSettings, SocialSettings } from "@/lib/settings";
+import { buildMetadata } from "@/lib/seo";
 
 export const revalidate = 60;
 
@@ -16,7 +17,26 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   await connectDB();
   const post = await BlogPost.findOne({ slug }).lean() as any;
-  return { title: post?.title || "Blog Post", description: post?.excerpt };
+  if (!post) {
+    return buildMetadata({
+      title: "Blog Post",
+      path: `/blog/${slug}`,
+      description: "Read practical digital service and web development insights from Chandan Kumar Shah.",
+      noIndex: true,
+    });
+  }
+
+  return buildMetadata({
+    title: post.title,
+    path: `/blog/${slug}`,
+    description: post.excerpt || "Read the full article from Chandan Kumar Shah.",
+    type: "article",
+    imagePath: post.coverImage || "/opengraph-image",
+    publishedTime: post.publishedAt ? new Date(post.publishedAt).toISOString() : undefined,
+    modifiedTime: post.updatedAt ? new Date(post.updatedAt).toISOString() : undefined,
+    tags: post.tags || [],
+    keywords: [post.category, ...(post.tags || []), "Chandan Shah blog"].filter(Boolean),
+  });
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {

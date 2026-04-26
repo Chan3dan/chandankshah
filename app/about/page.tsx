@@ -7,8 +7,15 @@ import Link from "next/link";
 import { GraduationCap, Award, ChevronRight, Star, Download, ArrowRight, Mail, MapPin, Phone, Clock3, Languages, Medal } from "lucide-react";
 import type { ProfileSettings, SocialSettings } from "@/lib/settings";
 import { BUSINESS_DISCLAIMER, OFFICIAL_PROCESS_NOTICE } from "@/lib/site-content";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata = { title: "About Me" };
+export const metadata = buildMetadata({
+  title: "About",
+  path: "/about",
+  description:
+    "Learn about Chandan Kumar Shah, his digital services background, education, practical process, and client-first approach to documentation and web development in Nepal.",
+  keywords: ["About Chandan Shah", "Chandan Kumar Shah", "Nepal web developer", "digital services Nepal"],
+});
 export const dynamic = "force-dynamic";
 
 export default async function AboutPage() {

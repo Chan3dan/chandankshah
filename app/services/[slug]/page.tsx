@@ -10,6 +10,7 @@ import { ServiceSchema, BreadcrumbSchema, FAQSchema } from "@/components/public/
 import type { ProfileSettings, SocialSettings } from "@/lib/settings";
 import ServiceIcon from "@/components/public/ServiceIcon";
 import { BUSINESS_DISCLAIMER, OFFICIAL_PROCESS_NOTICE, buildServiceFaqs, isOfficialProcessService, PROCESS_STEPS } from "@/lib/site-content";
+import { buildMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -17,7 +18,21 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   await connectDB();
   const svc = await Service.findOne({ slug }).lean() as any;
-  return { title: svc?.title || "Service", description: svc?.description };
+  if (!svc) {
+    return buildMetadata({
+      title: "Service",
+      path: `/services/${slug}`,
+      description: "Explore digital services from Chandan Kumar Shah.",
+      noIndex: true,
+    });
+  }
+
+  return buildMetadata({
+    title: svc.title,
+    path: `/services/${slug}`,
+    description: svc.description || `Professional help with ${svc.title}.`,
+    keywords: [svc.title, svc.category, "digital services Nepal", "Chandan Shah"].filter(Boolean),
+  });
 }
 
 export default async function ServiceDetailPage({ params }: { params: Promise<{ slug: string }> }) {

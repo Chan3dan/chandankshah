@@ -7,8 +7,15 @@ import ContactClient from "@/components/public/ContactClient";
 import type { ProfileSettings, SocialSettings } from "@/lib/settings";
 import { FAQSchema } from "@/components/public/StructuredData";
 import { CONTACT_FAQS } from "@/lib/site-content";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata = { title: "Contact Me" };
+export const metadata = buildMetadata({
+  title: "Contact",
+  path: "/contact",
+  description:
+    "Contact Chandan Kumar Shah for documentation help, Loksewa support, DEMAT setup, and web development work. Reach out by form, email, phone, or WhatsApp.",
+  keywords: ["contact Chandan Shah", "web developer contact Nepal", "digital services contact Nepal"],
+});
 export const dynamic = "force-dynamic";
 
 export default async function ContactPage() {

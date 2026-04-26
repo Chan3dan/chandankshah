@@ -1,30 +1,59 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { GOOGLE_SITE_VERIFICATION, SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://chandankshah.com.np"),
+  metadataBase: new URL(SITE_URL),
+  applicationName: "Chandan Kumar Shah",
   title: {
-    default: "Chandan Kumar Shah — Digital Services & Portfolio",
+    default: SITE_TITLE,
     template: "%s | Chandan Shah",
   },
-  description:
-    "Independent digital services in Nepal for documentation, Loksewa support, DEMAT setup, portfolio websites, and practical online assistance.",
+  description: SITE_DESCRIPTION,
   keywords: ["Chandan Shah", "Loksewa", "DEMAT", "Nepal", "digital services", "documentation", "web development", "Niyukta"],
   alternates: {
-    canonical: "https://chandankshah.com.np",
+    canonical: SITE_URL,
+  },
+  verification: {
+    google: GOOGLE_SITE_VERIFICATION,
+  },
+  authors: [{ name: "Chandan Kumar Shah", url: SITE_URL }],
+  creator: "Chandan Kumar Shah",
+  publisher: "Chandan Kumar Shah",
+  category: "Digital Services",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
   openGraph: {
     type: "website",
-    url: "https://chandankshah.com.np",
+    url: SITE_URL,
     siteName: "Chandan Kumar Shah",
-    title: "Chandan Kumar Shah — Digital Services & Portfolio",
-    description: "Independent digital services in Nepal for documentation, Loksewa support, DEMAT setup, and web solutions.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    locale: "en_US",
+    images: [
+      {
+        url: `${SITE_URL}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: SITE_TITLE,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Chandan Kumar Shah — Digital Services & Portfolio",
-    description: "Independent digital services in Nepal for documentation, forms, finance setup, and web work.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: [`${SITE_URL}/twitter-image`],
   },
 };
 

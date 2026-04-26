@@ -9,8 +9,15 @@ import type { ProfileSettings, SocialSettings } from "@/lib/settings";
 import { FAQSchema } from "@/components/public/StructuredData";
 import { SERVICES_PAGE_FAQS } from "@/lib/site-content";
 import ServicesDirectoryClient from "@/components/public/ServicesDirectoryClient";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata = { title: "Services" };
+export const metadata = buildMetadata({
+  title: "Services",
+  path: "/services",
+  description:
+    "Browse documentation help, Loksewa support, DEMAT and Mero Share setup, academic project help, and web development services available across Nepal.",
+  keywords: ["Loksewa help Nepal", "DEMAT setup Nepal", "documentation services Nepal", "web development Nepal"],
+});
 export const dynamic = "force-dynamic";
 
 export default async function ServicesPage() {

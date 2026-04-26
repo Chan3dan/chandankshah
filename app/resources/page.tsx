@@ -6,11 +6,15 @@ import Footer from "@/components/public/Footer";
 import ResourcesClient from "@/components/public/ResourcesClient";
 import { FAQSchema } from "@/components/public/StructuredData";
 import type { ProfileSettings, SocialSettings } from "@/lib/settings";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata = {
+export const metadata = buildMetadata({
   title: "Free Loksewa & DEMAT Resources",
-  description: "Free study materials, syllabus PDFs, and guides for Loksewa preparation and DEMAT account setup in Nepal.",
-};
+  path: "/resources",
+  description:
+    "Free study materials, syllabus PDFs, digital guides, and downloadable resources for Loksewa preparation, DEMAT setup, and online service workflows in Nepal.",
+  keywords: ["Loksewa resources", "DEMAT guide Nepal", "free study materials Nepal", "digital service resources"],
+});
 export const dynamic = "force-dynamic";
 
 const LOKSEWA_FAQS = [

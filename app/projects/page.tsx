@@ -6,8 +6,15 @@ import Footer from "@/components/public/Footer";
 import Link from "next/link";
 import { ExternalLink, ChevronRight, ArrowRight } from "lucide-react";
 import type { ProfileSettings, SocialSettings } from "@/lib/settings";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata = { title: "Portfolio & Projects" };
+export const metadata = buildMetadata({
+  title: "Portfolio & Projects",
+  path: "/projects",
+  description:
+    "Explore websites, digital products, and practical delivery projects built by Chandan Kumar Shah with attention to performance, responsiveness, and real-world usability.",
+  keywords: ["portfolio Nepal developer", "projects Chandan Shah", "web development portfolio Nepal"],
+});
 export const dynamic = "force-dynamic";
 
 export default async function ProjectsPage() {

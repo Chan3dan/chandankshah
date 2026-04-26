@@ -7,8 +7,15 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import type { ProfileSettings, SocialSettings } from "@/lib/settings";
 import BlogIndexClient from "@/components/public/BlogIndexClient";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata = { title: "Blog" };
+export const metadata = buildMetadata({
+  title: "Blog",
+  path: "/blog",
+  description:
+    "Read practical guides, service explainers, documentation tips, and web development insights written for clients and users across Nepal.",
+  keywords: ["blog Chandan Shah", "Loksewa guides", "DEMAT guides Nepal", "web development blog Nepal"],
+});
 export const dynamic = "force-dynamic";
 
 export default async function BlogPage() {

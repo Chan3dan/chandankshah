@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import { ExternalLink, ChevronRight, ArrowLeft } from "lucide-react";
 import { BreadcrumbSchema } from "@/components/public/StructuredData";
 import type { ProfileSettings, SocialSettings } from "@/lib/settings";
+import { buildMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -15,7 +16,22 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   await connectDB();
   const p = await Project.findOne({ slug }).lean() as any;
-  return { title: p?.title || "Project", description: p?.description };
+  if (!p) {
+    return buildMetadata({
+      title: "Project",
+      path: `/projects/${slug}`,
+      description: "Explore project work by Chandan Kumar Shah.",
+      noIndex: true,
+    });
+  }
+
+  return buildMetadata({
+    title: p.title,
+    path: `/projects/${slug}`,
+    description: p.description || `Explore the ${p.title} project by Chandan Kumar Shah.`,
+    imagePath: p.imageUrl || "/opengraph-image",
+    keywords: [p.category, ...(p.tags || []), "portfolio Nepal", "web development project"].filter(Boolean),
+  });
 }
 
 export default async function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
