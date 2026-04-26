@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown, ExternalLink, House, Layers3, CalendarClock, MessageSquareMore } from "lucide-react";
+import ThemeToggle from "@/components/ThemeToggle";
 import type { NavSettings } from "@/lib/settings";
 
 const STATIC_NAV = [
@@ -187,6 +188,7 @@ export default function Navbar({ navSettings, brand }: Props) {
 
           {/* Right */}
           <div className="desktop-actions">
+            <ThemeToggle compact />
             <Link href="/book" className="btn btn-secondary btn-sm">Book Service</Link>
             <Link href="/contact" className="btn btn-primary btn-sm">Contact</Link>
           </div>
@@ -261,6 +263,9 @@ export default function Navbar({ navSettings, brand }: Props) {
         <div style={{ display: "flex", gap: 12, marginTop: 24, flexWrap: "wrap" }}>
           <Link href="/book" className="btn btn-secondary" style={{ flex: 1, justifyContent: "center" }}>Book Service</Link>
           <Link href="/contact" className="btn btn-primary" style={{ flex: 1, justifyContent: "center" }}>Contact</Link>
+        </div>
+        <div style={{ marginTop: 16 }}>
+          <ThemeToggle />
         </div>
       </aside>
 
