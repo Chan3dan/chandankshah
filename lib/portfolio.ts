@@ -116,6 +116,8 @@ function normalizeUrlForPortfolio(url?: string) {
 function normalizeTitleForPortfolio(title?: string) {
   return (title || "")
     .toLowerCase()
+    .replace(/\bprep\b/g, "preparation")
+    .replace(/\bapp\b/g, "application")
     .replace(/[^a-z0-9\s]/g, " ")
     .replace(/\b(personal|website|platform|site|project)\b/g, " ")
     .replace(/\s+/g, " ")
@@ -150,6 +152,7 @@ export function mergePortfolioProjects(rawProjects: any[] = []) {
     return !canonicalSeeds.some((seed) => {
       if (urlKey && seed.urlKey && urlKey === seed.urlKey) return true;
       if (titleKey && seed.titleKey && titleKey === seed.titleKey) return true;
+      if (titleKey && seed.titleKey && (titleKey.includes(seed.titleKey) || seed.titleKey.includes(titleKey))) return true;
       return false;
     });
   });

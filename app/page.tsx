@@ -1,17 +1,19 @@
 import { getSetting } from "@/lib/settings";
 import { connectDB } from "@/lib/mongodb";
-import { Service, Project, Testimonial } from "@/models";
+import { Service, Project, Testimonial, Resource } from "@/models";
 import Navbar from "@/components/public/NavbarServer";
 import Footer from "@/components/public/Footer";
 import HomeClient from "@/components/public/HomeClient";
 import { PersonSchema, LocalBusinessSchema, WebSiteSchema } from "@/components/public/StructuredData";
 import type { HeroSettings, ProfileSettings, NiyuktaSettings, PricingSettings, SocialSettings } from "@/lib/settings";
+import { mergePortfolioProjects, syncDefaultPortfolioProjects } from "@/lib/portfolio";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   await connectDB();
-  const [hero, profile, niyukta, pricing, social, meta, services, projects, testimonials] = await Promise.all([
+  await syncDefaultPortfolioProjects();
+  const [hero, profile, niyukta, pricing, social, meta, services, projectsRaw, testimonials, resources] = await Promise.all([
     getSetting<HeroSettings>("hero"),
     getSetting<ProfileSettings>("profile"),
     getSetting<NiyuktaSettings>("niyukta"),
@@ -19,11 +21,23 @@ export default async function HomePage() {
     getSetting<SocialSettings>("social"),
     getSetting("meta") as Promise<{ siteName: string; siteTagline: string; siteUrl?: string; siteDescription?: string }>,
     Service.find({ isActive: true }).sort({ sortOrder: 1 }).limit(6).lean(),
-    Project.find({ isActive: true, featured: true }).sort({ sortOrder: 1 }).limit(4).lean(),
+    Project.find({ isActive: true }).sort({ sortOrder: 1, createdAt: -1 }).lean(),
     Testimonial.find({ isActive: true }).sort({ isFeatured: -1, createdAt: -1 }).limit(6).lean(),
+    Resource.find({ isActive: true }).lean(),
   ]);
 
   const BASE = (meta as any).siteUrl || "https://chandankshah.com.np";
+  const mergedProjects = mergePortfolioProjects(JSON.parse(JSON.stringify(projectsRaw)));
+  const featuredProjects = mergedProjects.filter((project: any) => project.featured).slice(0, 4);
+  const heroWithRealStats: HeroSettings = {
+    ...hero,
+    stats: [
+      { value: `${mergedProjects.length}+`, label: "Projects Published" },
+      { value: `${services.length}+`, label: "Services Listed" },
+      { value: `${resources.length}+`, label: "Resources Available" },
+      { value: `${testimonials.length}+`, label: "Client Reviews" },
+    ],
+  };
 
   return (
     <>
@@ -54,12 +68,12 @@ export default async function HomePage() {
 
       <Navbar />
       <HomeClient
-        hero={hero}
+        hero={heroWithRealStats}
         profile={profile}
         niyukta={niyukta}
         pricing={pricing}
         services={JSON.parse(JSON.stringify(services))}
-        projects={JSON.parse(JSON.stringify(projects))}
+        projects={JSON.parse(JSON.stringify(featuredProjects))}
         testimonials={JSON.parse(JSON.stringify(testimonials))}
       />
       <Footer
