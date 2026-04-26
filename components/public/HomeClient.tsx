@@ -306,46 +306,69 @@ function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSe
                   </a>
                 </div>
               </div>
-            </div>
 
-            <div className="home-channel-lower">
-              <div className="home-hero-copy">
-              <div className="home-pillars-grid" style={{ marginBottom: 28 }}>
-                {HERO_PILLARS.map((item) => (
-                  <div key={item.label} className="home-pillar-card">
-                    <div style={{ fontSize: 11, fontWeight: 700, color: "var(--ink-4)", letterSpacing: 0.8, textTransform: "uppercase", marginBottom: 5 }}>{item.label}</div>
-                    <div style={{ fontSize: 13.5, color: "var(--ink-2)", lineHeight: 1.6 }}>{item.text}</div>
+              <div className="home-hero-aside">
+                <div className="home-hero-aside__header">
+                  <div style={{ fontSize: 12, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase", color: "var(--blue)" }}>
+                    Quick Profile
                   </div>
-                ))}
-              </div>
-
-              <div className="home-hero-note" style={{ padding: "14px 16px", borderRadius: 14, background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.18)", marginBottom: 28 }}>
-                <p style={{ margin: 0, fontSize: 13.5, color: "var(--ink-3)", lineHeight: 1.7 }}>
-                  {OFFICIAL_PROCESS_NOTICE}
-                </p>
-              </div>
-
-              <div className="home-hero-stats">
-                {hero.stats.map((stat, index) => (
-                  <div key={index} className="home-stat-card">
-                    <div style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(2rem,5vw,2.3rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1 }}>{stat.value}</div>
-                    <div style={{ fontSize: 12.5, color: "var(--ink-4)", marginTop: 6, fontWeight: 600 }}>{stat.label}</div>
+                  <div style={{ fontSize: 13.5, color: "var(--ink-3)", lineHeight: 1.65 }}>
+                    Fast support for documentation, web work, and digital setup with direct follow-up.
                   </div>
-                ))}
-              </div>
-              </div>
+                </div>
 
-              <div className="home-profile-panel">
-                <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 20 }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                   {profileHighlights.map(({ label, icon: Icon }) => (
-                    <div key={label} style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 12px", background: "var(--bg-subtle)", borderRadius: 10, fontSize: 13.5, color: "var(--ink-2)", border: "1px solid var(--border)" }}>
+                    <div key={label} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 12px", background: "var(--surface)", borderRadius: 12, fontSize: 13.5, color: "var(--ink-2)", border: "1px solid var(--border)" }}>
                       <Icon size={16} color="var(--blue)" />
                       {label}
                     </div>
                   ))}
                 </div>
-                <Link href="/contact" className="btn btn-primary" style={{ width: "100%", justifyContent: "center" }}>Book a Consultation</Link>
-                <p style={{ fontSize: 12.5, color: "var(--ink-4)", margin: "12px 0 0" }}>{profile.availability}</p>
+
+                <div className="home-hero-aside__meta">
+                  <div className="home-hero-aside__meta-card">
+                    <div style={{ fontSize: 12, color: "var(--ink-4)", marginBottom: 4 }}>Location</div>
+                    <div style={{ fontSize: 14, fontWeight: 700, color: "var(--ink-1)" }}>{profile.location}</div>
+                  </div>
+                  <div className="home-hero-aside__meta-card">
+                    <div style={{ fontSize: 12, color: "var(--ink-4)", marginBottom: 4 }}>Availability</div>
+                    <div style={{ fontSize: 14, fontWeight: 700, color: "var(--ink-1)" }}>{profile.availability}</div>
+                  </div>
+                </div>
+
+                <Link href="/contact" className="btn btn-primary" style={{ width: "100%", justifyContent: "center" }}>
+                  Book a Consultation
+                </Link>
+              </div>
+            </div>
+
+            <div className="home-channel-lower">
+              <div className="home-hero-copy">
+                <div className="home-pillars-grid" style={{ marginBottom: 0 }}>
+                  {HERO_PILLARS.map((item) => (
+                    <div key={item.label} className="home-pillar-card">
+                      <div style={{ fontSize: 11, fontWeight: 700, color: "var(--ink-4)", letterSpacing: 0.8, textTransform: "uppercase", marginBottom: 5 }}>{item.label}</div>
+                      <div style={{ fontSize: 13.5, color: "var(--ink-2)", lineHeight: 1.6 }}>{item.text}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="home-profile-panel">
+                <div className="home-hero-stats">
+                  {hero.stats.map((stat, index) => (
+                    <div key={index} className="home-stat-card">
+                      <div style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(2rem,5vw,2.3rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1 }}>{stat.value}</div>
+                      <div style={{ fontSize: 12.5, color: "var(--ink-4)", marginTop: 6, fontWeight: 600 }}>{stat.label}</div>
+                    </div>
+                  ))}
+                </div>
+                <div className="home-hero-note" style={{ padding: "14px 16px", borderRadius: 14, background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.18)", marginTop: 18 }}>
+                  <p style={{ margin: 0, fontSize: 13.5, color: "var(--ink-3)", lineHeight: 1.7 }}>
+                    {OFFICIAL_PROCESS_NOTICE}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
