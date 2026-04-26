@@ -747,7 +747,7 @@ select.input { cursor: pointer; }
   grid-template-columns: auto minmax(0, 1fr) minmax(280px, 0.72fr);
   gap: clamp(18px, 3vw, 28px);
   align-items: start;
-  margin-top: clamp(-108px, -11vw, -74px);
+  margin-top: 0;
   position: relative;
   z-index: 2;
 }
@@ -1275,7 +1275,7 @@ select.input { cursor: pointer; }
   .home-channel-profile-row {
     justify-items: center;
     text-align: center;
-    margin-top: -52px;
+    margin-top: 0;
   }
   .home-channel-copy {
     justify-items: center;
