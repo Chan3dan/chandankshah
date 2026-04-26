@@ -8,10 +8,29 @@ interface Project {
   _id: string; title: string; slug: string; category: string;
   description: string; longDescription: string; tags: string[];
   link: string; githubLink: string; imageUrl: string;
+  role: string; timeframe: string; status: string; platform: string;
+  focusAreas: string[]; outcomes: string[];
   featured: boolean; isActive: boolean; sortOrder: number;
 }
 
-const EMPTY = { title: "", category: "Web App", description: "", longDescription: "", tags: [] as string[], link: "", githubLink: "", imageUrl: "", featured: false, isActive: true };
+const EMPTY = {
+  title: "",
+  category: "Web App",
+  description: "",
+  longDescription: "",
+  tags: [] as string[],
+  link: "",
+  githubLink: "",
+  imageUrl: "",
+  role: "",
+  timeframe: "",
+  status: "",
+  platform: "",
+  focusAreas: [] as string[],
+  outcomes: [] as string[],
+  featured: false,
+  isActive: true,
+};
 
 export default function AdminProjects() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -153,6 +172,8 @@ export default function AdminProjects() {
 function ProjectForm({ initial, onSave, onCancel, saving, isEdit }: any) {
   const [form, setForm] = useState({ ...EMPTY, ...initial });
   const [newTag, setNewTag] = useState("");
+  const [newFocusArea, setNewFocusArea] = useState("");
+  const [newOutcome, setNewOutcome] = useState("");
   const set = (k: string, v: any) => setForm((p: any) => ({ ...p, [k]: v }));
 
   useEffect(() => {
@@ -164,6 +185,12 @@ function ProjectForm({ initial, onSave, onCancel, saving, isEdit }: any) {
       <div className="admin-form-grid-2" style={{ marginBottom: 14 }}>
         <div><label className="form-label">Title *</label><input className="input" value={form.title} onChange={e => set("title", e.target.value)} /></div>
         <div><label className="form-label">Category</label><input className="input" value={form.category} onChange={e => set("category", e.target.value)} /></div>
+      </div>
+      <div className="admin-form-grid-4" style={{ marginBottom: 14 }}>
+        <div><label className="form-label">Role</label><input className="input" value={form.role} onChange={e => set("role", e.target.value)} placeholder="Frontend, full-stack, deployment…" /></div>
+        <div><label className="form-label">Platform</label><input className="input" value={form.platform} onChange={e => set("platform", e.target.value)} placeholder="Web app, platform, website…" /></div>
+        <div><label className="form-label">Timeframe</label><input className="input" value={form.timeframe} onChange={e => set("timeframe", e.target.value)} placeholder="2025 or 2024-2025" /></div>
+        <div><label className="form-label">Status</label><input className="input" value={form.status} onChange={e => set("status", e.target.value)} placeholder="Live, ongoing, archived…" /></div>
       </div>
       <div className="form-group"><label className="form-label">Short Description *</label><textarea className="input" value={form.description} onChange={e => set("description", e.target.value)} style={{ minHeight: 70 }} /></div>
       <div className="form-group"><label className="form-label">Long Description</label><textarea className="input" value={form.longDescription} onChange={e => set("longDescription", e.target.value)} style={{ minHeight: 100 }} /></div>
@@ -186,6 +213,37 @@ function ProjectForm({ initial, onSave, onCancel, saving, isEdit }: any) {
         <div style={{ display: "flex", gap: 8 }}>
           <input className="input" value={newTag} onChange={e => setNewTag(e.target.value)} placeholder="Next.js, React…" onKeyDown={e => { if (e.key === "Enter") { e.preventDefault(); if (newTag.trim()) { set("tags", [...(form.tags || []), newTag.trim()]); setNewTag(""); } } }} style={{ flex: 1 }} />
           <button onClick={() => { if (newTag.trim()) { set("tags", [...(form.tags || []), newTag.trim()]); setNewTag(""); } }} className="btn btn-secondary btn-sm">Add</button>
+        </div>
+      </div>
+
+      <div className="form-group">
+        <label className="form-label">Focus Areas</label>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 8 }}>
+          {form.focusAreas?.map((t: string, i: number) => (
+            <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "4px 10px", background: "var(--bg-subtle)", border: "1px solid var(--border)", borderRadius: 99, fontSize: 13 }}>
+              {t}<button onClick={() => set("focusAreas", form.focusAreas.filter((_: string, j: number) => j !== i))} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--red)", padding: 0 }}>×</button>
+            </span>
+          ))}
+        </div>
+        <div style={{ display: "flex", gap: 8 }}>
+          <input className="input" value={newFocusArea} onChange={e => setNewFocusArea(e.target.value)} placeholder="Responsive design, SEO, admin CMS…" onKeyDown={e => { if (e.key === "Enter") { e.preventDefault(); if (newFocusArea.trim()) { set("focusAreas", [...(form.focusAreas || []), newFocusArea.trim()]); setNewFocusArea(""); } } }} style={{ flex: 1 }} />
+          <button onClick={() => { if (newFocusArea.trim()) { set("focusAreas", [...(form.focusAreas || []), newFocusArea.trim()]); setNewFocusArea(""); } }} className="btn btn-secondary btn-sm">Add</button>
+        </div>
+      </div>
+
+      <div className="form-group">
+        <label className="form-label">Outcomes</label>
+        <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 8 }}>
+          {form.outcomes?.map((t: string, i: number) => (
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 12px", background: "var(--bg-subtle)", border: "1px solid var(--border)", borderRadius: 12, fontSize: 13.5 }}>
+              <span style={{ flex: 1 }}>{t}</span>
+              <button onClick={() => set("outcomes", form.outcomes.filter((_: string, j: number) => j !== i))} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--red)", padding: 0 }}>×</button>
+            </div>
+          ))}
+        </div>
+        <div style={{ display: "flex", gap: 8 }}>
+          <input className="input" value={newOutcome} onChange={e => setNewOutcome(e.target.value)} placeholder="Describe a concrete result or delivery outcome" onKeyDown={e => { if (e.key === "Enter") { e.preventDefault(); if (newOutcome.trim()) { set("outcomes", [...(form.outcomes || []), newOutcome.trim()]); setNewOutcome(""); } } }} style={{ flex: 1 }} />
+          <button onClick={() => { if (newOutcome.trim()) { set("outcomes", [...(form.outcomes || []), newOutcome.trim()]); setNewOutcome(""); } }} className="btn btn-secondary btn-sm">Add</button>
         </div>
       </div>
 

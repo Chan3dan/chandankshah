@@ -49,6 +49,12 @@ export interface IProject extends Document {
   link: string;
   githubLink: string;
   imageUrl: string;
+  role: string;
+  timeframe: string;
+  status: string;
+  platform: string;
+  focusAreas: string[];
+  outcomes: string[];
   featured: boolean;
   isActive: boolean;
   sortOrder: number;
@@ -67,6 +73,12 @@ const ProjectSchema = new Schema<IProject>(
     link: { type: String, default: "" },
     githubLink: { type: String, default: "" },
     imageUrl: { type: String, default: "" },
+    role: { type: String, default: "" },
+    timeframe: { type: String, default: "" },
+    status: { type: String, default: "" },
+    platform: { type: String, default: "" },
+    focusAreas: [{ type: String }],
+    outcomes: [{ type: String }],
     featured: { type: Boolean, default: false },
     isActive: { type: Boolean, default: true },
     sortOrder: { type: Number, default: 0 },

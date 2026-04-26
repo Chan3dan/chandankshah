@@ -3,10 +3,12 @@ import { connectDB } from "@/lib/mongodb";
 import { Project } from "@/models";
 import { requireAdmin } from "@/lib/admin-guard";
 import slugify from "slugify";
+import { syncDefaultPortfolioProjects } from "@/lib/portfolio";
 
 export async function GET(req: NextRequest) {
   try {
     await connectDB();
+    await syncDefaultPortfolioProjects();
     const { searchParams } = new URL(req.url);
     const featured = searchParams.get("featured");
     const query: Record<string, unknown> = { isActive: true };
