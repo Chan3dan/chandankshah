@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Save, User, Home, Globe, DollarSign, Sparkles, Settings, ChevronDown, ChevronUp, Plus, Trash2, Layout } from "lucide-react";
 import toast from "react-hot-toast";
+import ImageUpload from "@/components/admin/ImageUpload";
 
 export default function AdminSettings() {
   const [settings, setSettings] = useState<Record<string, any>>({});
@@ -70,6 +71,30 @@ export default function AdminSettings() {
                   <div className="admin-form-grid-2" style={{ marginBottom: 14 }}>
                     <div><label className="form-label">Your Name</label><input className="input" value={S("hero").name || ""} onChange={e => set("hero", "name", e.target.value)} /></div>
                     <div><label className="form-label">Avatar Letter</label><input className="input" value={S("hero").avatarLetter || ""} onChange={e => set("hero", "avatarLetter", e.target.value)} /></div>
+                  </div>
+                  <div className="admin-form-grid-2" style={{ marginBottom: 18 }}>
+                    <ImageUpload
+                      value={S("hero").bannerUrl || ""}
+                      currentPublicId={S("hero").bannerPublicId || ""}
+                      onChange={(url, publicId) => {
+                        set("hero", "bannerUrl", url);
+                        set("hero", "bannerPublicId", publicId || "");
+                      }}
+                      folder="cks-website/hero"
+                      label="Homepage Banner"
+                      aspectHint="Wide banner recommended, around 3:1 or 16:5."
+                    />
+                    <ImageUpload
+                      value={S("hero").logoUrl || ""}
+                      currentPublicId={S("hero").logoPublicId || ""}
+                      onChange={(url, publicId) => {
+                        set("hero", "logoUrl", url);
+                        set("hero", "logoPublicId", publicId || "");
+                      }}
+                      folder="cks-website/hero"
+                      label="Profile / Brand Logo"
+                      aspectHint="Square image recommended for the round profile logo."
+                    />
                   </div>
                   <div className="form-group"><label className="form-label">Subtitle (above name)</label><input className="input" value={S("hero").subtitle || ""} onChange={e => set("hero", "subtitle", e.target.value)} /></div>
                   <div className="form-group"><label className="form-label">Tagline (below name)</label><input className="input" value={S("hero").tagline || ""} onChange={e => set("hero", "tagline", e.target.value)} /></div>

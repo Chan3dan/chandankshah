@@ -6,6 +6,10 @@ export interface HeroSettings {
   tagline: string;
   subtitle: string;
   description: string;
+  bannerUrl: string;
+  bannerPublicId: string;
+  logoUrl: string;
+  logoPublicId: string;
   ctaPrimary: string;
   ctaSecondary: string;
   badges: string[];
@@ -82,6 +86,10 @@ const DEFAULTS = {
     tagline: "BCA Student & Digital Services Specialist",
     subtitle: "Turning complexity into clarity",
     description: "I help individuals and businesses with Loksewa form filling, DEMAT accounts, documentation, academic projects, and web development — bridging traditional services with modern tech in Nepal.",
+    bannerUrl: "",
+    bannerPublicId: "",
+    logoUrl: "",
+    logoPublicId: "",
     ctaPrimary: "View Services",
     ctaSecondary: "My Portfolio",
     badges: ["BCA Student", "Loksewa Expert", "DEMAT Specialist", "Web Developer", "Documentation Consultant"],

@@ -836,16 +836,6 @@ select.input { cursor: pointer; }
   background: linear-gradient(180deg, transparent, rgba(0,0,0,0.18));
   pointer-events: none;
 }
-.home-channel-head {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: clamp(18px, 3vw, 28px);
-  align-items: end;
-  padding: 0 clamp(12px, 2vw, 18px);
-  margin-top: clamp(-84px, -8vw, -56px);
-  position: relative;
-  z-index: 2;
-}
 .home-channel-avatar {
   position: relative;
   width: clamp(104px, 16vw, 168px);
@@ -861,7 +851,6 @@ select.input { cursor: pointer; }
   min-width: 0;
   display: grid;
   gap: 16px;
-  padding: 16px 0 0;
 }
 .home-hero-frame {
   position: relative;
@@ -873,10 +862,22 @@ select.input { cursor: pointer; }
   border: 1px solid rgba(228, 226, 220, 0.92);
   box-shadow: var(--shadow-xl);
   overflow: hidden;
+}
+.home-channel-profile-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: clamp(18px, 3vw, 28px);
+  align-items: center;
+  margin-top: clamp(-108px, -11vw, -74px);
+  position: relative;
+  z-index: 2;
+}
+.home-channel-lower {
   display: grid;
   grid-template-columns: minmax(0, 1.08fr) minmax(260px, 0.62fr);
   gap: 24px;
   align-items: start;
+  margin-top: 24px;
 }
 .home-hero-frame::after {
   content: "";
@@ -1288,7 +1289,7 @@ select.input { cursor: pointer; }
   .home-conversion-grid,
   .home-process-grid,
   .home-niyukta-grid,
-  .home-hero-frame {
+  .home-channel-lower {
     grid-template-columns: 1fr;
   }
   .home-trust-grid {
@@ -1367,16 +1368,14 @@ select.input { cursor: pointer; }
     min-height: 160px;
     border-radius: 22px;
   }
-  .home-channel-head {
+  .home-channel-profile-row {
     grid-template-columns: 1fr;
     justify-items: center;
     text-align: center;
     margin-top: -52px;
-    padding: 0;
   }
   .home-channel-copy {
     justify-items: center;
-    padding-top: 0;
   }
   .home-channel-avatar {
     width: 104px;
@@ -1419,6 +1418,9 @@ select.input { cursor: pointer; }
   .home-pillars-grid,
   .home-hero-stats {
     justify-items: stretch;
+  }
+  .home-channel-lower {
+    margin-top: 18px;
   }
   .admin-main-inner { padding: 22px 16px; }
   .admin-topbar { padding: 0 16px; }

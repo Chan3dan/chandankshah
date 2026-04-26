@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown, ExternalLink, House, Layers3, CalendarClock, MessageSquareMore } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -36,9 +37,15 @@ const MOBILE_PRIMARY_NAV = [
 
 interface Props {
   navSettings?: NavSettings;
+  brand?: {
+    name?: string;
+    tagline?: string;
+    logoUrl?: string;
+    avatarLetter?: string;
+  };
 }
 
-export default function Navbar({ navSettings }: Props) {
+export default function Navbar({ navSettings, brand }: Props) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -82,12 +89,24 @@ export default function Navbar({ navSettings }: Props) {
         <div className="site-container" style={{ display: "flex", alignItems: "center", height: 64, gap: 24 }}>
           {/* Logo */}
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none", flexShrink: 0 }}>
-            <div className="brand-mark" style={{ width: 36, height: 36, borderRadius: 10 }}>
-              <span style={{ fontWeight: 800, fontSize: 16, fontFamily: "var(--font-sans)", letterSpacing: "-1px" }}>C</span>
+            <div className="brand-mark" style={{ width: 36, height: 36, borderRadius: 10, overflow: "hidden", background: brand?.logoUrl ? "var(--surface)" : undefined }}>
+              {brand?.logoUrl ? (
+                <Image
+                  src={brand.logoUrl}
+                  alt={brand.name || "Brand logo"}
+                  width={36}
+                  height={36}
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              ) : (
+                <span style={{ fontWeight: 800, fontSize: 16, fontFamily: "var(--font-sans)", letterSpacing: "-1px" }}>
+                  {brand?.avatarLetter || "C"}
+                </span>
+              )}
             </div>
             <div style={{ lineHeight: 1.2 }}>
-              <div style={{ fontWeight: 700, fontSize: 15, color: "var(--ink-1)", letterSpacing: "-0.03em" }}>Chandan Shah</div>
-              <div style={{ fontSize: 10.5, color: "var(--ink-4)", fontWeight: 500 }}>Digital Services</div>
+              <div style={{ fontWeight: 700, fontSize: 15, color: "var(--ink-1)", letterSpacing: "-0.03em" }}>{brand?.name || "Chandan Shah"}</div>
+              <div style={{ fontSize: 10.5, color: "var(--ink-4)", fontWeight: 500 }}>{brand?.tagline || "Digital Services"}</div>
             </div>
           </Link>
 
