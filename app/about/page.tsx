@@ -58,7 +58,7 @@ export default async function AboutPage() {
                   <p style={{ fontSize: "clamp(14px,2vw,16px)", color: "var(--ink-3)", lineHeight: 1.8, margin: 0 }}>{profile.bio1}</p>
                   <p style={{ fontSize: "clamp(14px,2vw,16px)", color: "var(--ink-3)", lineHeight: 1.8, margin: 0 }}>{profile.bio2}</p>
                   <div style={{ padding: "16px 18px", borderRadius: 16, background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.18)", width: "100%" }}>
-                    <h2 style={{ fontSize: 15, fontWeight: 700, color: "var(--ink-1)", marginBottom: 8 }}>Independent service notice</h2>
+                    <div style={{ fontSize: 15, fontWeight: 700, color: "var(--ink-1)", marginBottom: 8 }}>Independent service notice</div>
                     <p style={{ fontSize: 13.5, color: "var(--ink-3)", lineHeight: 1.7, margin: "0 0 8px" }}>{BUSINESS_DISCLAIMER}</p>
                     <p style={{ fontSize: 13.5, color: "var(--ink-3)", lineHeight: 1.7, margin: 0 }}>{OFFICIAL_PROCESS_NOTICE}</p>
                   </div>
@@ -78,7 +78,7 @@ export default async function AboutPage() {
                     {[
                       { label: "Location", value: profile.location, icon: MapPin },
                       { label: "Phone", value: profile.phone, icon: Phone },
-                      { label: "Email", value: profile.email, icon: Mail },
+                      { label: "Email", value: "Send an email", icon: Mail },
                       { label: "Available", value: profile.availability, icon: Clock3 },
                       { label: "Languages", value: profile.languages?.join(", "), icon: Languages },
                     ].map(item => (

@@ -70,9 +70,9 @@ export default function Footer({ profile, social, meta }: FooterProps) {
                 </a>
               )}
               {profile?.email && (
-                <a href={`mailto:${profile.email}`} style={{ fontSize: 13, color: "var(--footer-ink-muted)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 8 }} className="link-hover-white">
+                <a href={`mailto:${profile.email}`} style={{ fontSize: 13, color: "var(--footer-ink-muted)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 8 }} className="link-hover-white" aria-label="Send an email">
                   <Mail size={14} />
-                  {profile.email}
+                  Send an email
                 </a>
               )}
               {profile?.location && (

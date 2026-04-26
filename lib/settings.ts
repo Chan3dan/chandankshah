@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { connectDB } from "./mongodb";
 import { SiteSettings } from "@/models";
 
@@ -217,15 +218,19 @@ const DEFAULTS = {
   } as NavSettings,
 };
 
-export async function getSetting<T>(key: string): Promise<T> {
+const readSetting = cache(async (key: string) => {
   try {
     await connectDB();
     const doc = await SiteSettings.findOne({ key });
-    if (doc) return doc.value as T;
-    return DEFAULTS[key as keyof typeof DEFAULTS] as unknown as T;
+    if (doc) return doc.value;
+    return DEFAULTS[key as keyof typeof DEFAULTS];
   } catch {
-    return DEFAULTS[key as keyof typeof DEFAULTS] as unknown as T;
+    return DEFAULTS[key as keyof typeof DEFAULTS];
   }
+});
+
+export async function getSetting<T>(key: string): Promise<T> {
+  return readSetting(key) as Promise<T>;
 }
 
 export async function setSetting(key: string, value: unknown) {

@@ -41,7 +41,7 @@ export default function ContactClient({ profile, social, services }: Props) {
 
   const contactItems = [
     { icon: <Phone size={18} />, label: "Phone", value: profile.phone, href: `tel:${profile.phone}`, color: "#2563eb" },
-    { icon: <Mail size={18} />, label: "Email", value: profile.email, href: `mailto:${profile.email}`, color: "#7c3aed" },
+    { icon: <Mail size={18} />, label: "Email", value: "Send an email", href: `mailto:${profile.email}`, color: "#7c3aed" },
     { icon: <MapPin size={18} />, label: "Location", value: profile.location, href: undefined, color: "#059669" },
     { icon: <Clock size={18} />, label: "Availability", value: profile.availability, href: undefined, color: "#d97706" },
   ];
@@ -106,7 +106,7 @@ export default function ContactClient({ profile, social, services }: Props) {
               </div>
 
               <div className="card-static" style={{ padding: 20 }}>
-                <h2 style={{ fontFamily: "var(--font-serif)", fontSize: 20, fontWeight: 400, marginBottom: 14 }}>Before you send your message</h2>
+                <div style={{ fontFamily: "var(--font-serif)", fontSize: 20, fontWeight: 400, marginBottom: 14, color: "var(--ink-1)" }}>Before you send your message</div>
                 <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                   {CONTACT_EXPECTATIONS.map((item, index) => {
                     const Icon = index === 0 ? FileText : index === 1 ? TimerReset : ShieldCheck;
@@ -131,7 +131,7 @@ export default function ContactClient({ profile, social, services }: Props) {
               {sent ? (
                 <div style={{ textAlign: "center", padding: "48px 0" }}>
                   <CheckCircle2 size={56} color="var(--green)" style={{ margin: "0 auto 16px" }} />
-                  <h2 style={{ fontFamily: "var(--font-serif)", fontSize: 26, fontWeight: 400, marginBottom: 8 }}>Message Sent!</h2>
+                  <div style={{ fontFamily: "var(--font-serif)", fontSize: 26, fontWeight: 400, marginBottom: 8, color: "var(--ink-1)" }}>Message Sent!</div>
                   <p style={{ color: "var(--ink-3)", marginBottom: 24 }}>Thanks {form.name}! I&apos;ll get back to you within a few hours.</p>
                   {trackingCode && (
                     <div style={{ margin: "0 auto 20px", maxWidth: 360, padding: "14px 16px", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 12 }}>
@@ -151,7 +151,7 @@ export default function ContactClient({ profile, social, services }: Props) {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit}>
-                  <h2 style={{ fontFamily: "var(--font-serif)", fontSize: 22, fontWeight: 400, marginBottom: 24 }}>Send a Message</h2>
+                  <div style={{ fontFamily: "var(--font-serif)", fontSize: 22, fontWeight: 400, marginBottom: 24, color: "var(--ink-1)" }}>Send a Message</div>
                   <div className="grid-2" style={{ gap: 16, marginBottom: 16 }}>
                     <div className="form-group" style={{ marginBottom: 0 }}>
                       <label className="form-label">Full Name *</label>

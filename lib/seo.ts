@@ -4,7 +4,7 @@ export const SITE_URL = "https://chandankshah.com.np";
 export const SITE_NAME = "Chandan Kumar Shah";
 export const SITE_TITLE = "Chandan Kumar Shah — Digital Services & Portfolio";
 export const SITE_DESCRIPTION =
-  "Independent digital services in Nepal for documentation, Loksewa support, DEMAT setup, portfolio websites, and practical online assistance.";
+  "Independent digital services in Nepal for documentation, Loksewa support, DEMAT setup, portfolio websites, academic guidance, and practical online assistance for individuals and small businesses.";
 export const GOOGLE_SITE_VERIFICATION = "9MZ8KN2iRj0j2c9wqDP-KeA9WVdnu_XHb8ZcpCAWEkc";
 
 type OpenGraphType = "website" | "article";

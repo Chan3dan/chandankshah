@@ -116,7 +116,7 @@ function QuickServiceFinder({ services, profile }: { services: any[]; profile: P
                 <Link href={`/services/${selectedService.slug}`} className="btn btn-primary">
                   Open Service <ArrowRight size={14} />
                 </Link>
-                <Link href={`/book?service=${encodeURIComponent(selectedService.title)}`} className="btn btn-secondary">
+                <Link href="/book" className="btn btn-secondary">
                   Book This Service
                 </Link>
                 <a href={`https://wa.me/${profile.whatsapp}?text=${whatsappText}`} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
@@ -168,7 +168,7 @@ function TrustSection() {
               <div style={{ width: 42, height: 42, borderRadius: 12, background: "var(--blue-bg)", border: "1px solid var(--blue-border)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 14 }}>
                 <ShieldCheck size={18} color="var(--blue)" />
               </div>
-              <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--ink-1)", marginBottom: 8 }}>{item.title}</h3>
+              <p style={{ fontSize: 16, fontWeight: 700, color: "var(--ink-1)", margin: "0 0 8px" }}>{item.title}</p>
               <p style={{ fontSize: "clamp(14px,2vw,15px)", color: "var(--ink-3)", lineHeight: 1.7, margin: 0 }}>{item.description}</p>
             </div>
           ))}
@@ -185,13 +185,13 @@ function ConversionSection() {
         <div className="home-conversion-grid">
           <div className="card-static home-section-shell" style={{ padding: "clamp(22px,4vw,32px)" }}>
             <span className="home-kicker" style={{ marginBottom: 12 }}>Before You Book</span>
-            <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1.7rem,3vw,2.3rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1.2, marginBottom: 14 }}>
+            <h3 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1.7rem,3vw,2.3rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1.2, marginBottom: 14 }}>
               What helps a request move faster
-            </h2>
+            </h3>
             <div className="info-card-grid" style={{ marginBottom: 18 }}>
               {BOOKING_GUIDE.map((item) => (
                 <div key={item.title} style={{ padding: "16px 16px 14px", borderRadius: 14, background: "var(--bg-subtle)", border: "1px solid var(--border)" }}>
-                  <h3 style={{ fontSize: 15, fontWeight: 700, color: "var(--ink-1)", marginBottom: 8 }}>{item.title}</h3>
+                  <p style={{ fontSize: 15, fontWeight: 700, color: "var(--ink-1)", margin: "0 0 8px" }}>{item.title}</p>
                   <p style={{ margin: 0, fontSize: 13.5, color: "var(--ink-3)", lineHeight: 1.7 }}>{item.text}</p>
                 </div>
               ))}
@@ -205,9 +205,9 @@ function ConversionSection() {
 
           <div className="card-static home-section-shell" style={{ padding: "clamp(22px,4vw,32px)" }}>
             <span className="home-kicker" style={{ marginBottom: 12 }}>Popular Bundles</span>
-            <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1.6rem,2.8vw,2.1rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1.2, marginBottom: 14 }}>
+            <h3 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1.6rem,2.8vw,2.1rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1.2, marginBottom: 14 }}>
               Combinations clients ask for most
-            </h2>
+            </h3>
             <div className="home-list-stack" style={{ marginBottom: 18 }}>
               {POPULAR_BUNDLES.map((bundle) => (
                 <div key={bundle} style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 14px", borderRadius: 12, background: "var(--bg-subtle)", border: "1px solid var(--border)", fontSize: 14, fontWeight: 600, color: "var(--ink-2)" }}>
@@ -279,10 +279,13 @@ function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSe
                     <div>
                       <h1 className="home-hero-title" style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(2.2rem,5vw,4rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1.02, letterSpacing: "-0.03em", margin: "0 0 10px" }}>
                         {hero.name}
+                        <span style={{ display: "block", fontSize: "clamp(1.2rem,2.2vw,1.85rem)", lineHeight: 1.1, color: "var(--ink-3)", marginTop: 8 }}>
+                          Digital Services
+                        </span>
                       </h1>
-                      <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1rem,2.2vw,1.45rem)", fontWeight: 400, fontStyle: "italic", color: "var(--blue)", margin: "0 0 10px" }}>
+                      <p style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1rem,2.2vw,1.45rem)", fontWeight: 400, fontStyle: "italic", color: "var(--blue)", margin: "0 0 10px" }}>
                         {hero.tagline}
-                      </h2>
+                      </p>
                       <p style={{ fontSize: 14, color: "var(--ink-4)", margin: 0 }}>
                         {hero.subtitle}
                       </p>
@@ -406,7 +409,7 @@ function ServicesSection({ services }: { services: any[] }) {
                 <div style={{ width: 48, height: 48, borderRadius: 13, background: `${svc.color}12`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 14 }}>
                   <ServiceIcon service={svc} color={svc.color} />
                 </div>
-                <h3 style={{ fontWeight: 700, fontSize: 16, color: "var(--ink-1)", marginBottom: 6 }}>{svc.title}</h3>
+                <p style={{ fontWeight: 700, fontSize: 16, color: "var(--ink-1)", margin: "0 0 6px" }}>{svc.title}</p>
                 <p style={{ fontSize: 14, color: "var(--ink-3)", lineHeight: 1.65, marginBottom: 14 }}>{svc.description}</p>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 14 }}>
                   {svc.features?.slice(0, 3).map((f: string) => (
@@ -450,7 +453,7 @@ function ProcessSection() {
                 <div style={{ width: 36, height: 36, borderRadius: 10, background: "var(--green-bg)", color: "var(--green)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, marginBottom: 14 }}>
                   {index + 1}
                 </div>
-                <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--ink-1)", marginBottom: 8 }}>{step.title}</h3>
+                <p style={{ fontSize: 16, fontWeight: 700, color: "var(--ink-1)", margin: "0 0 8px" }}>{step.title}</p>
                 <p style={{ fontSize: "clamp(14px,2vw,15px)", color: "var(--ink-3)", lineHeight: 1.7, margin: 0 }}>{step.description}</p>
               </div>
             ))}

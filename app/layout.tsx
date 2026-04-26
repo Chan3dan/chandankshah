@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { GOOGLE_SITE_VERIFICATION, SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "@/lib/seo";
+import { getSetting, type SiteMetaSettings } from "@/lib/settings";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -55,9 +57,21 @@ export const metadata: Metadata = {
     description: SITE_DESCRIPTION,
     images: [`${SITE_URL}/twitter-image`],
   },
+  manifest: "/manifest.webmanifest",
+  icons: {
+    icon: [{ url: "/favicon.ico" }],
+    apple: [{ url: "/apple-icon", sizes: "180x180", type: "image/png" }],
+  },
+  appleWebApp: {
+    capable: true,
+    title: "Chandan Shah",
+    statusBarStyle: "default",
+  },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const meta = await getSetting<SiteMetaSettings>("meta");
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -70,6 +84,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body suppressHydrationWarning>
+        <GoogleAnalytics measurementId={meta.googleAnalytics} />
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
