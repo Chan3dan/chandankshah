@@ -253,57 +253,59 @@ function HeroSection({ hero, profile }: { hero: HeroSettings; profile: ProfileSe
 
           <div className="home-hero-frame">
             <div className="home-channel-profile-row">
-              <div className="home-channel-avatar">
-                <Image
-                  src={logoSrc}
-                  alt={`${hero.name} logo`}
-                  fill
-                  sizes="(max-width: 768px) 104px, 168px"
-                  style={{ objectFit: "cover" }}
-                />
-              </div>
-
-              <div className="home-channel-copy">
-                <div className="hero-badges-row" style={{ gap: 8 }}>
-                  <span style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 12px", background: "var(--green-bg)", border: "1px solid rgba(22,163,74,0.2)", borderRadius: 99, fontSize: 12, fontWeight: 600, color: "var(--green)" }}>
-                    <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--green)", display: "inline-block" }} />
-                    Available for Work
-                  </span>
-                  <span style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 12px", background: "var(--bg-subtle)", border: "1px solid var(--border)", borderRadius: 99, fontSize: 12, fontWeight: 500, color: "var(--ink-3)" }}>
-                    <MapPin size={11} /> {profile.location}
-                  </span>
+              <div className="home-channel-main">
+                <div className="home-channel-avatar">
+                  <Image
+                    src={logoSrc}
+                    alt={`${hero.name} logo`}
+                    fill
+                    sizes="(max-width: 768px) 104px, 168px"
+                    style={{ objectFit: "cover" }}
+                  />
                 </div>
 
-                <div>
-                  <h1 className="home-hero-title" style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(2.2rem,5vw,4rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1.02, letterSpacing: "-0.03em", margin: "0 0 10px" }}>
-                    {hero.name}
-                  </h1>
-                  <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1rem,2.2vw,1.45rem)", fontWeight: 400, fontStyle: "italic", color: "var(--blue)", margin: "0 0 10px" }}>
-                    {hero.tagline}
-                  </h2>
-                  <p style={{ fontSize: 14, color: "var(--ink-4)", margin: 0 }}>
-                    {hero.subtitle}
-                  </p>
-                </div>
-
-                <p className="home-hero-description" style={{ fontSize: "clamp(14px,2vw,16px)", color: "var(--ink-3)", lineHeight: 1.8, margin: 0 }}>
-                  {hero.description}
-                </p>
-
-                <div className="hero-badges-row" style={{ gap: 8 }}>
-                  {hero.badges.map((badge, index) => (
-                    <span key={index} style={{ padding: "6px 14px", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 99, fontSize: 13, fontWeight: 500, color: "var(--ink-2)", boxShadow: "var(--shadow-xs)" }}>
-                      {cleanBadgeLabel(badge)}
+                <div className="home-channel-copy">
+                  <div className="hero-badges-row" style={{ gap: 8 }}>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 12px", background: "var(--green-bg)", border: "1px solid rgba(22,163,74,0.2)", borderRadius: 99, fontSize: 12, fontWeight: 600, color: "var(--green)" }}>
+                      <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--green)", display: "inline-block" }} />
+                      Available for Work
                     </span>
-                  ))}
-                </div>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 12px", background: "var(--bg-subtle)", border: "1px solid var(--border)", borderRadius: 99, fontSize: 12, fontWeight: 500, color: "var(--ink-3)" }}>
+                      <MapPin size={11} /> {profile.location}
+                    </span>
+                  </div>
 
-                <div className="stack-actions">
-                  <Link href="/services" className="btn btn-primary btn-lg">{hero.ctaPrimary} <ArrowRight size={16} /></Link>
-                  <Link href="/projects" className="btn btn-secondary btn-lg">{hero.ctaSecondary}</Link>
-                  <a href={hero.resumeUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost btn-lg">
-                    <Download size={15} /> Resume
-                  </a>
+                  <div>
+                    <h1 className="home-hero-title" style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(2.2rem,5vw,4rem)", fontWeight: 400, color: "var(--ink-1)", lineHeight: 1.02, letterSpacing: "-0.03em", margin: "0 0 10px" }}>
+                      {hero.name}
+                    </h1>
+                    <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(1rem,2.2vw,1.45rem)", fontWeight: 400, fontStyle: "italic", color: "var(--blue)", margin: "0 0 10px" }}>
+                      {hero.tagline}
+                    </h2>
+                    <p style={{ fontSize: 14, color: "var(--ink-4)", margin: 0 }}>
+                      {hero.subtitle}
+                    </p>
+                  </div>
+
+                  <p className="home-hero-description" style={{ fontSize: "clamp(14px,2vw,16px)", color: "var(--ink-3)", lineHeight: 1.8, margin: 0 }}>
+                    {hero.description}
+                  </p>
+
+                  <div className="hero-badges-row" style={{ gap: 8 }}>
+                    {hero.badges.map((badge, index) => (
+                      <span key={index} style={{ padding: "6px 14px", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 99, fontSize: 13, fontWeight: 500, color: "var(--ink-2)", boxShadow: "var(--shadow-xs)" }}>
+                        {cleanBadgeLabel(badge)}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="stack-actions">
+                    <Link href="/services" className="btn btn-primary btn-lg">{hero.ctaPrimary} <ArrowRight size={16} /></Link>
+                    <Link href="/projects" className="btn btn-secondary btn-lg">{hero.ctaSecondary}</Link>
+                    <a href={hero.resumeUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost btn-lg">
+                      <Download size={15} /> Resume
+                    </a>
+                  </div>
                 </div>
               </div>
 
